@@ -9,8 +9,8 @@ import java.util.Iterator;
 
 public class Device {
 
-    public static String CONNECTION_KEY = "connection";
-    public static String CHANNELS_KEY = "channels";
+    private static String CONNECTION_KEY = "connection";
+    private static String CHANNELS_KEY = "channels";
     private static String PROPERTIES_KEY = "properties";
     private static String HOST_KEY = "host";
     private static String PROTOCOLS_KEY = "protocols";
@@ -21,12 +21,12 @@ public class Device {
 
     public ArrayList<Channel> channels = new ArrayList<>();
 
-    public String host;
-    public ArrayList<Protocol> protocols = new ArrayList<>(Costants.min_protocols);
-    public String device_name;
-    public String device_id;
-    public String secret;
-    public String vhost;
+    private String host;
+    private ArrayList<Protocol> protocols = new ArrayList<>(Costants.min_protocols);
+    private String device_name;
+    private String device_id;
+    private String secret;
+    private String vhost;
 
     public Device(JSONObject jsonObject) {
         try {
@@ -59,8 +59,36 @@ public class Device {
 
     }
 
+    public ArrayList<Protocol> getProtocols() {
+        return protocols;
+    }
+
+    public ArrayList<Channel> getChannels() {
+        return channels;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public String getDevice_name() {
+        return device_name;
+    }
+
+    public String getDevice_id() {
+        return device_id;
+    }
+
+    public String getSecret() {
+        return secret;
+    }
+
+    public String getVhost() {
+        return vhost;
+    }
+
     public String toString() {
-        return "\nConnection:\nHOST: " + host + "\nPROTOCOLS: " + protocols.toString() +  "\nDEVICE NAME: " + device_name + "\nDEVICE_ID: " + device_id + "\nSECRET: " + secret + "\nVHOST: " + vhost
+        return "\nHOST: " + host + "\nPROTOCOLS: " + protocols.toString() +  "\nDEVICE NAME: " + device_name + "\nDEVICE_ID: " + device_id + "\nSECRET: " + secret + "\nVHOST: " + vhost
         + "\n" + channels.toString();
     }
 }

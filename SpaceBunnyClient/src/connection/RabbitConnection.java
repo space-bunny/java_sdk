@@ -4,6 +4,10 @@ import com.rabbitmq.client.*;
 import device.Device;
 import device.Protocol;
 
+import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+
 public class RabbitConnection {
     private Connection conn = null;
     private Protocol protocol = null;
@@ -15,86 +19,83 @@ public class RabbitConnection {
         this.ssl = ssl;
     }
 
-    public boolean connect(Device device) {
-        try {
-            ConnectionFactory factory = new ConnectionFactory();
-            factory.setHost(device.getHost());
-            factory.setPort(ssl ? protocol.getSsl_port() : protocol.getPort());
-            factory.setVirtualHost(device.getVhost());
-            factory.setUsername(device.getDevice_id());
-            factory.setPassword(device.getSecret());
-            if (ssl)
-                factory.useSslProtocol();
-            conn = factory.newConnection();
+    public boolean connect(Device device) throws KeyManagementException, NoSuchAlgorithmException, IOException {
+        ConnectionFactory factory = new ConnectionFactory();
+        factory.setHost(device.getHost());
+        factory.setPort(ssl ? protocol.getSsl_port() : protocol.getPort());
+        factory.setVirtualHost(device.getVhost());
+        factory.setUsername(device.getDevice_id());
+        factory.setPassword(device.getSecret());
+        if (ssl)
+            factory.useSslProtocol();
+        conn = factory.newConnection();
 
-            return true;
+        return true;
 
-        } catch(Exception ex) {
-            System.out.println("ERRORE: " + ex.toString());
-            return false;
-        }
     }
 
     public boolean isConnected() {
         return ((conn != null) && (conn.isOpen()));
     }
 
-    public boolean close() {
-        if (conn != null) {
-            try {
-                conn.close(0, "Close Connection");
-                return true;
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                return false;
-            }
-        }
-        return false;
+    public void close() throws IOException {
+        conn.close(0, "Close Connection");
     }
 
-    public boolean publish(String device_id, device.Channel channel, String msg) {
-        try {
-            Channel rabbitChannel = conn.createChannel();
+    public void publish(String device_id, device.Channel channel, String msg) throws IOException {
+        Channel rabbitChannel = conn.createChannel();
 
-            //String queueName = device_id + ".inbox";
-            String exchangeName = device_id;
-            String routingKey = exchangeName + "." + channel.getName();
+        //String queueName = device_id + ".inbox";
+        String exchangeName = device_id;
+        String routingKey = exchangeName + "." + channel.getName();
 
-            rabbitChannel.basicPublish(exchangeName, routingKey, null, msg.getBytes());
+        rabbitChannel.basicPublish(exchangeName, routingKey, null, msg.getBytes());
 
-            rabbitChannel.close(0, "Close Channel");
+        rabbitChannel.close(0, "Close Channel");
 
-            return true;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return false;
-        }
     }
 
-    public String receive(String device_id) {
+    public String receive(String device_id) throws IOException {
         String message = "";
-        try {
-            Channel channel = conn.createChannel();
+        Channel channel = conn.createChannel();
 
-            String queueName = device_id + ".inbox";
+        String queueName = device_id + ".inbox";
 
-            GetResponse response = channel.basicGet(queueName, false);
-            if (response == null) {
-                message = "-1";
-            } else {
-                byte[] body = response.getBody();
-                long deliveryTag = response.getEnvelope().getDeliveryTag();
+        GetResponse response = channel.basicGet(queueName, false);
+        if (response == null) {
+            message = "-1";
+        } else {
+            byte[] body = response.getBody();
+            long deliveryTag = response.getEnvelope().getDeliveryTag();
 
-                message = new String(body);
+            message = new String(body);
 
-                channel.basicAck(deliveryTag, false);
-            }
-
-            channel.close(0, "Close Channel");
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            return message;
+            channel.basicAck(deliveryTag, false);
         }
+
+        channel.close(0, "Close Channel");
+        return message;
+    }
+
+    public String subscribe(String device_id) throws IOException {
+        String message = "";
+        Channel channel = conn.createChannel();
+
+        String queueName = device_id + ".inbox";
+
+        GetResponse response = channel.basicGet(queueName, false);
+        if (response == null) {
+            message = "-1";
+        } else {
+            byte[] body = response.getBody();
+            long deliveryTag = response.getEnvelope().getDeliveryTag();
+
+            message = new String(body);
+
+            channel.basicAck(deliveryTag, false);
+        }
+
+        channel.close(0, "Close Channel");
+        return message;
     }
 }

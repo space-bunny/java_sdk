@@ -1,5 +1,7 @@
 import device.Channel;
 import device.Device;
+import exception.SpaceBunnyConfigurationException;
+import exception.SpaceBunnyConnectionException;
 
 import java.util.ArrayList;
 
@@ -9,29 +11,38 @@ public class Main {
 
         String device_key = "2440a806-f9c1-4b0a-a711-20fbdefadd3e:GDZGztyXcCtnztK85yC_hA";
 
-        SpaceBunnyClient cs = new SpaceBunnyClient(device_key);
-        cs.setOnFinishConfigiuration(new SpaceBunnyClient.OnFinishConfigiurationCallBack() {
-            @Override
-            public void onConfigured(Device device, boolean ssl) {
-                System.out.println(device.toString());
-            }
-        });
-
-        cs.connect();
-        ArrayList<Channel> channels = cs.getChannels();
-        if (cs.isConnected()) {
-
-            cs.publish(channels.get(0), "Ciao");
-
-            cs.receive(new SpaceBunnyClient.OnMessageReceived() {
+        try {
+            final SpaceBunnyClient spaceBunny = new SpaceBunnyClient(device_key);
+            spaceBunny.setOnFinishConfigiurationListener(new SpaceBunnyClient.OnFinishConfigiurationListener() {
                 @Override
-                public void onReceived(String message) {
-
+                public void onConfigured(Device device) throws SpaceBunnyConnectionException {
+                    //System.out.println(device.toString());
                 }
             });
-        }
 
-        cs.close();
+            spaceBunny.connect(new SpaceBunnyClient.OnConnectedListener() {
+                @Override
+                public void onConnected() throws SpaceBunnyConnectionException {
+                    ArrayList<Channel> channels = spaceBunny.getChannels();
+                    System.out.println("5");
+                    spaceBunny.publish(channels.get(0), "Ciao");
+                    /*spaceBunny.subscribe(new SpaceBunnyClient.OnMessageReceivedListener() {
+                        @Override
+                        public void onReceived(String message) throws SpaceBunnyConnectionException {
+
+                            System.out.println(message);
+
+                            if (message.equals("-1")) {
+                                spaceBunny.close();
+                            }
+                        }
+                    });*/
+                }
+            });
+
+        } catch (SpaceBunnyConnectionException ex) {
+            ex.printStackTrace();
+        }
 
     }
 }

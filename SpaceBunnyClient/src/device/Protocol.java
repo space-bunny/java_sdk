@@ -1,11 +1,12 @@
 package device;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Protocol {
 
-    private static String PORT_KEY = "port";
-    private static String SSL_PORT_KEY = "ssl_port";
+    private final static String PORT_KEY = "port";
+    private final static String SSL_PORT_KEY = "ssl_port";
 
     private String name;
     private int port;
@@ -17,14 +18,10 @@ public class Protocol {
         this.ssl_port = ssl_port;
     }
 
-    public Protocol(String name, JSONObject js) {
-        try {
-            this.name = name;
-            this.port = js.getInt(PORT_KEY);
-            this.ssl_port = js.getInt(SSL_PORT_KEY);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+    public Protocol(String name, JSONObject js) throws JSONException {
+        this.name = name;
+        this.port = js.getInt(PORT_KEY);
+        this.ssl_port = js.getInt(SSL_PORT_KEY);
     }
 
     public String getName() {

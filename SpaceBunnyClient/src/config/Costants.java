@@ -2,11 +2,11 @@ package config;
 
 public class Costants {
 
-    public static String url_endpoint = "http://api.demo.spacebunny.io";
-    public static String url_endpoint_ssl = "https://api.demo.spacebunny.io";
-    public static String api_version = "/v1";
-    public static String path_endpoint = "/device_configurations";
-    public static int min_protocols = 4;
+    public final static String url_endpoint = "http://api.demo.spacebunny.io";
+    public final static String url_endpoint_ssl = "https://api.demo.spacebunny.io";
+    public final static String api_version = "/v1";
+    public final static String path_endpoint = "/device_configurations";
+    public final static int min_protocols = 4;
 
     public static String DEFAULT_PROTOCOL = "amqp";
 

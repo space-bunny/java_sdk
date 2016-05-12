@@ -13,7 +13,6 @@ public class Device {
 
     private final static String CONNECTION_KEY = "connection";
     private final static String CHANNELS_KEY = "channels";
-    private final static String PROPERTIES_KEY = "properties";
     private final static String HOST_KEY = "host";
     private final static String PROTOCOLS_KEY = "protocols";
     private final static String DEVICE_NAME_KEY = "device_name";
@@ -28,6 +27,18 @@ public class Device {
     private String device_id;
     private String secret;
     private String vhost;
+
+    /**
+     *
+     * @param device_name
+     * @param device_id
+     * @param secret
+     * @param protocols
+     * @param channels
+     * @param host
+     * @param vhost
+     * @throws SpaceBunnyConfigurationException
+     */
 
     public Device(String device_name, String device_id, String secret, ArrayList<Protocol> protocols, ArrayList<Channel> channels, String host, String vhost) throws SpaceBunnyConfigurationException {
         this.host = host;
@@ -56,6 +67,11 @@ public class Device {
 
     }
 
+    /**
+     *
+     * @param jsonObject
+     * @throws JSONException
+     */
     public Device(JSONObject jsonObject) throws JSONException {
             // Connection
             JSONObject conn = jsonObject.getJSONObject(CONNECTION_KEY);
@@ -113,7 +129,10 @@ public class Device {
         + "\n" + channels.toString();
     }
 
-    public static class DeviceBuilder{
+    /**
+     * Device Custom Builder
+     */
+    public static class Builder{
 
         private String host;
         private ArrayList<Protocol> protocols = new ArrayList<>(Costants.min_protocols);
@@ -123,40 +142,40 @@ public class Device {
         private String secret;
         private String vhost;
 
-        public DeviceBuilder() {
+        public Builder() {
         }
 
-        public DeviceBuilder setHost(String host) {
+        public Builder setHost(String host) {
             this.host = host;
             return this;
         }
 
-        public DeviceBuilder setDeviceName(String device_name) {
+        public Builder setDeviceName(String device_name) {
             this.device_name = device_name;
             return this;
         }
 
-        public DeviceBuilder setDeviceId(String device_id) {
+        public Builder setDeviceId(String device_id) {
             this.device_id = device_id;
             return this;
         }
 
-        public DeviceBuilder setSecret(String secret) {
+        public Builder setSecret(String secret) {
             this.secret = secret;
             return this;
         }
 
-        public DeviceBuilder setVHost(String vhost) {
+        public Builder setVHost(String vhost) {
             this.vhost = vhost;
             return this;
         }
 
-        public DeviceBuilder setSecret(ArrayList<Protocol> protocols) {
+        public Builder setSecret(ArrayList<Protocol> protocols) {
             this.protocols = protocols;
             return this;
         }
 
-        public DeviceBuilder setVHost(ArrayList<Channel> channels) {
+        public Builder setVHost(ArrayList<Channel> channels) {
             this.channels = channels;
             return this;
         }

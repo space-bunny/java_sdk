@@ -1,3 +1,9 @@
+/**
+ * A module that exports the base SpaceBunny client
+ * @module SpaceBunny
+ */
+
+// Import some helpers modules
 import com.sun.istack.internal.Nullable;
 import config.Costants;
 
@@ -10,8 +16,10 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
+import config.Utilities;
 import connection.RabbitConnection;
 import device.*;
+import exception.SpaceBunnyConfigurationException;
 import exception.SpaceBunnyConnectionException;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,6 +35,14 @@ public class SpaceBunnyClient {
 
     private String device_key;
     private boolean ssl = true;
+    private boolean verify_ca = true;
+
+
+    /**
+     *
+     * @constructor
+     * @param device_key unique key device
+     */
 
     public SpaceBunnyClient(String device_key) throws SpaceBunnyConnectionException {
         if (device_key == null || device_key.equals(""))
@@ -34,10 +50,86 @@ public class SpaceBunnyClient {
         this.device_key = device_key;
     }
 
+    /**
+     *
+     * @constructor
+     * @param device custom device created by the user
+     */
     public SpaceBunnyClient(Device device) {
         this.device = device;
     }
 
+    /**
+     * Open RabbitMQ connection with SpaceBunny
+     * @throws SpaceBunnyConnectionException
+     */
+    public void connect() throws SpaceBunnyConnectionException {
+        connect(null, null);
+    }
+
+    /**
+     * Open RabbitMQ connection with SpaceBunny
+     * @param onConnectedListener callback
+     * @throws SpaceBunnyConnectionException
+     */
+    public void connect(OnConnectedListener onConnectedListener) throws SpaceBunnyConnectionException {
+        connect(null, onConnectedListener);
+    }
+
+    /**
+     * Open RabbitMQ connection with SpaceBunny
+     * @param protocol custom protocol defined by the user
+     * @param onConnectedListener callback
+     * @throws SpaceBunnyConnectionException
+     */
+    public void connect(Protocol protocol, OnConnectedListener onConnectedListener) throws SpaceBunnyConnectionException {
+        try {
+            configure();
+            if (protocol == null)
+                protocol = findProtocol(Costants.DEFAULT_PROTOCOL);
+            rabbitConnection = new RabbitConnection(protocol, ssl);
+            if (rabbitConnection.connect(device) && onConnectedListener != null)
+                onConnectedListener.onConnected();
+        } catch (Exception ex) {
+            throw new SpaceBunnyConnectionException(ex);
+        }
+    }
+
+    /**
+     *
+     * @return connection status
+     */
+    public boolean isConnected() {
+        return rabbitConnection.isConnected();
+    }
+
+    /**
+     * Test the connection with SpaceBunny
+     * Throws an exception if it is not
+     * @throws SpaceBunnyConnectionException
+     */
+    public void testConnection() throws SpaceBunnyConnectionException {
+        if (!isConnected())
+            throw new SpaceBunnyConnectionException("Space Bunny is not connected. Try spaceBunny.connect().");
+    }
+
+    /**
+     * Set a custom CA
+     * @param path of CA
+     * @param certificateName
+     */
+    public void setPathCustomCA(String path, String certificateName) {
+        Utilities.addCA(path, certificateName);
+    }
+
+    /**
+     * Download device configuration from SpaceBunny
+     * @throws KeyManagementException
+     * @throws NoSuchAlgorithmException
+     * @throws IOException
+     * @throws JSONException
+     * @throws SpaceBunnyConnectionException
+     */
     private void configure() throws KeyManagementException, NoSuchAlgorithmException, IOException, JSONException, SpaceBunnyConnectionException {
 
         URLConnection uc;
@@ -54,30 +146,36 @@ public class SpaceBunnyClient {
 
         } catch (Exception ex) {
 
-            // Create a trust manager that does not validate certificate chains
-            TrustManager[] trustAllCerts = new TrustManager[]{
-                    new X509TrustManager() {
-                        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                            return null;
-                        }
-                        public void checkClientTrusted(
-                                java.security.cert.X509Certificate[] certs, String authType) {
-                        }
-                        public void checkServerTrusted(
-                                java.security.cert.X509Certificate[] certs, String authType) {
-                        }
-                    }
-            };
+            if (!verify_ca) {
+                // Create a trust manager that does not validate certificate chains
+                TrustManager[] trustAllCerts = new TrustManager[]{
+                        new X509TrustManager() {
+                            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                                return null;
+                            }
 
-            SSLContext sc = SSLContext.getInstance("SSL");
-            sc.init(null, trustAllCerts, new java.security.SecureRandom());
-            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+                            public void checkClientTrusted(
+                                    java.security.cert.X509Certificate[] certs, String authType) {
+                            }
+
+                            public void checkServerTrusted(
+                                    java.security.cert.X509Certificate[] certs, String authType) {
+                            }
+                        }
+                };
+
+                SSLContext sc = SSLContext.getInstance("SSL");
+                sc.init(null, trustAllCerts, new java.security.SecureRandom());
+                HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
 
 
-            URL url = new URL(Costants.generateHostname(ssl));
-            uc = url.openConnection();
-            uc.setRequestProperty("Device-Key", device_key);
-            reader = new BufferedReader(new InputStreamReader(uc.getInputStream(), "UTF-8"));
+                URL url = new URL(Costants.generateHostname(ssl));
+                uc = url.openConnection();
+                uc.setRequestProperty("Device-Key", device_key);
+                reader = new BufferedReader(new InputStreamReader(uc.getInputStream(), "UTF-8"));
+            } else {
+                throw new SpaceBunnyConnectionException("Error with ssl connection!");
+            }
 
         }
 
@@ -94,75 +192,81 @@ public class SpaceBunnyClient {
 
     }
 
+    /**
+     *
+     * @param callBack
+     */
     public void setOnFinishConfigiurationListener(@Nullable OnFinishConfigiurationListener callBack) {
         configCallBack = callBack;
     }
 
-    public void connect() throws SpaceBunnyConnectionException {
-        connect(null, null);
-    }
-
-    public void connect(OnConnectedListener onConnectedListener) throws SpaceBunnyConnectionException {
-        connect(null, onConnectedListener);
-    }
-
-    public void connect(Protocol protocol, OnConnectedListener onConnectedListener) throws SpaceBunnyConnectionException {
+    /**
+     * Publish msg on channel to SpaceBunny
+     * @param channel
+     * @param msg to publish
+     * @throws SpaceBunnyConnectionException
+     */
+    public void publish(device.Channel channel, String msg) throws SpaceBunnyConnectionException {
+        testConnection();
         try {
-            configure();
-            if (protocol == null)
-                protocol = findProtocol(Costants.DEFAULT_PROTOCOL);
-            rabbitConnection = new RabbitConnection(protocol, ssl);
-            if (rabbitConnection.connect(device) && onConnectedListener != null)
-                onConnectedListener.onConnected();
+            rabbitConnection.publish(device.getDevice_id(), channel, msg);
         } catch (Exception ex) {
             throw new SpaceBunnyConnectionException(ex);
         }
     }
 
-    public boolean isConnected() {
-        return rabbitConnection.isConnected();
-    }
-
-
-    public void publish(device.Channel channel, String msg) throws SpaceBunnyConnectionException {
-        if (rabbitConnection.isConnected()) {
-            try {
-                rabbitConnection.publish(device.getDevice_id(), channel, msg);
-            } catch (Exception ex) {
-                throw new SpaceBunnyConnectionException(ex);
-            }
-        }
-        System.out.println("5");
-        throw new SpaceBunnyConnectionException("Space Bunny is not connected. Try spaceBunny.connect().");
-    }
-
+    /**
+     * Receive one message from inbox
+     * @param onMessageReceived
+     * @throws SpaceBunnyConnectionException
+     */
     public void receive(OnMessageReceivedListener onMessageReceived) throws SpaceBunnyConnectionException {
-        if (rabbitConnection.isConnected()) {
-            try {
-                onMessageReceived.onReceived(rabbitConnection.receive(device.getDevice_id()));
-            } catch (Exception ex) {
-                throw new SpaceBunnyConnectionException(ex);
-            }
+        testConnection();
+        try {
+            onMessageReceived.onReceived(rabbitConnection.receive(device.getDevice_id()));
+        } catch (Exception ex) {
+            throw new SpaceBunnyConnectionException(ex);
         }
-        throw new SpaceBunnyConnectionException("Space Bunny is not connected. Try spaceBunny.connect().");
     }
 
-    public void subscribe(OnMessageReceivedListener onMessageReceived) throws SpaceBunnyConnectionException { // TODO receive tutti i messaggi
-        if (rabbitConnection.isConnected()) {
-            try {
-                onMessageReceived.onReceived(rabbitConnection.subscribe(device.getDevice_id()));
-            } catch (Exception ex) {
-                throw new SpaceBunnyConnectionException(ex);
-            }
+    /**
+     * Subscribe to input channel
+     * @param onMessageReceived callBack on message received
+     * @throws SpaceBunnyConnectionException
+     */
+    public void subscribe(RabbitConnection.OnSubscriptionMessageReceivedListener onMessageReceived) throws SpaceBunnyConnectionException {
+        testConnection();
+        try {
+            rabbitConnection.subscribe(device.getDevice_id(), onMessageReceived);
+        } catch (Exception ex) {
+            throw new SpaceBunnyConnectionException(ex);
         }
-        throw new SpaceBunnyConnectionException("Space Bunny is not connected. Try spaceBunny.connect().");
     }
 
-    private Protocol findProtocol(String p) throws SpaceBunnyConnectionException {
+    /**
+     * Unsubscribe to input channel
+     * @throws SpaceBunnyConnectionException
+     */
+    public void unsubscribe() throws SpaceBunnyConnectionException {
+        testConnection();
+        try {
+            rabbitConnection.unsubscribe(device.getDevice_id());
+        } catch (Exception ex) {
+            throw new SpaceBunnyConnectionException(ex);
+        }
+    }
+
+    /**
+     * Find protocol by his name
+     * @param p
+     * @return searched protocol
+     * @throws SpaceBunnyConfigurationException
+     */
+    private Protocol findProtocol(String p) throws SpaceBunnyConfigurationException {
         for (Protocol protocol : device.getProtocols())
             if (protocol.getName().equals(p))
                 return protocol;
-        throw new SpaceBunnyConnectionException("Standard protocol not found. Try to configure again the device.");
+        throw new SpaceBunnyConfigurationException("Standard protocol not found. Try to configure again the device.");
     }
 
     public void setSsl(boolean ssl) {
@@ -173,6 +277,14 @@ public class SpaceBunnyClient {
         return this.ssl;
     }
 
+    public void setVerifyCA(boolean verify) {
+        this.verify_ca = verify;
+    }
+
+    public boolean isCAVerifed() {
+        return this.verify_ca;
+    }
+
     public ArrayList<Protocol> getProtocols() {
         return device.getProtocols();
     }
@@ -181,15 +293,17 @@ public class SpaceBunnyClient {
         return device.getChannels();
     }
 
+    /**
+     * Close connection to SpaceBunny
+     * @throws SpaceBunnyConnectionException
+     */
     public void close() throws SpaceBunnyConnectionException {
-        if (isConnected()) {
-            try {
-                rabbitConnection.close();
-            } catch (Exception ex) {
-                throw new SpaceBunnyConnectionException(ex);
-            }
+        testConnection();
+        try {
+            rabbitConnection.close();
+        } catch (Exception ex) {
+            throw new SpaceBunnyConnectionException(ex);
         }
-        throw new SpaceBunnyConnectionException("Space Bunny is not connected. Do you have just close the connection?");
     }
 
     public interface OnFinishConfigiurationListener

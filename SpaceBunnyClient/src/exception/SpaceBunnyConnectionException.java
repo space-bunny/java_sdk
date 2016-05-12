@@ -1,5 +1,9 @@
 package exception;
 
+/**
+ * Custom exception for connection errors
+ */
+
 public class SpaceBunnyConnectionException extends Exception {
     public SpaceBunnyConnectionException(String message){
         super(message);

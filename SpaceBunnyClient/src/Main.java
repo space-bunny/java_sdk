@@ -1,3 +1,5 @@
+import com.rabbitmq.client.Envelope;
+import connection.RabbitConnection;
 import device.Channel;
 import device.Device;
 import exception.SpaceBunnyConfigurationException;
@@ -13,6 +15,7 @@ public class Main {
 
         try {
             final SpaceBunnyClient spaceBunny = new SpaceBunnyClient(device_key);
+            //spaceBunny.setPathCustomCA("", "");
             spaceBunny.setOnFinishConfigiurationListener(new SpaceBunnyClient.OnFinishConfigiurationListener() {
                 @Override
                 public void onConfigured(Device device) throws SpaceBunnyConnectionException {
@@ -24,21 +27,24 @@ public class Main {
                 @Override
                 public void onConnected() throws SpaceBunnyConnectionException {
                     ArrayList<Channel> channels = spaceBunny.getChannels();
-                    System.out.println("5");
+
                     spaceBunny.publish(channels.get(0), "Ciao");
-                    /*spaceBunny.subscribe(new SpaceBunnyClient.OnMessageReceivedListener() {
+                    spaceBunny.subscribe(new RabbitConnection.OnSubscriptionMessageReceivedListener() {
                         @Override
-                        public void onReceived(String message) throws SpaceBunnyConnectionException {
-
+                        public void onReceived(String message, Envelope envelope) {
                             System.out.println(message);
-
-                            if (message.equals("-1")) {
-                                spaceBunny.close();
-                            }
+                            if (message.equals("q"))
+                                try {
+                                    spaceBunny.unsubscribe();
+                                } catch (SpaceBunnyConnectionException e) {
+                                    e.printStackTrace();
+                                }
                         }
-                    });*/
+                    });
                 }
             });
+
+            //spaceBunny.close();
 
         } catch (SpaceBunnyConnectionException ex) {
             ex.printStackTrace();

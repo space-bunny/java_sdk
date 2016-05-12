@@ -3,15 +3,22 @@ package connection;
 import com.rabbitmq.client.*;
 import device.Device;
 import device.Protocol;
+import exception.SpaceBunnyConnectionException;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RabbitConnection {
     private Connection conn = null;
     private Protocol protocol = null;
     private boolean ssl = true;
+    private Map<String, Subscription> channelSubscribes = new HashMap<>();
 
     public RabbitConnection(Protocol protocol, boolean ssl)
     {
@@ -77,25 +84,46 @@ public class RabbitConnection {
         return message;
     }
 
-    public String subscribe(String device_id) throws IOException {
-        String message = "";
+    public void subscribe(String device_id, OnSubscriptionMessageReceivedListener onSubscriptionMessageReceivedListener) throws IOException {
         Channel channel = conn.createChannel();
 
+        final String random_consumer_tag = new BigInteger(130, new SecureRandom()).toString(32);
         String queueName = device_id + ".inbox";
 
-        GetResponse response = channel.basicGet(queueName, false);
-        if (response == null) {
-            message = "-1";
-        } else {
-            byte[] body = response.getBody();
-            long deliveryTag = response.getEnvelope().getDeliveryTag();
+        channelSubscribes.put(device_id, new Subscription(channel, random_consumer_tag));
 
-            message = new String(body);
+        boolean autoAck = false;
+        channel.basicConsume(queueName, autoAck, random_consumer_tag,
+                new DefaultConsumer(channel) {
+                    @Override
+                    public void handleDelivery(String consumerTag,
+                                               Envelope envelope,
+                                               AMQP.BasicProperties properties,
+                                               byte[] body)
+                            throws IOException
+                    {
+                        String routingKey = envelope.getRoutingKey();
+                        String contentType = properties.getContentType();
+                        long deliveryTag = envelope.getDeliveryTag();
 
-            channel.basicAck(deliveryTag, false);
-        }
+                        onSubscriptionMessageReceivedListener.onReceived(new String(body), envelope);
 
-        channel.close(0, "Close Channel");
-        return message;
+                        channel.basicAck(deliveryTag, false);
+                    }
+                });
+
     }
+
+    public void unsubscribe(String device_id) throws IOException {
+        Subscription subscription = channelSubscribes.get(device_id);
+        subscription.getChannel().basicCancel(subscription.getConsumerTag());
+        subscription.getChannel().close(0, "Close Channel");
+        channelSubscribes.remove(device_id);
+    }
+
+    public interface OnSubscriptionMessageReceivedListener
+    {
+        void onReceived(String message, Envelope envelope);
+    }
+
 }

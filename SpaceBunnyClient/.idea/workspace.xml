@@ -2,14 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="669d23dc-5576-420f-8c6b-3b7195cce659" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/device/Device$DeviceBuilder.class" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/Main$2.class" afterPath="$PROJECT_DIR$/out/production/SpaceBunnyClient/Main$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/SpaceBunnyClient$1.class" afterPath="$PROJECT_DIR$/out/production/SpaceBunnyClient/SpaceBunnyClient$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/SpaceBunnyClient.class" afterPath="$PROJECT_DIR$/out/production/SpaceBunnyClient/SpaceBunnyClient.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/device/Device.class" afterPath="$PROJECT_DIR$/out/production/SpaceBunnyClient/device/Device.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Main.java" afterPath="$PROJECT_DIR$/src/Main.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/SpaceBunnyClient.java" afterPath="$PROJECT_DIR$/src/SpaceBunnyClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/config/Costants.java" afterPath="$PROJECT_DIR$/src/config/Costants.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/connection/RabbitConnection.java" afterPath="$PROJECT_DIR$/src/connection/RabbitConnection.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/device/Channel.java" afterPath="$PROJECT_DIR$/src/device/Channel.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/device/Device.java" afterPath="$PROJECT_DIR$/src/device/Device.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/device/Protocol.java" afterPath="$PROJECT_DIR$/src/device/Protocol.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/exception/SpaceBunnyConfigurationException.java" afterPath="$PROJECT_DIR$/src/exception/SpaceBunnyConfigurationException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/exception/SpaceBunnyConnectionException.java" afterPath="$PROJECT_DIR$/src/exception/SpaceBunnyConnectionException.java" />
     </list>
     <ignored path="ClientSpaceBunny.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -34,27 +40,10 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="97">
-              <caret line="26" column="44" selection-start-line="26" selection-start-column="44" selection-end-line="26" selection-end-column="44" />
+            <state relative-caret-position="572">
+              <caret line="50" column="9" selection-start-line="13" selection-start-column="8" selection-end-line="50" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SpaceBunnyClient.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/SpaceBunnyClient.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="131">
-              <caret line="117" column="0" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
-              <folding>
-                <element signature="e#1079#1080#0" expanded="true" />
-                <element signature="e#1115#1116#0" expanded="true" />
-                <element signature="e#6258#6259#0" expanded="true" />
-                <element signature="e#6288#6289#0" expanded="true" />
-                <element signature="e#6318#6319#0" expanded="true" />
-                <element signature="e#6349#6350#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -63,20 +52,8 @@
       <file leaf-file-name="RabbitConnection.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/connection/RabbitConnection.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="37">
-              <caret line="32" column="20" selection-start-line="32" selection-start-column="20" selection-end-line="32" selection-end-column="20" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Device.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/device/Device.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="215">
-              <caret line="115" column="17" selection-start-line="115" selection-start-column="17" selection-end-line="115" selection-end-column="17" />
+            <state relative-caret-position="249">
+              <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -109,15 +86,17 @@
         <option value="$PROJECT_DIR$/src/device/Connection.java" />
         <option value="$PROJECT_DIR$/src/exception/SpaceBunnyIOException.java" />
         <option value="$PROJECT_DIR$/src/config/Costants.java" />
-        <option value="$PROJECT_DIR$/src/device/Protocol.java" />
-        <option value="$PROJECT_DIR$/src/device/Channel.java" />
         <option value="$PROJECT_DIR$/src/device/DeviceBuilder.java" />
-        <option value="$PROJECT_DIR$/src/device/Device.java" />
-        <option value="$PROJECT_DIR$/src/exception/SpaceBunnyConfigurationException.java" />
-        <option value="$PROJECT_DIR$/src/exception/SpaceBunnyConnectionException.java" />
         <option value="$PROJECT_DIR$/src/Main.java" />
-        <option value="$PROJECT_DIR$/src/connection/RabbitConnection.java" />
+        <option value="$PROJECT_DIR$/src/config/Utilities.java" />
+        <option value="$PROJECT_DIR$/src/exception/SpaceBunnyConnectionException.java" />
+        <option value="$PROJECT_DIR$/src/device/Channel.java" />
+        <option value="$PROJECT_DIR$/src/device/Protocol.java" />
+        <option value="$PROJECT_DIR$/src/connection/Subscription.java" />
+        <option value="$PROJECT_DIR$/src/exception/SpaceBunnyConfigurationException.java" />
         <option value="$PROJECT_DIR$/src/SpaceBunnyClient.java" />
+        <option value="$PROJECT_DIR$/src/device/Device.java" />
+        <option value="$PROJECT_DIR$/src/connection/RabbitConnection.java" />
       </list>
     </option>
   </component>
@@ -159,7 +138,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -268,6 +246,7 @@
       </pane>
       <pane id="PackagesPane" />
       <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -569,6 +548,46 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SpaceBunnyClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1615">
+          <caret line="117" column="0" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#9958#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/connection/RabbitConnection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="32" column="20" selection-start-line="32" selection-start-column="20" selection-end-line="32" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/device/Device.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1598">
+          <caret line="115" column="17" selection-start-line="115" selection-start-column="17" selection-end-line="115" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
           <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
           <folding>
@@ -582,12 +601,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#1079#1080#0" expanded="true" />
-            <element signature="e#1115#1116#0" expanded="true" />
-            <element signature="e#6258#6259#0" expanded="true" />
-            <element signature="e#6288#6289#0" expanded="true" />
-            <element signature="e#6318#6319#0" expanded="true" />
-            <element signature="e#6349#6350#0" expanded="true" />
+            <element signature="e#0#9958#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -627,12 +641,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#1079#1080#0" expanded="true" />
-            <element signature="e#1115#1116#0" expanded="true" />
-            <element signature="e#6258#6259#0" expanded="true" />
-            <element signature="e#6288#6289#0" expanded="true" />
-            <element signature="e#6318#6319#0" expanded="true" />
-            <element signature="e#6349#6350#0" expanded="true" />
+            <element signature="e#0#9958#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -652,22 +661,55 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#1079#1080#0" expanded="true" />
-            <element signature="e#1115#1116#0" expanded="true" />
-            <element signature="e#6258#6259#0" expanded="true" />
-            <element signature="e#6288#6289#0" expanded="true" />
-            <element signature="e#6318#6319#0" expanded="true" />
-            <element signature="e#6349#6350#0" expanded="true" />
+            <element signature="e#0#9958#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Config.java" />
     <entry file="file://$PROJECT_DIR$/src/device/Connection.java" />
-    <entry file="file://$PROJECT_DIR$/src/exception/SpaceBunnyIOException.java">
+    <entry file="file://$PROJECT_DIR$/src/exception/SpaceBunnyIOException.java" />
+    <entry file="file://$PROJECT_DIR$/src/device/DeviceBuilder.java" />
+    <entry file="file://$PROJECT_DIR$/src/device/Protocol.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="32" selection-start-line="5" selection-start-column="32" selection-end-line="5" selection-end-column="32" />
+        <state relative-caret-position="476">
+          <caret line="73" column="7" selection-start-line="73" selection-start-column="7" selection-end-line="73" selection-end-column="7" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/config/Utilities.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="21" column="53" selection-start-line="21" selection-start-column="53" selection-end-line="21" selection-end-column="53" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/connection/Subscription.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="14" column="7" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/exception/SpaceBunnyConnectionException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="34" selection-start-line="3" selection-start-column="34" selection-end-line="3" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/device/Channel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="436">
+          <caret line="60" column="7" selection-start-line="60" selection-start-column="7" selection-end-line="60" selection-end-column="7" />
           <folding />
         </state>
       </provider>
@@ -680,92 +722,48 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/device/Protocol.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
-          <caret line="20" column="68" selection-start-line="20" selection-start-column="68" selection-end-line="20" selection-end-column="68" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#837#838#0" expanded="true" />
-            <element signature="e#936#937#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/device/Channel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/device/DeviceBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/device/Device.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="115" column="17" selection-start-line="115" selection-start-column="17" selection-end-line="115" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/exception/SpaceBunnyConnectionException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
-          <folding>
-            <element signature="e#226#227#0" expanded="true" />
-            <element signature="e#264#265#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/exception/SpaceBunnyConfigurationException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
-          <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/connection/RabbitConnection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="37">
-          <caret line="32" column="20" selection-start-line="32" selection-start-column="20" selection-end-line="32" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SpaceBunnyClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="117" column="0" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
+        <state relative-caret-position="2051">
+          <caret line="319" column="5" selection-start-line="319" selection-start-column="5" selection-end-line="319" selection-end-column="5" />
           <folding>
-            <element signature="e#1079#1080#0" expanded="true" />
-            <element signature="e#1115#1116#0" expanded="true" />
-            <element signature="e#6258#6259#0" expanded="true" />
-            <element signature="e#6288#6289#0" expanded="true" />
-            <element signature="e#6318#6319#0" expanded="true" />
-            <element signature="e#6349#6350#0" expanded="true" />
+            <element signature="e#0#9958#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/device/Device.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-448">
+          <caret line="132" column="14" selection-start-line="132" selection-start-column="14" selection-end-line="132" selection-end-column="14" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/connection/RabbitConnection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="249">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="97">
-          <caret line="26" column="44" selection-start-line="26" selection-start-column="44" selection-end-line="26" selection-end-column="44" />
+        <state relative-caret-position="572">
+          <caret line="50" column="9" selection-start-line="13" selection-start-column="8" selection-end-line="50" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

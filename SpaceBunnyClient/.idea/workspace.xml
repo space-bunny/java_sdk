@@ -2,20 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="669d23dc-5576-420f-8c6b-3b7195cce659" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/device/Device$DeviceBuilder.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/Main$2.class" afterPath="$PROJECT_DIR$/out/production/SpaceBunnyClient/Main$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/SpaceBunnyClient$1.class" afterPath="$PROJECT_DIR$/out/production/SpaceBunnyClient/SpaceBunnyClient$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/SpaceBunnyClient.class" afterPath="$PROJECT_DIR$/out/production/SpaceBunnyClient/SpaceBunnyClient.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/device/Device.class" afterPath="$PROJECT_DIR$/out/production/SpaceBunnyClient/device/Device.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Main.java" afterPath="$PROJECT_DIR$/src/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/SpaceBunnyClient.java" afterPath="$PROJECT_DIR$/src/SpaceBunnyClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/connection/RabbitConnection.java" afterPath="$PROJECT_DIR$/src/connection/RabbitConnection.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/device/Channel.java" afterPath="$PROJECT_DIR$/src/device/Channel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/device/Device.java" afterPath="$PROJECT_DIR$/src/device/Device.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/device/Protocol.java" afterPath="$PROJECT_DIR$/src/device/Protocol.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/exception/SpaceBunnyConfigurationException.java" afterPath="$PROJECT_DIR$/src/exception/SpaceBunnyConfigurationException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/exception/SpaceBunnyConnectionException.java" afterPath="$PROJECT_DIR$/src/exception/SpaceBunnyConnectionException.java" />
     </list>
     <ignored path="ClientSpaceBunny.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -40,8 +27,8 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="572">
-              <caret line="50" column="9" selection-start-line="13" selection-start-column="8" selection-end-line="50" selection-end-column="9" />
+            <state relative-caret-position="351">
+              <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="47" selection-end-column="33" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -87,7 +74,6 @@
         <option value="$PROJECT_DIR$/src/exception/SpaceBunnyIOException.java" />
         <option value="$PROJECT_DIR$/src/config/Costants.java" />
         <option value="$PROJECT_DIR$/src/device/DeviceBuilder.java" />
-        <option value="$PROJECT_DIR$/src/Main.java" />
         <option value="$PROJECT_DIR$/src/config/Utilities.java" />
         <option value="$PROJECT_DIR$/src/exception/SpaceBunnyConnectionException.java" />
         <option value="$PROJECT_DIR$/src/device/Channel.java" />
@@ -97,6 +83,7 @@
         <option value="$PROJECT_DIR$/src/SpaceBunnyClient.java" />
         <option value="$PROJECT_DIR$/src/device/Device.java" />
         <option value="$PROJECT_DIR$/src/connection/RabbitConnection.java" />
+        <option value="$PROJECT_DIR$/src/Main.java" />
       </list>
     </option>
   </component>
@@ -762,8 +749,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="572">
-          <caret line="50" column="9" selection-start-line="13" selection-start-column="8" selection-end-line="50" selection-end-column="9" />
+        <state relative-caret-position="351">
+          <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="47" selection-end-column="33" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

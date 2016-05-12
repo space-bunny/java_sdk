@@ -43,6 +43,7 @@ public class Main {
                     });
                 }
             });
+            spaceBunny.setSsl(false);
 
             //spaceBunny.close();
 

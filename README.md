@@ -2,8 +2,6 @@
   <img width="480" src="assets/logo.png"/>
 </p>
 
-[![NPM](https://img.shields.io/npm/v/spacebunny.svg?style=flat-square)](https://www.npmjs.com/package/spacebunny)
-
 [Space Bunny](http://spacebunny.io) is the IoT platform that makes it easy for you and your devices to send and exchange messages with a server or even with each other. You can store the data, receive timely event notifications, monitor live streams and remotely control your devices. Easy to use, and ready to scale at any time.
 
 This is the source code repository for Java SDK.
@@ -72,35 +70,28 @@ try {
 }
 ```
 
-For more advanced usage please refer to example files in `examples` folder
+#### SpaceBunnyClient Constructor
 
-### Device
+In this example you can access all device parameters
 
-#### STOMP receiver and publisher
+```javascript
+String device_key = "device_identifer";
 
-In this example a device waits for incoming messages on its `inbox` channel and publishes a single message on the first configured channel
+try {
+    final SpaceBunnyClient spaceBunny = new SpaceBunnyClient(device_key);
+    spaceBunny.setOnFinishConfigiurationListener(new SpaceBunnyClient.OnFinishConfigiurationListener() {
+        @Override
+        public void onConfigured(Device device) throws SpaceBunnyConnectionException {
+            System.out.println(device.toString());
+        }
+    });
 
-```html
-<script src="https://raw.githubusercontent.com/space-bunny/node-sdk/master/dist/spacebunny.js"></script>
-<script>
-  [...]
-  // Use your Api Key
-  var connectionParams = { apiKey: 'your-api-key' };
-  var webStompClient = new StompClient(connectionParams);
-  webStompClient.onReceive(messageCallback).then(function(res) {
-    console.log('Successfully connected!');
-  }).catch(function(reason) {
-    console.error(reason);
-  });
-  var content = { some: 'json' };
-  var channels = webStompClient.channels();
-  webStompClient.publish(channels[0], content).then(function(res) {
-    console.log('Message published!');
-  }).catch(function(reason) {
-    console.error(reason);
-  });
-  [...]
-</script>
+	// Close connection
+    spaceBunny.close();
+
+} catch (SpaceBunnyConnectionException ex) {
+    ex.printStackTrace();
+}
 ```
 
 ## License

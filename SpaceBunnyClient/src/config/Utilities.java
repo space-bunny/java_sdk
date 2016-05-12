@@ -3,6 +3,7 @@ package config;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -27,14 +28,13 @@ public class Utilities {
             Path ksPath = Paths.get(System.getProperty("java.home"),
                     "lib", "security", "cacerts");
             keyStore.load(Files.newInputStream(ksPath),
-                    path.toCharArray());
+                    "changeit".toCharArray());
 
             CertificateFactory cf = CertificateFactory.getInstance("X.509");
+
             try (InputStream caInput = new BufferedInputStream(
-                    getResourceAsStream(certificateName))) {
+                    Utilities.class.getResourceAsStream("/" + path + "/" + certificateName))) {
                 Certificate crt = cf.generateCertificate(caInput);
-                System.out.println("Added Cert for " + ((X509Certificate) crt)
-                        .getSubjectDN());
 
                 keyStore.setCertificateEntry(certificateName, crt);
             }

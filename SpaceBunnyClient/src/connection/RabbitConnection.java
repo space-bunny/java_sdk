@@ -3,14 +3,11 @@ package connection;
 import com.rabbitmq.client.*;
 import device.Device;
 import device.Protocol;
-import exception.SpaceBunnyConnectionException;
-
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 

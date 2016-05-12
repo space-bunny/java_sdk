@@ -2,10 +2,10 @@ import com.rabbitmq.client.Envelope;
 import connection.RabbitConnection;
 import device.Channel;
 import device.Device;
-import exception.SpaceBunnyConfigurationException;
 import exception.SpaceBunnyConnectionException;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
 
@@ -15,7 +15,7 @@ public class Main {
 
         try {
             final SpaceBunnyClient spaceBunny = new SpaceBunnyClient(device_key);
-            //spaceBunny.setPathCustomCA("", "");
+            spaceBunny.setPathCustomCA("cert", "cert1.pem");
             spaceBunny.setOnFinishConfigiurationListener(new SpaceBunnyClient.OnFinishConfigiurationListener() {
                 @Override
                 public void onConfigured(Device device) throws SpaceBunnyConnectionException {
@@ -33,19 +33,22 @@ public class Main {
                         @Override
                         public void onReceived(String message, Envelope envelope) {
                             System.out.println(message);
-                            if (message.equals("q"))
-                                try {
-                                    spaceBunny.unsubscribe();
-                                } catch (SpaceBunnyConnectionException e) {
-                                    e.printStackTrace();
-                                }
                         }
                     });
                 }
             });
-            spaceBunny.setSsl(false);
 
-            //spaceBunny.close();
+            new Thread() {
+                public void run() {
+                    try {
+                        TimeUnit.SECONDS.sleep(10);
+                        spaceBunny.unsubscribe();
+                        spaceBunny.close();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }.start();
 
         } catch (SpaceBunnyConnectionException ex) {
             ex.printStackTrace();

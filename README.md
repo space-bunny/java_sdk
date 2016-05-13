@@ -126,11 +126,9 @@ spaceBunny.connect(new Protocol(), new SpaceBunnyClient.OnConnectedListener() {
 In this example you can turn off secure connection or certificate verification
 
 ```java
-[...] 
 spaceBunny.setSsl(false);
 
 spaceBunny.setVerifyCA(false);
-[...]
 ```
 
 #### SpaceBunnyClient Custom Certificate 
@@ -138,19 +136,15 @@ spaceBunny.setVerifyCA(false);
 In this example you can set a custom certificate
 
 ```java
-[...
 spaceBunny.setPathCustomCA("<absolute_path>\\cert.pem");
-[...]
 ```
 
 #### SpaceBunnyClient Read Attributes
 
 ```java
-[...
 spaceBunny.getProtocols();
 
 spaceBunny.getChannels();
-[...]
 ```
 
 ## License

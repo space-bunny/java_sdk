@@ -9,13 +9,92 @@ Please feel free to contribute!
 
 ## Installation
 
+```
 
+```
 
 ## Basic usage
 
 ### Device
 
 Devices can publish messages on configured channels and receive messages on their `inbox` channel
+
+#### Connection
+
+Configure the instance of the SpaceBunny's Client with a valid Device Key:
+
+```java
+try {
+    final SpaceBunnyClient spaceBunny = new SpaceBunnyClient("device_key");
+    SpaceBunnyClient.OnFinishConfigiurationListener() {
+        @Override
+        public void onConfigured(Device device) throws SpaceBunnyConnectionException {
+            System.out.println(device.toString());
+        }
+    });
+} catch (SpaceBunnyConfigurationException ex) {
+    ex.printStackTrace();
+}
+```
+
+Set up the client if needed:
+
+```java
+// Turn off secure connection or certificate verification
+spaceBunny.setSsl(false);
+
+spaceBunny.setVerifyCA(false);
+
+// Set a custom certificate
+spaceBunny.setPathCustomCA("<absolute_path>\\cert.pem");
+```
+
+Connect to SpaceBunny with multiple parameters 
+
+```java
+// Connection with default protocol (AMQP)
+spaceBunny.connect();
+
+// Connection with custom callback
+spaceBunny.connect(new SpaceBunnyClient.OnConnectedListener() {
+    @Override
+    public void onConnected() throws SpaceBunnyConnectionException {
+        
+    }
+});
+
+// Connection with custom protocol and custom callback
+spaceBunny.connect(new Protocol(), new SpaceBunnyClient.OnConnectedListener() {
+    @Override
+    public void onConnected() throws SpaceBunnyConnectionException {
+        
+    }
+});
+```
+
+Close connection when you have done:
+```java
+try {
+    final SpaceBunnyClient spaceBunny = new SpaceBunnyClient("device_key");
+    SpaceBunnyClient.OnFinishConfigiurationListener() {
+        @Override
+        public void onConfigured(Device device) throws SpaceBunnyConnectionException {
+            System.out.println(device.toString());
+        }
+    });
+    spaceBunny.close();
+} catch (SpaceBunnyConfigurationException ex) {
+    ex.printStackTrace();
+}
+```
+
+#### SpaceBunnyClient Read Attributes
+
+```java
+spaceBunny.getProtocols();
+
+spaceBunny.getChannels();
+```
 
 #### AMQP publisher
 
@@ -42,7 +121,7 @@ try {
 }
 ```
 
-#### AMQP receiver
+#### AMQP subscribe
 
 In this example a device waits for incoming messages on its `inbox` channel
 
@@ -68,83 +147,6 @@ try {
 } catch (SpaceBunnyConnectionException ex) {
     ex.printStackTrace();
 }
-```
-
-#### SpaceBunnyClient Constructor
-
-In this example you can access all device parameters
-
-```java
-String device_key = "device_identifer";
-
-try {
-    final SpaceBunnyClient spaceBunny = new SpaceBunnyClient(device_key);
-    spaceBunny.setOnFinishConfigiurationListener(new SpaceBunnyClient.OnFinishConfigiurationListener() {
-        @Override
-        public void onConfigured(Device device) throws SpaceBunnyConnectionException {
-            System.out.println(device.toString());
-        }
-    });
-
-	// Close connection
-    spaceBunny.close();
-
-} catch (SpaceBunnyConnectionException ex) {
-    ex.printStackTrace();
-}
-```
-
-#### SpaceBunnyClient Connection Parameters 
-
-In this example you can set connection parameters
-
-```java
-[...]  
-// Connection with default protocol (AMQP)
-spaceBunny.connect();
-
-// Connection with custom callback
-spaceBunny.connect(new SpaceBunnyClient.OnConnectedListener() {
-    @Override
-    public void onConnected() throws SpaceBunnyConnectionException {
-        
-    }
-});
-
-// Connection with custom protocol and custom callback
-spaceBunny.connect(new Protocol(), new SpaceBunnyClient.OnConnectedListener() {
-    @Override
-    public void onConnected() throws SpaceBunnyConnectionException {
-        
-    }
-});
-[...]
-```
-
-#### SpaceBunnyClient Secure Connection
-
-In this example you can turn off secure connection or certificate verification
-
-```java
-spaceBunny.setSsl(false);
-
-spaceBunny.setVerifyCA(false);
-```
-
-#### SpaceBunnyClient Custom Certificate 
-
-In this example you can set a custom certificate
-
-```java
-spaceBunny.setPathCustomCA("<absolute_path>\\cert.pem");
-```
-
-#### SpaceBunnyClient Read Attributes
-
-```java
-spaceBunny.getProtocols();
-
-spaceBunny.getChannels();
 ```
 
 ## License

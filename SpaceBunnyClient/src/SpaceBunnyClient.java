@@ -44,9 +44,9 @@ public class SpaceBunnyClient {
      * @param device_key unique key device
      */
 
-    public SpaceBunnyClient(String device_key) throws SpaceBunnyConnectionException {
+    public SpaceBunnyClient(String device_key) throws SpaceBunnyConfigurationException {
         if (device_key == null || device_key.equals(""))
-            throw new SpaceBunnyConnectionException("Configuration error.");
+            throw new SpaceBunnyConfigurationException("Device configuration error.");
         this.device_key = device_key;
     }
 
@@ -55,7 +55,9 @@ public class SpaceBunnyClient {
      * @constructor
      * @param device custom device created by the user
      */
-    public SpaceBunnyClient(Device device) {
+    public SpaceBunnyClient(Device device) throws SpaceBunnyConfigurationException {
+        if (device == null)
+            throw new SpaceBunnyConfigurationException("Device configuration error.");
         this.device = device;
     }
 
@@ -86,7 +88,7 @@ public class SpaceBunnyClient {
         try {
             configure();
             if (protocol == null)
-                protocol = findProtocol(Costants.DEFAULT_PROTOCOL);
+                protocol = Protocol.findProtocol(Costants.DEFAULT_PROTOCOL, device.getProtocols());
             rabbitConnection = new RabbitConnection(protocol, ssl);
             if (rabbitConnection.connect(device) && onConnectedListener != null)
                 onConnectedListener.onConnected();
@@ -117,7 +119,7 @@ public class SpaceBunnyClient {
      * Set a custom CA
      * @param path of CA
      */
-    public void setPathCustomCA(String path) {
+    public void setPathCustomCA(String path) throws SpaceBunnyConfigurationException {
         Utilities.addCA(path);
     }
 
@@ -253,19 +255,6 @@ public class SpaceBunnyClient {
         } catch (Exception ex) {
             throw new SpaceBunnyConnectionException(ex);
         }
-    }
-
-    /**
-     * Find protocol by his name
-     * @param p
-     * @return searched protocol
-     * @throws SpaceBunnyConfigurationException
-     */
-    private Protocol findProtocol(String p) throws SpaceBunnyConfigurationException {
-        for (Protocol protocol : device.getProtocols())
-            if (protocol.getName().equals(p))
-                return protocol;
-        throw new SpaceBunnyConfigurationException("Standard protocol not found. Try to configure again the device.");
     }
 
     public void setSsl(boolean ssl) {

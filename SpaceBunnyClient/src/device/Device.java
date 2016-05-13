@@ -43,7 +43,7 @@ public class Device {
     public Device(String device_name, String device_id, String secret, ArrayList<Protocol> protocols, ArrayList<Channel> channels, String host, String vhost) throws SpaceBunnyConfigurationException {
         this.host = host;
         this.protocols = protocols;
-        this.device_name =  device_name; // TODO compatibilità 1.6 java
+        this.device_name =  device_name;
         this.device_id = device_id;
         this.secret =  secret;
         this.vhost =  vhost;
@@ -63,7 +63,7 @@ public class Device {
                 this.vhost.equals("") ||
                 this.channels == null ||
                 this.channels.size() == 0)
-            throw new SpaceBunnyConfigurationException("Error Device Configuration");
+            throw new SpaceBunnyConfigurationException("Error in Device Configuration!");
 
     }
 

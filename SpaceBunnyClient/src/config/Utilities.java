@@ -24,7 +24,7 @@ public class Utilities {
      * Function that add custom CA
      * @param path of the certificate
      */
-    public static void addCA(String path) {
+    public static void addCA(String path) throws SpaceBunnyConfigurationException {
         try {
             KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
             Path ksPath = Paths.get(System.getProperty("java.home"),
@@ -50,10 +50,10 @@ public class Utilities {
                 sslContext.init(null, tmf.getTrustManagers(), null);
                 SSLContext.setDefault(sslContext);
             } else {
-                throw new SpaceBunnyConfigurationException("Errore certificato inserito.");
+                throw new SpaceBunnyConfigurationException("Error with custom CA path.");
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new SpaceBunnyConfigurationException("Error with custom CA.");
         }
     }
 }

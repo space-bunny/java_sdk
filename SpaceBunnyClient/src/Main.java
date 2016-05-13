@@ -53,7 +53,7 @@ public class Main {
                 }
             }.start();
 
-        } catch (SpaceBunnyConnectionException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 

@@ -6,8 +6,11 @@ package device;
  */
 
 
+import exception.SpaceBunnyConfigurationException;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class Protocol {
 
@@ -76,5 +79,20 @@ public class Protocol {
      */
     public String toString() {
         return "\nPROTOCOL:\nNAME: " + name + "\nPORT: " + port + "\nSSL_PORT: " + ssl_port;
+    }
+
+
+
+    /**
+     * Find protocol by his name
+     * @param p
+     * @return searched protocol
+     * @throws SpaceBunnyConfigurationException
+     */
+    public static Protocol findProtocol(String p, ArrayList<Protocol> protocols) throws SpaceBunnyConfigurationException {
+        for (Protocol protocol : protocols)
+            if (protocol.getName().equals(p))
+                return protocol;
+        throw new SpaceBunnyConfigurationException("Standard protocol not found. Try to configure again the device.");
     }
 }

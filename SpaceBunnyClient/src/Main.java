@@ -4,6 +4,7 @@ import device.Channel;
 import device.Device;
 import exception.SpaceBunnyConnectionException;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -15,13 +16,15 @@ public class Main {
 
         try {
             final SpaceBunnyClient spaceBunny = new SpaceBunnyClient(device_key);
-            spaceBunny.setPathCustomCA("cert", "cert1.pem");
+            spaceBunny.setPathCustomCA("C:\\Users\\Tommaso\\Desktop\\Fancy Pixel\\api.demo.spacebunny.io\\api.demo.spacebunny.io\\cert1.pem");
             spaceBunny.setOnFinishConfigiurationListener(new SpaceBunnyClient.OnFinishConfigiurationListener() {
                 @Override
                 public void onConfigured(Device device) throws SpaceBunnyConnectionException {
                     //System.out.println(device.toString());
                 }
             });
+
+            spaceBunny.setVerifyCA(false);
 
             spaceBunny.connect(new SpaceBunnyClient.OnConnectedListener() {
                 @Override

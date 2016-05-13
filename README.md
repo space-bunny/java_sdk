@@ -46,7 +46,7 @@ try {
 
 In this example a device waits for incoming messages on its `inbox` channel
 
-```javascript
+```java
 String device_key = "device_identifer";
 
 try {
@@ -74,7 +74,7 @@ try {
 
 In this example you can access all device parameters
 
-```javascript
+```java
 String device_key = "device_identifer";
 
 try {
@@ -92,6 +92,65 @@ try {
 } catch (SpaceBunnyConnectionException ex) {
     ex.printStackTrace();
 }
+```
+
+#### SpaceBunnyClient Connection Parameters 
+
+In this example you can set connection parameters
+
+```java
+[...]  
+// Connection with default protocol (AMQP)
+spaceBunny.connect();
+
+// Connection with custom callback
+spaceBunny.connect(new SpaceBunnyClient.OnConnectedListener() {
+    @Override
+    public void onConnected() throws SpaceBunnyConnectionException {
+        
+    }
+});
+
+// Connection with custom protocol and custom callback
+spaceBunny.connect(new Protocol(), new SpaceBunnyClient.OnConnectedListener() {
+    @Override
+    public void onConnected() throws SpaceBunnyConnectionException {
+        
+    }
+});
+[...]
+```
+
+#### SpaceBunnyClient Secure Connection
+
+In this example you can turn off secure connection or certificate verification
+
+```java
+[...] 
+spaceBunny.setSsl(false);
+
+spaceBunny.setVerifyCA(false);
+[...]
+```
+
+#### SpaceBunnyClient Custom Certificate 
+
+In this example you can set a custom certificate
+
+```java
+[...
+spaceBunny.setPathCustomCA("<absolute_path>\\cert.pem");
+[...]
+```
+
+#### SpaceBunnyClient Read Attributes
+
+```java
+[...
+spaceBunny.getProtocols();
+
+spaceBunny.getChannels();
+[...]
 ```
 
 ## License

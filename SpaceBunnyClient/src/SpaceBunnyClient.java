@@ -116,10 +116,9 @@ public class SpaceBunnyClient {
     /**
      * Set a custom CA
      * @param path of CA
-     * @param certificateName
      */
-    public void setPathCustomCA(String path, String certificateName) {
-        Utilities.addCA(path, certificateName);
+    public void setPathCustomCA(String path) {
+        Utilities.addCA(path);
     }
 
     /**

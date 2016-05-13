@@ -1,9 +1,12 @@
 package config;
 
+import exception.SpaceBunnyConfigurationException;
+
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
 import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,9 +23,8 @@ public class Utilities {
     /**
      * Function that add custom CA
      * @param path of the certificate
-     * @param certificateName name of the certificate
      */
-    public static void addCA(String path, String certificateName) {
+    public static void addCA(String path) {
         try {
             KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
             Path ksPath = Paths.get(System.getProperty("java.home"),
@@ -32,19 +34,24 @@ public class Utilities {
 
             CertificateFactory cf = CertificateFactory.getInstance("X.509");
 
-            try (InputStream caInput = new BufferedInputStream(
-                    Utilities.class.getResourceAsStream("/" + path + "/" + certificateName))) {
-                Certificate crt = cf.generateCertificate(caInput);
+            File f = new File(path);
+            if (f.exists()) {
+                try (InputStream caInput = new BufferedInputStream(
+                        new FileInputStream(path))) {
+                    Certificate crt = cf.generateCertificate(caInput);
 
-                keyStore.setCertificateEntry(certificateName, crt);
+                    keyStore.setCertificateEntry(f.getName(), crt);
+                }
+
+                TrustManagerFactory tmf = TrustManagerFactory
+                        .getInstance(TrustManagerFactory.getDefaultAlgorithm());
+                tmf.init(keyStore);
+                SSLContext sslContext = SSLContext.getInstance("TLS");
+                sslContext.init(null, tmf.getTrustManagers(), null);
+                SSLContext.setDefault(sslContext);
+            } else {
+                throw new SpaceBunnyConfigurationException("Errore certificato inserito.");
             }
-
-            TrustManagerFactory tmf = TrustManagerFactory
-                    .getInstance(TrustManagerFactory.getDefaultAlgorithm());
-            tmf.init(keyStore);
-            SSLContext sslContext = SSLContext.getInstance("TLS");
-            sslContext.init(null, tmf.getTrustManagers(), null);
-            SSLContext.setDefault(sslContext);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

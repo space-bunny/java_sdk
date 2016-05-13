@@ -7,47 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="669d23dc-5576-420f-8c6b-3b7195cce659" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/ClientSpaceBunny/Main.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/ClientSpaceBunny/SpaceBunnyClient.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/ClientSpaceBunny/config/Costants.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/ClientSpaceBunny/device/Channel.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/ClientSpaceBunny/device/Device.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/ClientSpaceBunny/device/Protocol.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/Main$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/Main$2$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/Main$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/Main$3.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/Main.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/SpaceBunnyClient$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/SpaceBunnyClient$OnConnectedListener.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/SpaceBunnyClient$OnFinishConfigiurationListener.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/SpaceBunnyClient$OnMessageReceivedListener.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/SpaceBunnyClient.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/cert/cert1.pem" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/cert/chain1.pem" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/cert/fullchain1.pem" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/config/Costants.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/config/Utilities.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/connection/RabbitConnection$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/connection/RabbitConnection$OnSubscriptionMessageReceivedListener.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/connection/RabbitConnection.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/connection/Subscription.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/device/Channel.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/device/Device$Builder.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/device/Device.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/device/Protocol.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/exception/SpaceBunnyConfigurationException.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SpaceBunnyClient/exception/SpaceBunnyConnectionException.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/cert/cert1.pem" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/cert/chain1.pem" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/cert/fullchain1.pem" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Main.java" afterPath="$PROJECT_DIR$/src/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/SpaceBunnyClient.java" afterPath="$PROJECT_DIR$/src/SpaceBunnyClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/config/Utilities.java" afterPath="$PROJECT_DIR$/src/config/Utilities.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/device/Device.java" afterPath="$PROJECT_DIR$/src/device/Device.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/device/Protocol.java" afterPath="$PROJECT_DIR$/src/device/Protocol.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../README.md" afterPath="$PROJECT_DIR$/../README.md" />
     </list>
     <ignored path="ClientSpaceBunny.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -512,7 +472,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />

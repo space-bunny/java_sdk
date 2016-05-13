@@ -75,13 +75,6 @@ spaceBunny.connect(new Protocol(), new SpaceBunnyClient.OnConnectedListener() {
 Close connection when you have done:
 ```java
 try {
-    final SpaceBunnyClient spaceBunny = new SpaceBunnyClient("device_key");
-    SpaceBunnyClient.OnFinishConfigiurationListener() {
-        @Override
-        public void onConfigured(Device device) throws SpaceBunnyConnectionException {
-            System.out.println(device.toString());
-        }
-    });
     spaceBunny.close();
 } catch (SpaceBunnyConfigurationException ex) {
     ex.printStackTrace();

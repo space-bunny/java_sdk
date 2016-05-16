@@ -2,6 +2,7 @@ import com.rabbitmq.client.Envelope;
 import connection.RabbitConnection;
 import device.Channel;
 import device.Device;
+import device.Protocol;
 import exception.SpaceBunnyConnectionException;
 
 import java.io.File;
@@ -52,6 +53,16 @@ public class Main {
                     }
                 }
             }.start();
+
+            Device device = new Device.Builder()
+                    .setDeviceId()
+                    .setDeviceName()
+                    .setHost()
+                    .setSecret()
+                    .setVHost()
+                    .setChannels()
+                    .setProtocols()
+                    .getDevice();
 
         } catch (Exception ex) {
             ex.printStackTrace();

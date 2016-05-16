@@ -170,12 +170,12 @@ public class Device {
             return this;
         }
 
-        public Builder setSecret(ArrayList<Protocol> protocols) {
+        public Builder setProtocols(ArrayList<Protocol> protocols) {
             this.protocols = protocols;
             return this;
         }
 
-        public Builder setVHost(ArrayList<Channel> channels) {
+        public Builder setChannels(ArrayList<Channel> channels) {
             this.channels = channels;
             return this;
         }

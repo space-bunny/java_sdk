@@ -142,6 +142,66 @@ try {
 }
 ```
 
+## Some useful concepts
+
+### Device
+
+Build an instance of a device, configure and use it:
+
+```java
+String host = "host_to_connect";
+String device_name = "name_of_the_device";
+String device_id = "device_identifer";
+String secret = "password_for_connection";
+String vhost = "virtual_host_to_connect";
+ArrayList<Protocol> protocols = new ArrayList<>(Costants.min_protocols); // At least one protocol
+ArrayList<Channel> channels = new ArrayList<>(); // At least one channel
+
+Device device = new Device.Builder()
+                    .setDeviceId(device_id)
+                    .setDeviceName(device_name)
+                    .setHost(host)
+                    .setSecret(secret)
+                    .setVHost(vhost)
+                    .setChannels(channels)
+                    .setProtocols(protocols)
+                    .getDevice();
+```
+
+### Protocol
+
+Get all device protocols and use it:
+
+```java
+ArrayList<Protocol> protocols = spaceBunny.getProtocols();
+```
+
+Or create one:
+
+```java
+String name = "name_of_the_protocol";
+int port = port_to_connect;
+int ssl_port = ssl_port_for_secure_connection;
+
+Protocol protocol = new Protocol(name, port, ssl_port);
+```
+
+### Channel
+
+Get all device channels and use it:
+
+```java
+ArrayList<Channel> channels = spaceBunny.getChannels();
+```
+
+Or create one:
+```java
+String id = "id_of_the_channel";
+String name = "name_of_the_channel";
+
+Channel channel = new Channel(id, name);
+```
+
 ## License
 
 The library is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).

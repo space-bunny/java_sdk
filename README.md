@@ -9,8 +9,20 @@ Please feel free to contribute!
 
 ## Installation
 
+Gradle: 
+
+```
+compile 'io.spacebunny:device-sdk:0.5'
 ```
 
+Maven: 
+
+```
+<dependency>
+    <groupId>io.spacebunny</groupId>
+    <artifactId>device-sdk</artifactId>
+    <version>0.5</version>
+</dependency>
 ```
 
 ## Basic usage
@@ -28,7 +40,7 @@ try {
     final SpaceBunnyClient spaceBunny = new SpaceBunnyClient("device_key");
     SpaceBunnyClient.OnFinishConfigiurationListener() {
         @Override
-        public void onConfigured(Device device) throws SpaceBunnyConnectionException {
+        public void onConfigured(SBDevice device) throws SpaceBunnyConnectionException {
             System.out.println(device.toString());
         }
     });
@@ -64,7 +76,7 @@ spaceBunny.connect(new SpaceBunnyClient.OnConnectedListener() {
 });
 
 // Connection with custom protocol and custom callback
-spaceBunny.connect(new Protocol(), new SpaceBunnyClient.OnConnectedListener() {
+spaceBunny.connect(new SBProtocol(), new SpaceBunnyClient.OnConnectedListener() {
     @Override
     public void onConnected() throws SpaceBunnyConnectionException {
         
@@ -102,7 +114,7 @@ try {
     spaceBunny.connect(new SpaceBunnyClient.OnConnectedListener() {
         @Override
         public void onConnected() throws SpaceBunnyConnectionException {
-            ArrayList<Channel> channels = spaceBunny.getChannels();
+            ArrayList<SBChannel> channels = spaceBunny.getChannels();
 
             spaceBunny.publish(channels.get(0), "Something to share");
             
@@ -127,7 +139,7 @@ try {
     spaceBunny.connect(new SpaceBunnyClient.OnConnectedListener() {
         @Override
         public void onConnected() throws SpaceBunnyConnectionException {
-            ArrayList<Channel> channels = spaceBunny.getChannels();
+            ArrayList<SBChannel> channels = spaceBunny.getChannels();
             spaceBunny.subscribe(new RabbitConnection.OnSubscriptionMessageReceivedListener() {
                 @Override
                 public void onReceived(String message, Envelope envelope) {
@@ -144,7 +156,7 @@ try {
 
 ## Some useful concepts
 
-### Device
+#### Device
 
 Build an instance of a device, configure and use it:
 
@@ -154,10 +166,10 @@ String device_name = "name_of_the_device";
 String device_id = "device_identifer";
 String secret = "password_for_connection";
 String vhost = "virtual_host_to_connect";
-ArrayList<Protocol> protocols = new ArrayList<>(Costants.min_protocols); // At least one protocol
-ArrayList<Channel> channels = new ArrayList<>(); // At least one channel
+ArrayList<SBProtocol> protocols = new ArrayList<>(Costants.min_protocols); // At least one protocol
+ArrayList<SBChannel> channels = new ArrayList<>(); // At least one channel
 
-Device device = new Device.Builder()
+SBDevice device = new SBDevice.Builder()
                     .setDeviceId(device_id)
                     .setDeviceName(device_name)
                     .setHost(host)
@@ -168,12 +180,12 @@ Device device = new Device.Builder()
                     .getDevice();
 ```
 
-### Protocol
+#### Protocol
 
 Get all device protocols and use it:
 
 ```java
-ArrayList<Protocol> protocols = spaceBunny.getProtocols();
+ArrayList<SBProtocol> protocols = spaceBunny.getProtocols();
 ```
 
 Or create one:
@@ -183,15 +195,15 @@ String name = "name_of_the_protocol";
 int port = port_to_connect;
 int ssl_port = ssl_port_for_secure_connection;
 
-Protocol protocol = new Protocol(name, port, ssl_port);
+SBProtocol protocol = new SBProtocol(name, port, ssl_port);
 ```
 
-### Channel
+#### Channel
 
 Get all device channels and use it:
 
 ```java
-ArrayList<Channel> channels = spaceBunny.getChannels();
+ArrayList<SBChannel> channels = spaceBunny.getChannels();
 ```
 
 Or create one:
@@ -199,7 +211,7 @@ Or create one:
 String id = "id_of_the_channel";
 String name = "name_of_the_channel";
 
-Channel channel = new Channel(id, name);
+SBChannel channel = new SBChannel(id, name);
 ```
 
 ## License

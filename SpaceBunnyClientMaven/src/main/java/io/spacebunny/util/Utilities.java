@@ -1,4 +1,6 @@
-package io.spacebunny;
+package io.spacebunny.util;
+
+import io.spacebunny.SpaceBunny;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
@@ -15,11 +17,12 @@ import java.security.cert.CertificateFactory;
 
 public class Utilities {
 
-    /**
-     * Function that add custom CA
-     * @param path of the certificate
-     */
-    public static void addCA(String path) throws SpaceBunnyConfigurationException {
+
+    public static String generateHostname(boolean tls) {
+        return (tls ? Costants.URL_ENDPOINT_TLS : Costants.URL_ENDPOINT) + Costants.API_VERSION + Costants.PATH_ENDPOINT;
+    }
+
+    public static void addCA(String path) throws SpaceBunny.ConfigurationException {
         try {
             KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
             Path ksPath = Paths.get(System.getProperty("java.home"),
@@ -45,10 +48,10 @@ public class Utilities {
                 sslContext.init(null, tmf.getTrustManagers(), null);
                 SSLContext.setDefault(sslContext);
             } else {
-                throw new SpaceBunnyConfigurationException("Error with custom CA path.");
+                throw new SpaceBunny.ConfigurationException("Error with custom CA path.");
             }
         } catch (Exception e) {
-            throw new SpaceBunnyConfigurationException("Error with custom CA.");
+            throw new SpaceBunny.ConfigurationException("Error with custom CA.");
         }
     }
 }

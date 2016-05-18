@@ -1,4 +1,4 @@
-package io.spacebunny;
+package io.spacebunny.device;
 
 /**
  * A module that exports a protocol
@@ -6,6 +6,7 @@ package io.spacebunny;
  */
 
 
+import io.spacebunny.SpaceBunny;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,24 +15,24 @@ import java.util.ArrayList;
 public class SBProtocol {
 
     private final static String PORT_KEY = "port";
-    private final static String SSL_PORT_KEY = "ssl_port";
+    private final static String TLS_PORT_KEY = "ssl_port"; // TODO da cambiare in tls
 
     private String name;
     private int port;
-    private int ssl_port;
+    private int tls_port;
 
     /**
      *
      * @constructor
      * @param name of the protocol
      * @param port of the protocol
-     * @param ssl_port of the protocol for secure connection
+     * @param tls_port of the protocol for secure connection
      */
 
-    public SBProtocol(String name, int port, int ssl_port) {
+    public SBProtocol(String name, int port, int tls_port) {
         this.name = name;
         this.port = port;
-        this.ssl_port = ssl_port;
+        this.tls_port = tls_port;
     }
 
     /**
@@ -44,7 +45,7 @@ public class SBProtocol {
     public SBProtocol(String name, JSONObject js) throws JSONException {
         this.name = name;
         this.port = js.getInt(PORT_KEY);
-        this.ssl_port = js.getInt(SSL_PORT_KEY);
+        this.tls_port = js.getInt(TLS_PORT_KEY);
     }
 
 
@@ -66,10 +67,10 @@ public class SBProtocol {
 
     /**
      *
-     * @return ssl_port of the protocol
+     * @return tls_port of the protocol
      */
-    public int getSsl_port() {
-        return ssl_port;
+    public int getTls_port() {
+        return tls_port;
     }
 
     /**
@@ -77,21 +78,20 @@ public class SBProtocol {
      * @return string with protocol information
      */
     public String toString() {
-        return "\nPROTOCOL:\nNAME: " + name + "\nPORT: " + port + "\nSSL_PORT: " + ssl_port;
+        return "\nPROTOCOL:\nNAME: " + name + "\nPORT: " + port + "\nTLS_PORT: " + tls_port;
     }
 
 
 
     /**
      * Find protocol by his name
-     * @param p
+     * @param name
      * @return searched protocol
-     * @throws SpaceBunnyConfigurationException
      */
-    public static SBProtocol findProtocol(String p, ArrayList<SBProtocol> protocols) throws SpaceBunnyConfigurationException {
+    public static SBProtocol findProtocol(String name, ArrayList<SBProtocol> protocols) {
         for (SBProtocol protocol : protocols)
-            if (protocol.getName().equals(p))
+            if (protocol.getName().equals(name))
                 return protocol;
-        throw new SpaceBunnyConfigurationException("Standard protocol not found. Try to configure again the device.");
+        return null;
     }
 }

@@ -1,12 +1,15 @@
-package io.spacebunny;
+package io.spacebunny.device;
 
 
+import io.spacebunny.SpaceBunny;
+import io.spacebunny.util.Costants;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Logger;
 
 public class SBDevice {
 
@@ -18,9 +21,10 @@ public class SBDevice {
     private final static String DEVICE_ID_KEY = "device_id";
     private final static String SECRET_KEY = "secret";
     private final static String VHOST_KEY = "vhost";
+    private final static Logger LOGGER = Logger.getLogger(SpaceBunny.class.getName());
 
     private String host;
-    private ArrayList<SBProtocol> protocols = new ArrayList<>(Costants.min_protocols);
+    private ArrayList<SBProtocol> protocols = new ArrayList<>(1);
     private ArrayList<SBChannel> channels = new ArrayList<>();
     private String device_name;
     private String device_id;
@@ -36,10 +40,10 @@ public class SBDevice {
      * @param channels
      * @param host
      * @param vhost
-     * @throws SpaceBunnyConfigurationException
+     * @throws SpaceBunny.ConfigurationException
      */
 
-    public SBDevice(String device_name, String device_id, String secret, ArrayList<SBProtocol> protocols, ArrayList<SBChannel> channels, String host, String vhost) throws SpaceBunnyConfigurationException {
+    public SBDevice(String device_name, String device_id, String secret, ArrayList<SBProtocol> protocols, ArrayList<SBChannel> channels, String host, String vhost) throws SpaceBunny.ConfigurationException {
         this.host = host;
         this.protocols = protocols;
         this.device_name =  device_name;
@@ -48,10 +52,12 @@ public class SBDevice {
         this.vhost =  vhost;
         this.channels = channels;
 
+        // Check if default protocol already exists
+        if (SBProtocol.findProtocol(Costants.DEFAULT_PROTOCOL.getName(), this.protocols) == null)
+            this.protocols.add(0, Costants.DEFAULT_PROTOCOL);
+
         if (this.host == null ||
                 this.host.equals("") ||
-                this.protocols == null ||
-                this.protocols.size() == 0 ||
                 this.device_name == null ||
                 this.device_name.equals("") ||
                 this.device_id == null ||
@@ -59,10 +65,11 @@ public class SBDevice {
                 this.secret == null ||
                 this.secret.equals("") ||
                 this.vhost == null ||
-                this.vhost.equals("") ||
-                this.channels == null ||
-                this.channels.size() == 0)
-            throw new SpaceBunnyConfigurationException("Error in Device Configuration!");
+                this.vhost.equals(""))
+            throw new SpaceBunny.ConfigurationException("Error in Device Configuration!");
+
+        if (this.channels.size() == 0)
+            LOGGER.warning("No channel has been added.");
 
     }
 
@@ -72,27 +79,35 @@ public class SBDevice {
      * @throws JSONException
      */
     public SBDevice(JSONObject jsonObject) throws JSONException {
-            // Connection
-            JSONObject conn = jsonObject.getJSONObject(CONNECTION_KEY);
-            this.host = conn.getString(HOST_KEY);
+        // Connection
+        JSONObject conn = jsonObject.getJSONObject(CONNECTION_KEY);
+        this.host = conn.getString(HOST_KEY);
 
-            JSONObject pr = conn.getJSONObject(PROTOCOLS_KEY);
-            Iterator<?> keys = pr.keys();
+        JSONObject pr = conn.getJSONObject(PROTOCOLS_KEY);
+        Iterator<?> keys = pr.keys();
 
-            while( keys.hasNext() ) {
-                String key = (String)keys.next();
-                this.protocols.add(new SBProtocol(key, pr.getJSONObject(key)));
-            }
-            this.device_name =  conn.getString(DEVICE_NAME_KEY);
-            this.device_id =  conn.getString(DEVICE_ID_KEY);
-            this.secret =  conn.getString(SECRET_KEY);
-            this.vhost =  conn.getString(VHOST_KEY);
+        this.protocols.add(Costants.DEFAULT_PROTOCOL);
 
-            // Channels
-            JSONArray ch = jsonObject.getJSONArray(CHANNELS_KEY);
-            for (int i = 0; i < ch.length(); i++) {
-                channels.add(new SBChannel(ch.getJSONObject(i)));
-            }
+        while( keys.hasNext() ) {
+            String key = (String)keys.next();
+            SBProtocol newProtocol = new SBProtocol(key, pr.getJSONObject(key));
+
+            // Check default protocol updates
+            if (newProtocol.getName().equals(Costants.DEFAULT_PROTOCOL.getName()))
+                this.protocols.remove(Costants.DEFAULT_PROTOCOL);
+
+            this.protocols.add(newProtocol);
+        }
+        this.device_name =  conn.getString(DEVICE_NAME_KEY);
+        this.device_id =  conn.getString(DEVICE_ID_KEY);
+        this.secret =  conn.getString(SECRET_KEY);
+        this.vhost =  conn.getString(VHOST_KEY);
+
+        // Channels
+        JSONArray ch = jsonObject.getJSONArray(CHANNELS_KEY);
+        for (int i = 0; i < ch.length(); i++) {
+            channels.add(new SBChannel(ch.getJSONObject(i)));
+        }
     }
 
     public ArrayList<SBProtocol> getProtocols() {
@@ -134,7 +149,7 @@ public class SBDevice {
     public static class Builder{
 
         private String host;
-        private ArrayList<SBProtocol> protocols = new ArrayList<>(Costants.min_protocols);
+        private ArrayList<SBProtocol> protocols = new ArrayList<>(1);
         private ArrayList<SBChannel> channels = new ArrayList<>();
         private String device_name;
         private String device_id;
@@ -179,7 +194,7 @@ public class SBDevice {
             return this;
         }
 
-        public SBDevice getDevice() throws SpaceBunnyConfigurationException {
+        public SBDevice getDevice() throws SpaceBunny.ConfigurationException {
             return new SBDevice(device_name, device_id, secret, protocols, channels, host, vhost);
         }
     }

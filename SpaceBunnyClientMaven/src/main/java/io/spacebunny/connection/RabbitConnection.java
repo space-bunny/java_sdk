@@ -1,6 +1,10 @@
-package io.spacebunny;
+package io.spacebunny.connection;
 
 import com.rabbitmq.client.*;
+import io.spacebunny.device.SBChannel;
+import io.spacebunny.device.SBDevice;
+import io.spacebunny.device.SBProtocol;
+import io.spacebunny.device.SBSubscription;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -13,23 +17,23 @@ import java.util.Map;
 public class RabbitConnection {
     private Connection conn = null;
     private SBProtocol protocol = null;
-    private boolean ssl = true;
+    private boolean tls = true;
     private Map<String, SBSubscription> channelSubscribes = new HashMap<String, SBSubscription>();
 
-    public RabbitConnection(SBProtocol protocol, boolean ssl)
+    public RabbitConnection(SBProtocol protocol, boolean tls)
     {
         this.protocol = protocol;
-        this.ssl = ssl;
+        this.tls = tls;
     }
 
     public boolean connect(SBDevice device) throws KeyManagementException, NoSuchAlgorithmException, IOException {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost(device.getHost());
-        factory.setPort(ssl ? protocol.getSsl_port() : protocol.getPort());
+        factory.setPort(tls ? protocol.getTls_port() : protocol.getPort());
         factory.setVirtualHost(device.getVhost());
         factory.setUsername(device.getDevice_id());
         factory.setPassword(device.getSecret());
-        if (ssl)
+        if (tls)
             factory.useSslProtocol();
         conn = factory.newConnection();
 
@@ -45,12 +49,12 @@ public class RabbitConnection {
         conn.close(0, "Close Connection");
     }
 
-    public void publish(String device_id, SBChannel channel, String msg) throws IOException {
+    public void publish(String device_id, String channelName, String msg) throws IOException {
         Channel rabbitChannel = conn.createChannel();
 
         //String queueName = device_id + ".inbox";
         String exchangeName = device_id;
-        String routingKey = exchangeName + "." + channel.getName();
+        String routingKey = exchangeName + "." + channelName;
 
         rabbitChannel.basicPublish(exchangeName, routingKey, null, msg.getBytes());
 

@@ -1,6 +1,9 @@
 package io.spacebunny;
 
 import com.rabbitmq.client.Envelope;
+import io.spacebunny.connection.RabbitConnection;
+import io.spacebunny.device.SBChannel;
+import io.spacebunny.device.SBDevice;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -12,23 +15,21 @@ public class Main {
         String device_key = "2440a806-f9c1-4b0a-a711-20fbdefadd3e:GDZGztyXcCtnztK85yC_hA";
 
         try {
-            final SpaceBunnyClient spaceBunny = new SpaceBunnyClient(device_key);
+            final SpaceBunny.Client spaceBunny = new SpaceBunny.Client(device_key);
             //spaceBunny.setPathCustomCA("C:\\Users\\Tommaso\\Desktop\\Fancy Pixel\\api.demo.spacebunny.io\\api.demo.spacebunny.io\\cert1.pem");
-            spaceBunny.setOnFinishConfigiurationListener(new SpaceBunnyClient.OnFinishConfigiurationListener() {
+            spaceBunny.setOnFinishConfigiurationListener(new SpaceBunny.OnFinishConfigiurationListener() {
                 @Override
-                public void onConfigured(SBDevice device) throws SpaceBunnyConnectionException {
-                    System.out.println(device.toString());
+                public void onConfigured(SBDevice device) throws SpaceBunny.ConnectionException {
+                    //System.out.println(device.toString());
                 }
             });
 
             spaceBunny.setVerifyCA(false);
 
-            spaceBunny.connect(new SpaceBunnyClient.OnConnectedListener() {
+            spaceBunny.connect(new SpaceBunny.OnConnectedListener() {
                 @Override
-                public void onConnected() throws SpaceBunnyConnectionException {
-                    ArrayList<SBChannel> channels = spaceBunny.getChannels();
-
-                    spaceBunny.publish(channels.get(0), "{temp: 1}");
+                public void onConnected() throws SpaceBunny.ConnectionException {
+                    spaceBunny.publish("data", "{temp: 1}");
                     spaceBunny.subscribe(new RabbitConnection.OnSubscriptionMessageReceivedListener() {
                         @Override
                         public void onReceived(String message, Envelope envelope) {

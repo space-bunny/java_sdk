@@ -1,4 +1,4 @@
-package io.spacebunny;
+package io.spacebunny.device;
 
 /**
  * A module that exports a subscription

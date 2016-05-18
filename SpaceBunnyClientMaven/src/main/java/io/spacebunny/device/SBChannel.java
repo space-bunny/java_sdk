@@ -1,14 +1,21 @@
-package io.spacebunny;
+package io.spacebunny.device;
 
 /**
  * A module that exports a channel
  * @module SBChannel
  */
 
+import io.spacebunny.SpaceBunny;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.logging.Logger;
+
 public class SBChannel {
+
+
+    private final static Logger LOGGER = Logger.getLogger(SpaceBunny.class.getName());
 
     private final static String ID_KEY = "id";
     private final static String NAME_KEY = "name";
@@ -61,5 +68,12 @@ public class SBChannel {
      */
     public String toString() {
         return "\nChannel:\nID: " + id + "\nNAME: " + name;
+    }
+
+    public static SBChannel findChannel(String name, ArrayList<SBChannel> channels) throws SpaceBunny.ConfigurationException {
+        for (SBChannel channel : channels)
+            if (channel.getName().equals(name))
+                return channel;
+        return null;
     }
 }

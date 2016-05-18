@@ -29,10 +29,15 @@ public class RabbitConnection {
     public boolean connect(SBDevice device) throws KeyManagementException, NoSuchAlgorithmException, IOException {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost(device.getHost());
+        System.out.println(factory.getHost());
         factory.setPort(tls ? protocol.getTls_port() : protocol.getPort());
+        System.out.println(factory.getPort());
         factory.setVirtualHost(device.getVhost());
+        System.out.println(factory.getVirtualHost());
         factory.setUsername(device.getDevice_id());
+        System.out.println(factory.getUsername());
         factory.setPassword(device.getSecret());
+        System.out.println(factory.getPassword());
         if (tls)
             factory.useSslProtocol();
         conn = factory.newConnection();

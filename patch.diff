@@ -1,0 +1,3816 @@
+From b08f585715fa3bba567076f00faab1ab63738a35 Mon Sep 17 00:00:00 2001
+From: Tommaso Berlose <tommaso.berlose@gmail.com>
+Date: Wed, 18 May 2016 16:11:47 +0200
+Subject: [PATCH] Fix first relase problems
+
+---
+ README.md                                          |   4 +-
+ SpaceBunnyClientMaven/.idea/vcs.xml                |   6 +
+ SpaceBunnyClientMaven/.idea/workspace.xml          | 302 ++++++++++++++----
+ .../src/main/java/io/spacebunny/Costants.java      |  20 --
+ .../src/main/java/io/spacebunny/Main.java          |  19 +-
+ .../main/java/io/spacebunny/RabbitConnection.java  | 125 --------
+ .../src/main/java/io/spacebunny/SBChannel.java     |  65 ----
+ .../src/main/java/io/spacebunny/SBDevice.java      | 187 -----------
+ .../src/main/java/io/spacebunny/SBProtocol.java    |  97 ------
+ .../main/java/io/spacebunny/SBSubscription.java    |  42 ---
+ .../src/main/java/io/spacebunny/SpaceBunny.java    | 347 +++++++++++++++++++++
+ .../main/java/io/spacebunny/SpaceBunnyClient.java  | 305 ------------------
+ .../SpaceBunnyConfigurationException.java          |  15 -
+ .../spacebunny/SpaceBunnyConnectionException.java  |  15 -
+ .../src/main/java/io/spacebunny/Utilities.java     |  54 ----
+ .../io/spacebunny/connection/RabbitConnection.java | 129 ++++++++
+ .../main/java/io/spacebunny/device/SBChannel.java  |  79 +++++
+ .../main/java/io/spacebunny/device/SBDevice.java   | 202 ++++++++++++
+ .../main/java/io/spacebunny/device/SBProtocol.java |  97 ++++++
+ .../java/io/spacebunny/device/SBSubscription.java  |  42 +++
+ .../src/main/java/io/spacebunny/util/Costants.java |  13 +
+ .../main/java/io/spacebunny/util/Utilities.java    |  57 ++++
+ .../target/classes/io/spacebunny/Costants.class    | Bin 966 -> 0 bytes
+ .../target/classes/io/spacebunny/Main$1.class      | Bin 972 -> 788 bytes
+ .../target/classes/io/spacebunny/Main$2$1.class    | Bin 1001 -> 1023 bytes
+ .../target/classes/io/spacebunny/Main$2.class      | Bin 1518 -> 1328 bytes
+ .../target/classes/io/spacebunny/Main$3.class      | Bin 953 -> 1003 bytes
+ .../target/classes/io/spacebunny/Main.class        | Bin 1507 -> 1533 bytes
+ .../classes/io/spacebunny/RabbitConnection$1.class | Bin 2127 -> 0 bytes
+ ...ion$OnSubscriptionMessageReceivedListener.class | Bin 347 -> 0 bytes
+ .../classes/io/spacebunny/RabbitConnection.class   | Bin 5583 -> 0 bytes
+ .../target/classes/io/spacebunny/SBChannel.class   | Bin 1222 -> 0 bytes
+ .../classes/io/spacebunny/SBDevice$Builder.class   | Bin 2195 -> 0 bytes
+ .../target/classes/io/spacebunny/SBDevice.class    | Bin 4480 -> 0 bytes
+ .../target/classes/io/spacebunny/SBProtocol.class  | Bin 2363 -> 0 bytes
+ .../classes/io/spacebunny/SBSubscription.class     | Bin 737 -> 0 bytes
+ .../io/spacebunny/SpaceBunny$Client$1.class        | Bin 0 -> 1074 bytes
+ .../classes/io/spacebunny/SpaceBunny$Client.class  | Bin 0 -> 8388 bytes
+ .../SpaceBunny$ConfigurationException.class        | Bin 0 -> 663 bytes
+ .../SpaceBunny$ConnectionException.class           | Bin 0 -> 654 bytes
+ .../SpaceBunny$OnConnectedListener.class           | Bin 0 -> 349 bytes
+ ...SpaceBunny$OnFinishConfigiurationListener.class | Bin 0 -> 403 bytes
+ .../SpaceBunny$OnMessageReceivedListener.class     | Bin 0 -> 378 bytes
+ .../target/classes/io/spacebunny/SpaceBunny.class  | Bin 0 -> 1172 bytes
+ .../classes/io/spacebunny/SpaceBunnyClient$1.class | Bin 1028 -> 0 bytes
+ .../SpaceBunnyClient$OnConnectedListener.class     | Bin 336 -> 0 bytes
+ ...unnyClient$OnFinishConfigiurationListener.class | Bin 383 -> 0 bytes
+ ...paceBunnyClient$OnMessageReceivedListener.class | Bin 365 -> 0 bytes
+ .../classes/io/spacebunny/SpaceBunnyClient.class   | Bin 7973 -> 0 bytes
+ .../SpaceBunnyConfigurationException.class         | Bin 597 -> 0 bytes
+ .../spacebunny/SpaceBunnyConnectionException.class | Bin 588 -> 0 bytes
+ .../target/classes/io/spacebunny/Utilities.class   | Bin 3335 -> 0 bytes
+ .../spacebunny/connection/RabbitConnection$1.class | Bin 0 -> 2226 bytes
+ ...ion$OnSubscriptionMessageReceivedListener.class | Bin 0 -> 369 bytes
+ .../spacebunny/connection/RabbitConnection.class   | Bin 0 -> 5790 bytes
+ .../classes/io/spacebunny/device/SBChannel.class   | Bin 0 -> 2402 bytes
+ .../io/spacebunny/device/SBDevice$Builder.class    | Bin 0 -> 2315 bytes
+ .../classes/io/spacebunny/device/SBDevice.class    | Bin 0 -> 5283 bytes
+ .../classes/io/spacebunny/device/SBProtocol.class  | Bin 0 -> 2239 bytes
+ .../io/spacebunny/device/SBSubscription.class      | Bin 0 -> 751 bytes
+ .../classes/io/spacebunny/util/Costants.class      | Bin 0 -> 784 bytes
+ .../classes/io/spacebunny/util/Utilities.class     | Bin 0 -> 3868 bytes
+ 62 files changed, 1229 insertions(+), 993 deletions(-)
+ create mode 100644 SpaceBunnyClientMaven/.idea/vcs.xml
+ delete mode 100644 SpaceBunnyClientMaven/src/main/java/io/spacebunny/Costants.java
+ delete mode 100644 SpaceBunnyClientMaven/src/main/java/io/spacebunny/RabbitConnection.java
+ delete mode 100644 SpaceBunnyClientMaven/src/main/java/io/spacebunny/SBChannel.java
+ delete mode 100644 SpaceBunnyClientMaven/src/main/java/io/spacebunny/SBDevice.java
+ delete mode 100644 SpaceBunnyClientMaven/src/main/java/io/spacebunny/SBProtocol.java
+ delete mode 100644 SpaceBunnyClientMaven/src/main/java/io/spacebunny/SBSubscription.java
+ create mode 100644 SpaceBunnyClientMaven/src/main/java/io/spacebunny/SpaceBunny.java
+ delete mode 100644 SpaceBunnyClientMaven/src/main/java/io/spacebunny/SpaceBunnyClient.java
+ delete mode 100644 SpaceBunnyClientMaven/src/main/java/io/spacebunny/SpaceBunnyConfigurationException.java
+ delete mode 100644 SpaceBunnyClientMaven/src/main/java/io/spacebunny/SpaceBunnyConnectionException.java
+ delete mode 100644 SpaceBunnyClientMaven/src/main/java/io/spacebunny/Utilities.java
+ create mode 100644 SpaceBunnyClientMaven/src/main/java/io/spacebunny/connection/RabbitConnection.java
+ create mode 100644 SpaceBunnyClientMaven/src/main/java/io/spacebunny/device/SBChannel.java
+ create mode 100644 SpaceBunnyClientMaven/src/main/java/io/spacebunny/device/SBDevice.java
+ create mode 100644 SpaceBunnyClientMaven/src/main/java/io/spacebunny/device/SBProtocol.java
+ create mode 100644 SpaceBunnyClientMaven/src/main/java/io/spacebunny/device/SBSubscription.java
+ create mode 100644 SpaceBunnyClientMaven/src/main/java/io/spacebunny/util/Costants.java
+ create mode 100644 SpaceBunnyClientMaven/src/main/java/io/spacebunny/util/Utilities.java
+ delete mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/Costants.class
+ delete mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/RabbitConnection$1.class
+ delete mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/RabbitConnection$OnSubscriptionMessageReceivedListener.class
+ delete mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/RabbitConnection.class
+ delete mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/SBChannel.class
+ delete mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/SBDevice$Builder.class
+ delete mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/SBDevice.class
+ delete mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/SBProtocol.class
+ delete mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/SBSubscription.class
+ create mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunny$Client$1.class
+ create mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunny$Client.class
+ create mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunny$ConfigurationException.class
+ create mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunny$ConnectionException.class
+ create mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunny$OnConnectedListener.class
+ create mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunny$OnFinishConfigiurationListener.class
+ create mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunny$OnMessageReceivedListener.class
+ create mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunny.class
+ delete mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunnyClient$1.class
+ delete mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunnyClient$OnConnectedListener.class
+ delete mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunnyClient$OnFinishConfigiurationListener.class
+ delete mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunnyClient$OnMessageReceivedListener.class
+ delete mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunnyClient.class
+ delete mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunnyConfigurationException.class
+ delete mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunnyConnectionException.class
+ delete mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/Utilities.class
+ create mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/connection/RabbitConnection$1.class
+ create mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/connection/RabbitConnection$OnSubscriptionMessageReceivedListener.class
+ create mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/connection/RabbitConnection.class
+ create mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/device/SBChannel.class
+ create mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/device/SBDevice$Builder.class
+ create mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/device/SBDevice.class
+ create mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/device/SBProtocol.class
+ create mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/device/SBSubscription.class
+ create mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/util/Costants.class
+ create mode 100644 SpaceBunnyClientMaven/target/classes/io/spacebunny/util/Utilities.class
+
+diff --git a/README.md b/README.md
+index b96639b..937d214 100644
+--- a/README.md
++++ b/README.md
+@@ -31,7 +31,7 @@ Maven:
+ 
+ Devices can publish messages on configured channels and receive messages on their `inbox` channel
+ 
+-#### Connection
++#### Configuration
+ 
+ Configure the instance of the SpaceBunny's Client with a valid Device Key:
+ 
+@@ -61,6 +61,8 @@ spaceBunny.setVerifyCA(false);
+ spaceBunny.setPathCustomCA("<absolute_path>\\cert.pem");
+ ```
+ 
++#### Connection
++
+ Connect to SpaceBunny with multiple parameters 
+ 
+ ```java
+diff --git a/SpaceBunnyClientMaven/.idea/vcs.xml b/SpaceBunnyClientMaven/.idea/vcs.xml
+new file mode 100644
+index 0000000..6c0b863
+--- /dev/null
++++ b/SpaceBunnyClientMaven/.idea/vcs.xml
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+diff --git a/SpaceBunnyClientMaven/.idea/workspace.xml b/SpaceBunnyClientMaven/.idea/workspace.xml
+index c08ee9b..cf07d7f 100644
+--- a/SpaceBunnyClientMaven/.idea/workspace.xml
++++ b/SpaceBunnyClientMaven/.idea/workspace.xml
+@@ -1,7 +1,21 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ChangeListManager">
+-    <list default="true" id="b744036e-3c6b-435b-a3e3-ddfd6f3a52ad" name="Default" comment="" />
++    <list default="true" id="b744036e-3c6b-435b-a3e3-ddfd6f3a52ad" name="Default" comment="">
++      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/io/spacebunny/SpaceBunnyClient.java" afterPath="" />
++      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/io/spacebunny/SpaceBunnyConfigurationException.java" afterPath="" />
++      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/io/spacebunny/SpaceBunnyConnectionException.java" afterPath="" />
++      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/spacebunny/Costants.java" afterPath="$PROJECT_DIR$/src/main/java/io/spacebunny/util/Costants.java" />
++      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/spacebunny/RabbitConnection.java" afterPath="$PROJECT_DIR$/src/main/java/io/spacebunny/connection/RabbitConnection.java" />
++      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/spacebunny/SBChannel.java" afterPath="$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBChannel.java" />
++      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/spacebunny/SBDevice.java" afterPath="$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBDevice.java" />
++      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/spacebunny/SBProtocol.java" afterPath="$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBProtocol.java" />
++      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/spacebunny/SBSubscription.java" afterPath="$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBSubscription.java" />
++      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/io/spacebunny/Utilities.java" afterPath="$PROJECT_DIR$/src/main/java/io/spacebunny/util/Utilities.java" />
++      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../README.md" afterPath="$PROJECT_DIR$/../README.md" />
++      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
++      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/io/spacebunny/Main.java" afterPath="$PROJECT_DIR$/src/main/java/io/spacebunny/Main.java" />
++    </list>
+     <ignored path="SpaceBunnyClientMaven.iws" />
+     <ignored path=".idea/workspace.xml" />
+     <ignored path="$PROJECT_DIR$/out/" />
+@@ -22,7 +36,59 @@
+     <favorites_list name="SpaceBunnyClientMaven" />
+   </component>
+   <component name="FileEditorManager">
+-    <leaf />
++    <leaf>
++      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
++        <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/Main.java">
++          <provider selected="true" editor-type-id="text-editor">
++            <state relative-caret-position="81">
++              <caret line="22" column="22" selection-start-line="22" selection-start-column="22" selection-end-line="22" selection-end-column="22" />
++              <folding>
++                <element signature="e#715#981#0" expanded="true" />
++                <element signature="e#980#981#0" expanded="true" />
++                <element signature="e#1060#1628#0" expanded="true" />
++                <element signature="e#1309#1594#0" expanded="true" />
++                <element signature="e#1593#1594#0" expanded="true" />
++                <element signature="e#1627#1628#0" expanded="true" />
++              </folding>
++            </state>
++          </provider>
++        </entry>
++      </file>
++      <file leaf-file-name="SpaceBunny.java" pinned="false" current-in-tab="false">
++        <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/SpaceBunny.java">
++          <provider selected="true" editor-type-id="text-editor">
++            <state relative-caret-position="217">
++              <caret line="98" column="55" selection-start-line="98" selection-start-column="39" selection-end-line="98" selection-end-column="55" />
++              <folding>
++                <element signature="imports" expanded="true" />
++              </folding>
++            </state>
++          </provider>
++        </entry>
++      </file>
++      <file leaf-file-name="RabbitConnection.java" pinned="false" current-in-tab="true">
++        <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/connection/RabbitConnection.java">
++          <provider selected="true" editor-type-id="text-editor">
++            <state relative-caret-position="209">
++              <caret line="37" column="39" selection-start-line="37" selection-start-column="39" selection-end-line="37" selection-end-column="39" />
++              <folding>
++                <element signature="imports" expanded="true" />
++              </folding>
++            </state>
++          </provider>
++        </entry>
++      </file>
++    </leaf>
++  </component>
++  <component name="FileTemplateManagerImpl">
++    <option name="RECENT_TEMPLATES">
++      <list>
++        <option value="Class" />
++      </list>
++    </option>
++  </component>
++  <component name="Git.Settings">
++    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+   </component>
+   <component name="GradleLocalSettings">
+     <option name="externalProjectsViewState">
+@@ -48,9 +114,19 @@
+         <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/Subscription.java" />
+         <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/Device.java" />
+         <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/RabbitConnection.java" />
+-        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/Main.java" />
+         <option value="$PROJECT_DIR$/pom.xml" />
++        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/SBProtocol.java" />
++        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/Costants.java" />
++        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBSubscription.java" />
++        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/util/Utilities.java" />
+         <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/SpaceBunnyClient.java" />
++        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBDevice.java" />
++        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBChannel.java" />
++        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/util/Costants.java" />
++        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBProtocol.java" />
++        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/SpaceBunny.java" />
++        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/Main.java" />
++        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/connection/RabbitConnection.java" />
+       </list>
+     </option>
+   </component>
+@@ -75,14 +151,14 @@
+     <option name="width" value="1382" />
+     <option name="height" value="744" />
+   </component>
+-  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
++  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+     <OptionsSetting value="true" id="Add" />
+     <OptionsSetting value="true" id="Remove" />
+     <OptionsSetting value="true" id="Checkout" />
+     <OptionsSetting value="true" id="Update" />
+     <OptionsSetting value="true" id="Status" />
+     <OptionsSetting value="true" id="Edit" />
+-    <ConfirmationsSetting value="0" id="Add" />
++    <ConfirmationsSetting value="1" id="Add" />
+     <ConfirmationsSetting value="0" id="Remove" />
+   </component>
+   <component name="ProjectView">
+@@ -100,7 +176,7 @@
+       <foldersAlwaysOnTop value="true" />
+     </navigator>
+     <panes>
+-      <pane id="PackagesPane" />
++      <pane id="Scratches" />
+       <pane id="ProjectPane">
+         <subPane>
+           <PATH>
+@@ -136,8 +212,48 @@
+               <option name="myItemId" value="src" />
+               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+             </PATH_ELEMENT>
++          </PATH>
++          <PATH>
++            <PATH_ELEMENT>
++              <option name="myItemId" value="SpaceBunnyClientMaven" />
++              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
++            </PATH_ELEMENT>
++            <PATH_ELEMENT>
++              <option name="myItemId" value="SpaceBunnyClientMaven" />
++              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
++            </PATH_ELEMENT>
++            <PATH_ELEMENT>
++              <option name="myItemId" value="src" />
++              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
++            </PATH_ELEMENT>
++            <PATH_ELEMENT>
++              <option name="myItemId" value="main" />
++              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
++            </PATH_ELEMENT>
++            <PATH_ELEMENT>
++              <option name="myItemId" value="java" />
++              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
++            </PATH_ELEMENT>
++            <PATH_ELEMENT>
++              <option name="myItemId" value="spacebunny" />
++              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
++            </PATH_ELEMENT>
++          </PATH>
++          <PATH>
++            <PATH_ELEMENT>
++              <option name="myItemId" value="SpaceBunnyClientMaven" />
++              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
++            </PATH_ELEMENT>
++            <PATH_ELEMENT>
++              <option name="myItemId" value="SpaceBunnyClientMaven" />
++              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
++            </PATH_ELEMENT>
++            <PATH_ELEMENT>
++              <option name="myItemId" value="src" />
++              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
++            </PATH_ELEMENT>
+             <PATH_ELEMENT>
+-              <option name="myItemId" value="test" />
++              <option name="myItemId" value="main" />
+               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+             </PATH_ELEMENT>
+             <PATH_ELEMENT>
+@@ -145,7 +261,11 @@
+               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+             </PATH_ELEMENT>
+             <PATH_ELEMENT>
+-              <option name="myItemId" value="javasdk" />
++              <option name="myItemId" value="spacebunny" />
++              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
++            </PATH_ELEMENT>
++            <PATH_ELEMENT>
++              <option name="myItemId" value="util" />
+               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+             </PATH_ELEMENT>
+           </PATH>
+@@ -174,10 +294,44 @@
+               <option name="myItemId" value="spacebunny" />
+               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+             </PATH_ELEMENT>
++            <PATH_ELEMENT>
++              <option name="myItemId" value="device" />
++              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
++            </PATH_ELEMENT>
++          </PATH>
++          <PATH>
++            <PATH_ELEMENT>
++              <option name="myItemId" value="SpaceBunnyClientMaven" />
++              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
++            </PATH_ELEMENT>
++            <PATH_ELEMENT>
++              <option name="myItemId" value="SpaceBunnyClientMaven" />
++              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
++            </PATH_ELEMENT>
++            <PATH_ELEMENT>
++              <option name="myItemId" value="src" />
++              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
++            </PATH_ELEMENT>
++            <PATH_ELEMENT>
++              <option name="myItemId" value="main" />
++              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
++            </PATH_ELEMENT>
++            <PATH_ELEMENT>
++              <option name="myItemId" value="java" />
++              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
++            </PATH_ELEMENT>
++            <PATH_ELEMENT>
++              <option name="myItemId" value="spacebunny" />
++              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
++            </PATH_ELEMENT>
++            <PATH_ELEMENT>
++              <option name="myItemId" value="connection" />
++              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
++            </PATH_ELEMENT>
+           </PATH>
+         </subPane>
+       </pane>
+-      <pane id="Scratches" />
++      <pane id="PackagesPane" />
+       <pane id="Scope" />
+     </panes>
+   </component>
+@@ -201,7 +355,7 @@
+       <recent name="C:\Users\Tommaso\IdeaProjects\SpaceBunnyClientMaven\src\main\java\com\spacebunny\test\javasdk" />
+     </key>
+   </component>
+-  <component name="RunManager" selected="Application.Main (1)">
++  <component name="RunManager" selected="Application.Main (2)">
+     <configuration default="false" name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+         <pattern>
+@@ -242,6 +396,26 @@
+       <envs />
+       <method />
+     </configuration>
++    <configuration default="false" name="Main (2)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
++      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
++        <pattern>
++          <option name="PATTERN" value="io.spacebunny.*" />
++          <option name="ENABLED" value="true" />
++        </pattern>
++      </extension>
++      <option name="MAIN_CLASS_NAME" value="io.spacebunny.Main" />
++      <option name="VM_PARAMETERS" />
++      <option name="PROGRAM_PARAMETERS" />
++      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
++      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
++      <option name="ALTERNATIVE_JRE_PATH" />
++      <option name="ENABLE_SWING_INSPECTOR" value="false" />
++      <option name="ENV_VARIABLES" />
++      <option name="PASS_PARENT_ENVS" value="true" />
++      <module name="SpaceBunnyClientMaven" />
++      <envs />
++      <method />
++    </configuration>
+     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+       <module name="" />
+       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+@@ -461,14 +635,16 @@
+       <listeners />
+       <method />
+     </configuration>
+-    <list size="2">
++    <list size="3">
+       <item index="0" class="java.lang.String" itemvalue="Application.Main" />
+       <item index="1" class="java.lang.String" itemvalue="Application.Main (1)" />
++      <item index="2" class="java.lang.String" itemvalue="Application.Main (2)" />
+     </list>
+     <recent_temporary>
+-      <list size="2">
+-        <item index="0" class="java.lang.String" itemvalue="Application.Main (1)" />
+-        <item index="1" class="java.lang.String" itemvalue="Application.Main" />
++      <list size="3">
++        <item index="0" class="java.lang.String" itemvalue="Application.Main (2)" />
++        <item index="1" class="java.lang.String" itemvalue="Application.Main (1)" />
++        <item index="2" class="java.lang.String" itemvalue="Application.Main" />
+       </list>
+     </recent_temporary>
+   </component>
+@@ -490,7 +666,7 @@
+   </component>
+   <component name="ToolWindowManager">
+     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+-    <editor active="false" />
++    <editor active="true" />
+     <layout>
+       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+@@ -499,10 +675,10 @@
+       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
+       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38913363" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
++      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2035139" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
++      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2035139" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+@@ -570,10 +746,10 @@
+     <entry file="file://$PROJECT_DIR$/../SpaceBunnyClientGradle/src/main/java/SpaceBunnyClient.java" />
+     <entry file="file://$PROJECT_DIR$/../SpaceBunnyClientGradle/src/main/java/RabbitConnection.java" />
+     <entry file="file://$PROJECT_DIR$/../SpaceBunnyClientGradle/src/main/java/Main.java" />
+-    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/Utilities.java">
++    <entry file="file://$PROJECT_DIR$/pom.xml">
+       <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="68">
+-          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
++        <state relative-caret-position="238">
++          <caret line="17" column="14" selection-start-line="17" selection-start-column="14" selection-end-line="17" selection-end-column="14" />
+           <folding />
+         </state>
+       </provider>
+@@ -581,96 +757,106 @@
+     <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/SpaceBunnyConnectionException.java">
+       <provider selected="true" editor-type-id="text-editor">
+         <state relative-caret-position="102">
+-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
++          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="14" selection-end-column="1" />
+           <folding />
+         </state>
+       </provider>
+     </entry>
+     <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/SpaceBunnyConfigurationException.java">
+       <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="102">
+-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
++        <state relative-caret-position="170">
++          <caret line="14" column="1" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
+           <folding />
+         </state>
+       </provider>
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/SBSubscription.java">
++    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBSubscription.java">
+       <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="153">
+-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
++        <state relative-caret-position="187">
++          <caret line="11" column="36" selection-start-line="11" selection-start-column="36" selection-end-line="11" selection-end-column="36" />
+           <folding />
+         </state>
+       </provider>
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/pom.xml">
++    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/util/Utilities.java">
+       <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="238">
+-          <caret line="17" column="14" selection-start-line="17" selection-start-column="14" selection-end-line="17" selection-end-column="14" />
++        <state relative-caret-position="561">
++          <caret line="46" column="19" selection-start-line="46" selection-start-column="16" selection-end-line="46" selection-end-column="19" />
+           <folding />
+         </state>
+       </provider>
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/Costants.java">
++    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/SpaceBunnyClient.java">
+       <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="221">
+-          <caret line="13" column="41" selection-start-line="13" selection-start-column="25" selection-end-line="13" selection-end-column="41" />
++        <state relative-caret-position="538">
++          <caret line="309" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="309" selection-end-column="0" />
+           <folding />
+         </state>
+       </provider>
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/Main.java">
++    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/util/Costants.java">
+       <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="136">
+-          <caret line="11" column="88" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="88" />
+-          <folding>
+-            <element signature="e#586#855#0" expanded="true" />
+-            <element signature="e#854#855#0" expanded="true" />
+-          </folding>
++        <state relative-caret-position="187">
++          <caret line="11" column="83" selection-start-line="11" selection-start-column="83" selection-end-line="11" selection-end-column="83" />
++          <folding />
+         </state>
+       </provider>
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/SBDevice.java">
++    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBProtocol.java">
+       <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="306">
+-          <caret line="127" column="36" selection-start-line="126" selection-start-column="16" selection-end-line="127" selection-end-column="36" />
+-          <folding>
+-            <element signature="imports" expanded="true" />
+-          </folding>
++        <state relative-caret-position="221">
++          <caret line="17" column="85" selection-start-line="17" selection-start-column="85" selection-end-line="17" selection-end-column="85" />
++          <folding />
+         </state>
+       </provider>
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/SBProtocol.java">
++    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBDevice.java">
+       <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="-85">
+-          <caret line="16" column="58" selection-start-line="15" selection-start-column="32" selection-end-line="16" selection-end-column="58" />
++        <state relative-caret-position="221">
++          <caret line="55" column="29" selection-start-line="55" selection-start-column="23" selection-end-line="55" selection-end-column="29" />
+           <folding />
+         </state>
+       </provider>
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/SBChannel.java">
++    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBChannel.java">
+       <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="187">
+-          <caret line="12" column="32" selection-start-line="12" selection-start-column="32" selection-end-line="13" selection-end-column="50" />
++        <state relative-caret-position="436">
++          <caret line="75" column="31" selection-start-line="75" selection-start-column="31" selection-end-line="75" selection-end-column="31" />
+           <folding />
+         </state>
+       </provider>
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/SpaceBunnyClient.java">
++    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/Main.java">
+       <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="-250">
+-          <caret line="137" column="45" selection-start-line="137" selection-start-column="35" selection-end-line="137" selection-end-column="45" />
++        <state relative-caret-position="81">
++          <caret line="22" column="22" selection-start-line="22" selection-start-column="22" selection-end-line="22" selection-end-column="22" />
++          <folding>
++            <element signature="e#715#981#0" expanded="true" />
++            <element signature="e#980#981#0" expanded="true" />
++            <element signature="e#1060#1628#0" expanded="true" />
++            <element signature="e#1309#1594#0" expanded="true" />
++            <element signature="e#1593#1594#0" expanded="true" />
++            <element signature="e#1627#1628#0" expanded="true" />
++          </folding>
++        </state>
++      </provider>
++    </entry>
++    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/SpaceBunny.java">
++      <provider selected="true" editor-type-id="text-editor">
++        <state relative-caret-position="217">
++          <caret line="98" column="55" selection-start-line="98" selection-start-column="39" selection-end-line="98" selection-end-column="55" />
+           <folding>
+             <element signature="imports" expanded="true" />
+           </folding>
+         </state>
+       </provider>
+     </entry>
+-    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/RabbitConnection.java">
++    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/connection/RabbitConnection.java">
+       <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="68">
+-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
++        <state relative-caret-position="209">
++          <caret line="37" column="39" selection-start-line="37" selection-start-column="39" selection-end-line="37" selection-end-column="39" />
+           <folding>
+-            <element signature="e#499#523#0" expanded="true" />
++            <element signature="imports" expanded="true" />
+           </folding>
+         </state>
+       </provider>
+diff --git a/SpaceBunnyClientMaven/src/main/java/io/spacebunny/Costants.java b/SpaceBunnyClientMaven/src/main/java/io/spacebunny/Costants.java
+deleted file mode 100644
+index b5d51f9..0000000
+--- a/SpaceBunnyClientMaven/src/main/java/io/spacebunny/Costants.java
++++ /dev/null
+@@ -1,20 +0,0 @@
+-package io.spacebunny;
+-
+-public class Costants {
+-
+-    public final static String url_endpoint = "http://api.demo.spacebunny.io";
+-    public final static String url_endpoint_ssl = "https://api.demo.spacebunny.io";
+-    public final static String api_version = "/v1";
+-    public final static String path_endpoint = "/device_configurations";
+-    public final static int min_protocols = 4;
+-
+-    public static String DEFAULT_PROTOCOL = "amqp";
+-
+-
+-    public static String generateHostname(boolean ssl) {
+-        if (ssl)
+-            return url_endpoint_ssl + api_version + path_endpoint;
+-        else
+-            return url_endpoint + api_version + path_endpoint;
+-    }
+-}
+diff --git a/SpaceBunnyClientMaven/src/main/java/io/spacebunny/Main.java b/SpaceBunnyClientMaven/src/main/java/io/spacebunny/Main.java
+index f40f268..cd1a537 100644
+--- a/SpaceBunnyClientMaven/src/main/java/io/spacebunny/Main.java
++++ b/SpaceBunnyClientMaven/src/main/java/io/spacebunny/Main.java
+@@ -1,6 +1,9 @@
+ package io.spacebunny;
+ 
+ import com.rabbitmq.client.Envelope;
++import io.spacebunny.connection.RabbitConnection;
++import io.spacebunny.device.SBChannel;
++import io.spacebunny.device.SBDevice;
+ 
+ import java.util.ArrayList;
+ import java.util.concurrent.TimeUnit;
+@@ -12,23 +15,21 @@ public class Main {
+         String device_key = "2440a806-f9c1-4b0a-a711-20fbdefadd3e:GDZGztyXcCtnztK85yC_hA";
+ 
+         try {
+-            final SpaceBunnyClient spaceBunny = new SpaceBunnyClient(device_key);
++            final SpaceBunny.Client spaceBunny = new SpaceBunny.Client(device_key);
+             //spaceBunny.setPathCustomCA("C:\\Users\\Tommaso\\Desktop\\Fancy Pixel\\api.demo.spacebunny.io\\api.demo.spacebunny.io\\cert1.pem");
+-            spaceBunny.setOnFinishConfigiurationListener(new SpaceBunnyClient.OnFinishConfigiurationListener() {
++            spaceBunny.setOnFinishConfigiurationListener(new SpaceBunny.OnFinishConfigiurationListener() {
+                 @Override
+-                public void onConfigured(SBDevice device) throws SpaceBunnyConnectionException {
+-                    System.out.println(device.toString());
++                public void onConfigured(SBDevice device) throws SpaceBunny.ConnectionException {
++                    //System.out.println(device.toString());
+                 }
+             });
+ 
+             spaceBunny.setVerifyCA(false);
+ 
+-            spaceBunny.connect(new SpaceBunnyClient.OnConnectedListener() {
++            spaceBunny.connect(new SpaceBunny.OnConnectedListener() {
+                 @Override
+-                public void onConnected() throws SpaceBunnyConnectionException {
+-                    ArrayList<SBChannel> channels = spaceBunny.getChannels();
+-
+-                    spaceBunny.publish(channels.get(0), "{temp: 1}");
++                public void onConnected() throws SpaceBunny.ConnectionException {
++                    spaceBunny.publish("data", "{temp: 1}");
+                     spaceBunny.subscribe(new RabbitConnection.OnSubscriptionMessageReceivedListener() {
+                         @Override
+                         public void onReceived(String message, Envelope envelope) {
+diff --git a/SpaceBunnyClientMaven/src/main/java/io/spacebunny/RabbitConnection.java b/SpaceBunnyClientMaven/src/main/java/io/spacebunny/RabbitConnection.java
+deleted file mode 100644
+index 481df4e..0000000
+--- a/SpaceBunnyClientMaven/src/main/java/io/spacebunny/RabbitConnection.java
++++ /dev/null
+@@ -1,125 +0,0 @@
+-package io.spacebunny;
+-
+-import com.rabbitmq.client.*;
+-
+-import java.io.IOException;
+-import java.math.BigInteger;
+-import java.security.KeyManagementException;
+-import java.security.NoSuchAlgorithmException;
+-import java.security.SecureRandom;
+-import java.util.HashMap;
+-import java.util.Map;
+-
+-public class RabbitConnection {
+-    private Connection conn = null;
+-    private SBProtocol protocol = null;
+-    private boolean ssl = true;
+-    private Map<String, SBSubscription> channelSubscribes = new HashMap<String, SBSubscription>();
+-
+-    public RabbitConnection(SBProtocol protocol, boolean ssl)
+-    {
+-        this.protocol = protocol;
+-        this.ssl = ssl;
+-    }
+-
+-    public boolean connect(SBDevice device) throws KeyManagementException, NoSuchAlgorithmException, IOException {
+-        ConnectionFactory factory = new ConnectionFactory();
+-        factory.setHost(device.getHost());
+-        factory.setPort(ssl ? protocol.getSsl_port() : protocol.getPort());
+-        factory.setVirtualHost(device.getVhost());
+-        factory.setUsername(device.getDevice_id());
+-        factory.setPassword(device.getSecret());
+-        if (ssl)
+-            factory.useSslProtocol();
+-        conn = factory.newConnection();
+-
+-        return true;
+-
+-    }
+-
+-    public boolean isConnected() {
+-        return ((conn != null) && (conn.isOpen()));
+-    }
+-
+-    public void close() throws IOException {
+-        conn.close(0, "Close Connection");
+-    }
+-
+-    public void publish(String device_id, SBChannel channel, String msg) throws IOException {
+-        Channel rabbitChannel = conn.createChannel();
+-
+-        //String queueName = device_id + ".inbox";
+-        String exchangeName = device_id;
+-        String routingKey = exchangeName + "." + channel.getName();
+-
+-        rabbitChannel.basicPublish(exchangeName, routingKey, null, msg.getBytes());
+-
+-        rabbitChannel.close(0, "Close Channel");
+-
+-    }
+-
+-    public String receive(String device_id) throws IOException {
+-        String message = "";
+-        Channel channel = conn.createChannel();
+-
+-        String queueName = device_id + ".inbox";
+-
+-        GetResponse response = channel.basicGet(queueName, false);
+-        if (response == null) {
+-            message = "-1";
+-        } else {
+-            byte[] body = response.getBody();
+-            long deliveryTag = response.getEnvelope().getDeliveryTag();
+-
+-            message = new String(body);
+-
+-            channel.basicAck(deliveryTag, false);
+-        }
+-
+-        channel.close(0, "Close Channel");
+-        return message;
+-    }
+-
+-    public void subscribe(String device_id, final OnSubscriptionMessageReceivedListener onSubscriptionMessageReceivedListener) throws IOException {
+-        final Channel channel = conn.createChannel();
+-
+-        final String random_consumer_tag = new BigInteger(130, new SecureRandom()).toString(32);
+-        String queueName = device_id + ".inbox";
+-
+-        channelSubscribes.put(device_id, new SBSubscription(channel, random_consumer_tag));
+-
+-        boolean autoAck = false;
+-        channel.basicConsume(queueName, autoAck, random_consumer_tag,
+-                new DefaultConsumer(channel) {
+-                    @Override
+-                    public void handleDelivery(String consumerTag,
+-                                               Envelope envelope,
+-                                               AMQP.BasicProperties properties,
+-                                               byte[] body)
+-                            throws IOException
+-                    {
+-                        String routingKey = envelope.getRoutingKey();
+-                        String contentType = properties.getContentType();
+-                        long deliveryTag = envelope.getDeliveryTag();
+-
+-                        onSubscriptionMessageReceivedListener.onReceived(new String(body), envelope);
+-
+-                        channel.basicAck(deliveryTag, false);
+-                    }
+-                });
+-
+-    }
+-
+-    public void unsubscribe(String device_id) throws IOException {
+-        SBSubscription subscription = channelSubscribes.get(device_id);
+-        subscription.getChannel().basicCancel(subscription.getConsumerTag());
+-        subscription.getChannel().close(0, "Close Channel");
+-        channelSubscribes.remove(device_id);
+-    }
+-
+-    public interface OnSubscriptionMessageReceivedListener
+-    {
+-        void onReceived(String message, Envelope envelope);
+-    }
+-
+-}
+diff --git a/SpaceBunnyClientMaven/src/main/java/io/spacebunny/SBChannel.java b/SpaceBunnyClientMaven/src/main/java/io/spacebunny/SBChannel.java
+deleted file mode 100644
+index 3e6870b..0000000
+--- a/SpaceBunnyClientMaven/src/main/java/io/spacebunny/SBChannel.java
++++ /dev/null
+@@ -1,65 +0,0 @@
+-package io.spacebunny;
+-
+-/**
+- * A module that exports a channel
+- * @module SBChannel
+- */
+-
+-import org.json.JSONException;
+-import org.json.JSONObject;
+-
+-public class SBChannel {
+-
+-    private final static String ID_KEY = "id";
+-    private final static String NAME_KEY = "name";
+-
+-    private String id;
+-    private String name;
+-
+-    /**
+-     *
+-     * @constructor
+-     * @param id of the channel
+-     * @param name of the channel
+-     */
+-
+-    public SBChannel(String id, String name) {
+-        this.id = id;
+-        this.name = name;
+-    }
+-
+-    /**
+-     *
+-     * @constructor
+-     * @param jsonObject that contains all the information about the channel
+-     */
+-
+-    public SBChannel(JSONObject jsonObject) throws JSONException {
+-        this.id = jsonObject.getString(ID_KEY);
+-        this.name = jsonObject.getString(NAME_KEY);
+-    }
+-
+-    /**
+-     *
+-     * @return id of the channel
+-     */
+-    public String getId() {
+-        return id;
+-    }
+-
+-    /**
+-     *
+-     * @return name of the channel
+-     */
+-    public String getName() {
+-        return name;
+-    }
+-
+-    /**
+-     *
+-     * @return string with channel information
+-     */
+-    public String toString() {
+-        return "\nChannel:\nID: " + id + "\nNAME: " + name;
+-    }
+-}
+diff --git a/SpaceBunnyClientMaven/src/main/java/io/spacebunny/SBDevice.java b/SpaceBunnyClientMaven/src/main/java/io/spacebunny/SBDevice.java
+deleted file mode 100644
+index 5948989..0000000
+--- a/SpaceBunnyClientMaven/src/main/java/io/spacebunny/SBDevice.java
++++ /dev/null
+@@ -1,187 +0,0 @@
+-package io.spacebunny;
+-
+-
+-import org.json.JSONArray;
+-import org.json.JSONException;
+-import org.json.JSONObject;
+-
+-import java.util.ArrayList;
+-import java.util.Iterator;
+-
+-public class SBDevice {
+-
+-    private final static String CONNECTION_KEY = "connection";
+-    private final static String CHANNELS_KEY = "channels";
+-    private final static String HOST_KEY = "host";
+-    private final static String PROTOCOLS_KEY = "protocols";
+-    private final static String DEVICE_NAME_KEY = "device_name";
+-    private final static String DEVICE_ID_KEY = "device_id";
+-    private final static String SECRET_KEY = "secret";
+-    private final static String VHOST_KEY = "vhost";
+-
+-    private String host;
+-    private ArrayList<SBProtocol> protocols = new ArrayList<>(Costants.min_protocols);
+-    private ArrayList<SBChannel> channels = new ArrayList<>();
+-    private String device_name;
+-    private String device_id;
+-    private String secret;
+-    private String vhost;
+-
+-    /**
+-     *
+-     * @param device_name
+-     * @param device_id
+-     * @param secret
+-     * @param protocols
+-     * @param channels
+-     * @param host
+-     * @param vhost
+-     * @throws SpaceBunnyConfigurationException
+-     */
+-
+-    public SBDevice(String device_name, String device_id, String secret, ArrayList<SBProtocol> protocols, ArrayList<SBChannel> channels, String host, String vhost) throws SpaceBunnyConfigurationException {
+-        this.host = host;
+-        this.protocols = protocols;
+-        this.device_name =  device_name;
+-        this.device_id = device_id;
+-        this.secret =  secret;
+-        this.vhost =  vhost;
+-        this.channels = channels;
+-
+-        if (this.host == null ||
+-                this.host.equals("") ||
+-                this.protocols == null ||
+-                this.protocols.size() == 0 ||
+-                this.device_name == null ||
+-                this.device_name.equals("") ||
+-                this.device_id == null ||
+-                this.device_id.equals("") ||
+-                this.secret == null ||
+-                this.secret.equals("") ||
+-                this.vhost == null ||
+-                this.vhost.equals("") ||
+-                this.channels == null ||
+-                this.channels.size() == 0)
+-            throw new SpaceBunnyConfigurationException("Error in Device Configuration!");
+-
+-    }
+-
+-    /**
+-     *
+-     * @param jsonObject
+-     * @throws JSONException
+-     */
+-    public SBDevice(JSONObject jsonObject) throws JSONException {
+-            // Connection
+-            JSONObject conn = jsonObject.getJSONObject(CONNECTION_KEY);
+-            this.host = conn.getString(HOST_KEY);
+-
+-            JSONObject pr = conn.getJSONObject(PROTOCOLS_KEY);
+-            Iterator<?> keys = pr.keys();
+-
+-            while( keys.hasNext() ) {
+-                String key = (String)keys.next();
+-                this.protocols.add(new SBProtocol(key, pr.getJSONObject(key)));
+-            }
+-            this.device_name =  conn.getString(DEVICE_NAME_KEY);
+-            this.device_id =  conn.getString(DEVICE_ID_KEY);
+-            this.secret =  conn.getString(SECRET_KEY);
+-            this.vhost =  conn.getString(VHOST_KEY);
+-
+-            // Channels
+-            JSONArray ch = jsonObject.getJSONArray(CHANNELS_KEY);
+-            for (int i = 0; i < ch.length(); i++) {
+-                channels.add(new SBChannel(ch.getJSONObject(i)));
+-            }
+-    }
+-
+-    public ArrayList<SBProtocol> getProtocols() {
+-        return protocols;
+-    }
+-
+-    public ArrayList<SBChannel> getChannels() {
+-        return channels;
+-    }
+-
+-    public String getHost() {
+-        return host;
+-    }
+-
+-    public String getDevice_name() {
+-        return device_name;
+-    }
+-
+-    public String getDevice_id() {
+-        return device_id;
+-    }
+-
+-    public String getSecret() {
+-        return secret;
+-    }
+-
+-    public String getVhost() {
+-        return vhost;
+-    }
+-
+-    public String toString() {
+-        return "\nHOST: " + host + "\nPROTOCOLS: " + protocols.toString() +  "\nDEVICE NAME: " + device_name + "\nDEVICE_ID: " + device_id + "\nSECRET: " + secret + "\nVHOST: " + vhost
+-        + "\n" + channels.toString();
+-    }
+-
+-    /**
+-     * Device Custom Builder
+-     */
+-    public static class Builder{
+-
+-        private String host;
+-        private ArrayList<SBProtocol> protocols = new ArrayList<>(Costants.min_protocols);
+-        private ArrayList<SBChannel> channels = new ArrayList<>();
+-        private String device_name;
+-        private String device_id;
+-        private String secret;
+-        private String vhost;
+-
+-        public Builder() {
+-        }
+-
+-        public Builder setHost(String host) {
+-            this.host = host;
+-            return this;
+-        }
+-
+-        public Builder setDeviceName(String device_name) {
+-            this.device_name = device_name;
+-            return this;
+-        }
+-
+-        public Builder setDeviceId(String device_id) {
+-            this.device_id = device_id;
+-            return this;
+-        }
+-
+-        public Builder setSecret(String secret) {
+-            this.secret = secret;
+-            return this;
+-        }
+-
+-        public Builder setVHost(String vhost) {
+-            this.vhost = vhost;
+-            return this;
+-        }
+-
+-        public Builder setProtocols(ArrayList<SBProtocol> protocols) {
+-            this.protocols = protocols;
+-            return this;
+-        }
+-
+-        public Builder setChannels(ArrayList<SBChannel> channels) {
+-            this.channels = channels;
+-            return this;
+-        }
+-
+-        public SBDevice getDevice() throws SpaceBunnyConfigurationException {
+-            return new SBDevice(device_name, device_id, secret, protocols, channels, host, vhost);
+-        }
+-    }
+-}
+-
+diff --git a/SpaceBunnyClientMaven/src/main/java/io/spacebunny/SBProtocol.java b/SpaceBunnyClientMaven/src/main/java/io/spacebunny/SBProtocol.java
+deleted file mode 100644
+index 9022ae1..0000000
+--- a/SpaceBunnyClientMaven/src/main/java/io/spacebunny/SBProtocol.java
++++ /dev/null
+@@ -1,97 +0,0 @@
+-package io.spacebunny;
+-
+-/**
+- * A module that exports a protocol
+- * @module SBProtocol
+- */
+-
+-
+-import org.json.JSONException;
+-import org.json.JSONObject;
+-
+-import java.util.ArrayList;
+-
+-public class SBProtocol {
+-
+-    private final static String PORT_KEY = "port";
+-    private final static String SSL_PORT_KEY = "ssl_port";
+-
+-    private String name;
+-    private int port;
+-    private int ssl_port;
+-
+-    /**
+-     *
+-     * @constructor
+-     * @param name of the protocol
+-     * @param port of the protocol
+-     * @param ssl_port of the protocol for secure connection
+-     */
+-
+-    public SBProtocol(String name, int port, int ssl_port) {
+-        this.name = name;
+-        this.port = port;
+-        this.ssl_port = ssl_port;
+-    }
+-
+-    /**
+-     *
+-     * @constructor
+-     * @param name of the protocol
+-     * @param js JSONObject that contains all the information about the protocol
+-     */
+-
+-    public SBProtocol(String name, JSONObject js) throws JSONException {
+-        this.name = name;
+-        this.port = js.getInt(PORT_KEY);
+-        this.ssl_port = js.getInt(SSL_PORT_KEY);
+-    }
+-
+-
+-    /**
+-     *
+-     * @return name of the protocol
+-     */
+-    public String getName() {
+-        return name;
+-    }
+-
+-    /**
+-     *
+-     * @return port of the protocol
+-     */
+-    public int getPort() {
+-        return port;
+-    }
+-
+-    /**
+-     *
+-     * @return ssl_port of the protocol
+-     */
+-    public int getSsl_port() {
+-        return ssl_port;
+-    }
+-
+-    /**
+-     *
+-     * @return string with protocol information
+-     */
+-    public String toString() {
+-        return "\nPROTOCOL:\nNAME: " + name + "\nPORT: " + port + "\nSSL_PORT: " + ssl_port;
+-    }
+-
+-
+-
+-    /**
+-     * Find protocol by his name
+-     * @param p
+-     * @return searched protocol
+-     * @throws SpaceBunnyConfigurationException
+-     */
+-    public static SBProtocol findProtocol(String p, ArrayList<SBProtocol> protocols) throws SpaceBunnyConfigurationException {
+-        for (SBProtocol protocol : protocols)
+-            if (protocol.getName().equals(p))
+-                return protocol;
+-        throw new SpaceBunnyConfigurationException("Standard protocol not found. Try to configure again the device.");
+-    }
+-}
+diff --git a/SpaceBunnyClientMaven/src/main/java/io/spacebunny/SBSubscription.java b/SpaceBunnyClientMaven/src/main/java/io/spacebunny/SBSubscription.java
+deleted file mode 100644
+index cdb7e11..0000000
+--- a/SpaceBunnyClientMaven/src/main/java/io/spacebunny/SBSubscription.java
++++ /dev/null
+@@ -1,42 +0,0 @@
+-package io.spacebunny;
+-
+-/**
+- * A module that exports a subscription
+- * @module SBSubscription
+- */
+-
+-import com.rabbitmq.client.Channel;
+-
+-public class SBSubscription {
+-    private Channel channel = null;
+-    private String consumerTag = "";
+-
+-    /**
+-     *
+-     * @constructor
+-     * @param channel to subscribe
+-     * @param consumerTag that identify channel conncetion
+-     */
+-
+-    public SBSubscription(Channel channel, String consumerTag) {
+-        this.channel = channel;
+-        this.consumerTag = consumerTag;
+-    }
+-
+-    /**
+-     *
+-     * @return open channel
+-     */
+-
+-    public Channel getChannel() {
+-        return channel;
+-    }
+-
+-    /**
+-     *
+-     * @return consumerTag that identify the open connection
+-     */
+-    public String getConsumerTag() {
+-        return consumerTag;
+-    }
+-}
+diff --git a/SpaceBunnyClientMaven/src/main/java/io/spacebunny/SpaceBunny.java b/SpaceBunnyClientMaven/src/main/java/io/spacebunny/SpaceBunny.java
+new file mode 100644
+index 0000000..11374bc
+--- /dev/null
++++ b/SpaceBunnyClientMaven/src/main/java/io/spacebunny/SpaceBunny.java
+@@ -0,0 +1,347 @@
++package io.spacebunny;
++
++import io.spacebunny.connection.RabbitConnection;
++import io.spacebunny.device.SBChannel;
++import io.spacebunny.device.SBDevice;
++import io.spacebunny.device.SBProtocol;
++import io.spacebunny.util.Costants;
++import io.spacebunny.util.Utilities;
++import org.json.JSONException;
++import org.json.JSONObject;
++
++import javax.net.ssl.HttpsURLConnection;
++import javax.net.ssl.SSLContext;
++import javax.net.ssl.TrustManager;
++import javax.net.ssl.X509TrustManager;
++import java.io.BufferedReader;
++import java.io.IOException;
++import java.io.InputStreamReader;
++import java.net.URL;
++import java.net.URLConnection;
++import java.security.KeyManagementException;
++import java.security.NoSuchAlgorithmException;
++import java.util.ArrayList;
++import java.util.logging.Logger;
++
++public class SpaceBunny {
++
++    private final static Logger LOGGER = Logger.getLogger(SpaceBunny.class.getName());
++
++    public static class Client {
++
++        private SBDevice device = null;
++        private RabbitConnection rabbitConnection = null;
++
++        private OnFinishConfigiurationListener configCallBack = null;
++
++        private String device_key;
++        private boolean tls = true;
++        private boolean verify_ca = true;
++
++
++        /**
++         * @param device_key unique key device
++         * @constructor
++         */
++
++        public Client(String device_key) throws ConfigurationException {
++            if (device_key == null || device_key.equals(""))
++                throw new ConfigurationException("Device configuration error.");
++            this.device_key = device_key;
++        }
++
++        /**
++         * @param device custom device created by the user
++         * @constructor
++         */
++        public Client(SBDevice device) throws ConfigurationException {
++            if (device == null)
++                throw new ConfigurationException("Device configuration error.");
++            this.device = device;
++        }
++
++        /**
++         * Open RabbitMQ connection with SpaceBunny
++         *
++         * @throws ConnectionException
++         */
++        public void connect() throws ConnectionException {
++            connect(null, null);
++        }
++
++        /**
++         * Open RabbitMQ connection with SpaceBunny
++         *
++         * @param onConnectedListener callback
++         * @throws ConnectionException
++         */
++        public void connect(io.spacebunny.SpaceBunny.OnConnectedListener onConnectedListener) throws ConnectionException {
++            connect(null, onConnectedListener);
++        }
++
++        /**
++         * Open RabbitMQ connection with SpaceBunny
++         *
++         * @param protocol            custom protocol defined by the user
++         * @param onConnectedListener callback
++         * @throws ConnectionException
++         */
++        public void connect(SBProtocol protocol, io.spacebunny.SpaceBunny.OnConnectedListener onConnectedListener) throws ConnectionException {
++            try {
++                configure();
++                if (protocol == null) {
++                    protocol = Costants.DEFAULT_PROTOCOL;
++                } else {
++                    LOGGER.warning("Custom protocol not supported!");
++                    protocol = Costants.DEFAULT_PROTOCOL;
++                }
++
++                rabbitConnection = new RabbitConnection(protocol, tls);
++                if (rabbitConnection.connect(device) && onConnectedListener != null)
++                    onConnectedListener.onConnected();
++            } catch (Exception ex) {
++                throw new ConnectionException(ex);
++            }
++        }
++
++        /**
++         * @return connection status
++         */
++        public boolean isConnected() {
++            return rabbitConnection.isConnected();
++        }
++
++        /**
++         * Test the connection with SpaceBunny
++         * Throws an exception if it is not
++         *
++         * @throws ConnectionException
++         */
++        public void testConnection() throws ConnectionException {
++            if (!isConnected())
++                throw new ConnectionException("Space Bunny is not connected. Try spaceBunny.connect().");
++        }
++
++        /**
++         * Set a custom CA
++         *
++         * @param path of CA
++         */
++        public void setPathCustomCA(String path) throws ConfigurationException {
++            Utilities.addCA(path);
++        }
++
++        /**
++         * Download device configuration from SpaceBunny
++         *
++         * @throws KeyManagementException
++         * @throws NoSuchAlgorithmException
++         * @throws IOException
++         * @throws JSONException
++         * @throws ConnectionException
++         */
++        private void configure() throws KeyManagementException, NoSuchAlgorithmException, IOException, JSONException, ConnectionException {
++
++            URLConnection uc;
++            BufferedReader reader;
++
++            try {
++
++                URL url = new URL(Utilities.generateHostname(tls));
++                uc = url.openConnection();
++                uc.setRequestProperty("Device-Key", device_key);
++                reader = new BufferedReader(new InputStreamReader(uc.getInputStream(), "UTF-8"));
++
++            } catch (Exception ex) {
++
++                if (!verify_ca) {
++                    // Create a trust manager that does not validate certificate chains
++                    TrustManager[] trustAllCerts = new TrustManager[]{
++                            new X509TrustManager() {
++                                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
++                                    return null;
++                                }
++
++                                public void checkClientTrusted(
++                                        java.security.cert.X509Certificate[] certs, String authType) {
++                                }
++
++                                public void checkServerTrusted(
++                                        java.security.cert.X509Certificate[] certs, String authType) {
++                                }
++                            }
++                    };
++
++                    SSLContext sc = SSLContext.getInstance("SSL");
++                    sc.init(null, trustAllCerts, new java.security.SecureRandom());
++                    HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
++
++
++                    URL url = new URL(Utilities.generateHostname(tls));
++                    uc = url.openConnection();
++                    uc.setRequestProperty("Device-Key", device_key);
++                    reader = new BufferedReader(new InputStreamReader(uc.getInputStream(), "UTF-8"));
++                } else {
++                    throw new ConnectionException("Error with ssl connection!");
++                }
++
++            }
++
++            StringBuilder responseStrBuilder = new StringBuilder();
++
++            String inputStr;
++            while ((inputStr = reader.readLine()) != null)
++                responseStrBuilder.append(inputStr);
++
++            device = new SBDevice(new JSONObject(responseStrBuilder.toString()));
++
++            if (configCallBack != null)
++                configCallBack.onConfigured(this.device);
++
++        }
++
++        /**
++         * @param callBack
++         */
++        public void setOnFinishConfigiurationListener(io.spacebunny.SpaceBunny.OnFinishConfigiurationListener callBack) {
++            configCallBack = callBack;
++        }
++
++        /**
++         * Publish msg on channel to SpaceBunny
++         *
++         * @param channelName
++         * @param msg     to publish
++         * @throws ConnectionException
++         */
++        public void publish(String channelName, String msg) throws ConnectionException {
++            testConnection();
++            try {
++                SBChannel channel = SBChannel.findChannel(channelName, this.getChannels());
++                if (channel != null)
++                    rabbitConnection.publish(device.getDevice_id(), channelName, msg);
++                else
++                    LOGGER.warning("The channel does not exist!");
++            } catch (Exception ex) {
++                throw new ConnectionException(ex);
++            }
++        }
++
++        /**
++         * Receive one message from inbox
++         *
++         * @param onMessageReceived
++         * @throws ConnectionException
++         */
++        public void receive(io.spacebunny.SpaceBunny.OnMessageReceivedListener onMessageReceived) throws ConnectionException {
++            testConnection();
++            try {
++                onMessageReceived.onReceived(rabbitConnection.receive(device.getDevice_id()));
++            } catch (Exception ex) {
++                throw new ConnectionException(ex);
++            }
++        }
++
++        /**
++         * Subscribe to input channel
++         *
++         * @param onMessageReceived callBack on message received
++         * @throws ConnectionException
++         */
++        public void subscribe(RabbitConnection.OnSubscriptionMessageReceivedListener onMessageReceived) throws ConnectionException {
++            testConnection();
++            try {
++                rabbitConnection.subscribe(device.getDevice_id(), onMessageReceived);
++            } catch (Exception ex) {
++                throw new ConnectionException(ex);
++            }
++        }
++
++        /**
++         * Unsubscribe to input channel
++         *
++         * @throws ConnectionException
++         */
++        public void unsubscribe() throws ConnectionException {
++            testConnection();
++            try {
++                rabbitConnection.unsubscribe(device.getDevice_id());
++            } catch (Exception ex) {
++                throw new ConnectionException(ex);
++            }
++        }
++
++        public void setTls(boolean tls) {
++            this.tls = tls;
++        }
++
++        public boolean istls() {
++            return this.tls;
++        }
++
++        public void setVerifyCA(boolean verify) {
++            this.verify_ca = verify;
++        }
++
++        public boolean isCAVerifed() {
++            return this.verify_ca;
++        }
++
++        public ArrayList<SBProtocol> getProtocols() {
++            return device.getProtocols();
++        }
++
++        public ArrayList<SBChannel> getChannels() {
++            return device.getChannels();
++        }
++
++        /**
++         * Close connection to SpaceBunny
++         *
++         * @throws ConnectionException
++         */
++        public void close() throws ConnectionException {
++            testConnection();
++            try {
++                rabbitConnection.close();
++            } catch (Exception ex) {
++                throw new ConnectionException(ex);
++            }
++        }
++    }
++
++    public static class ConfigurationException extends Exception {
++        public ConfigurationException(String message){
++            super(message);
++        }
++
++        public ConfigurationException(Exception ex){
++            super(ex.getMessage());
++        }
++    }
++
++    public static class ConnectionException extends Exception {
++        public ConnectionException(String message){
++            super(message);
++        }
++
++        public ConnectionException(Exception ex){
++            super(ex.getMessage());
++        }
++    }
++
++    public interface OnFinishConfigiurationListener
++    {
++        void onConfigured(SBDevice device) throws ConnectionException;
++    }
++
++    public interface OnConnectedListener
++    {
++        void onConnected() throws ConnectionException;
++    }
++
++    public interface OnMessageReceivedListener
++    {
++        void onReceived(String message) throws ConnectionException;
++    }
++}
+diff --git a/SpaceBunnyClientMaven/src/main/java/io/spacebunny/SpaceBunnyClient.java b/SpaceBunnyClientMaven/src/main/java/io/spacebunny/SpaceBunnyClient.java
+deleted file mode 100644
+index b24bc26..0000000
+--- a/SpaceBunnyClientMaven/src/main/java/io/spacebunny/SpaceBunnyClient.java
++++ /dev/null
+@@ -1,305 +0,0 @@
+-package io.spacebunny; /**
+- * A module that exports the base SpaceBunny client
+- * @module SpaceBunny
+- */
+-
+-// Import some helpers modules
+-
+-import org.json.JSONException;
+-import org.json.JSONObject;
+-
+-import javax.net.ssl.HttpsURLConnection;
+-import javax.net.ssl.SSLContext;
+-import javax.net.ssl.TrustManager;
+-import javax.net.ssl.X509TrustManager;
+-import java.io.BufferedReader;
+-import java.io.IOException;
+-import java.io.InputStreamReader;
+-import java.net.URL;
+-import java.net.URLConnection;
+-import java.security.KeyManagementException;
+-import java.security.NoSuchAlgorithmException;
+-import java.util.ArrayList;
+-
+-public class SpaceBunnyClient {
+-
+-    private SBDevice device = null;
+-    private RabbitConnection rabbitConnection = null;
+-
+-    private OnFinishConfigiurationListener configCallBack = null;
+-
+-    private String device_key;
+-    private boolean ssl = true;
+-    private boolean verify_ca = true;
+-
+-
+-    /**
+-     *
+-     * @constructor
+-     * @param device_key unique key device
+-     */
+-
+-    public SpaceBunnyClient(String device_key) throws SpaceBunnyConfigurationException {
+-        if (device_key == null || device_key.equals(""))
+-            throw new SpaceBunnyConfigurationException("Device configuration error.");
+-        this.device_key = device_key;
+-    }
+-
+-    /**
+-     *
+-     * @constructor
+-     * @param device custom device created by the user
+-     */
+-    public SpaceBunnyClient(SBDevice device) throws SpaceBunnyConfigurationException {
+-        if (device == null)
+-            throw new SpaceBunnyConfigurationException("Device configuration error.");
+-        this.device = device;
+-    }
+-
+-    /**
+-     * Open RabbitMQ connection with SpaceBunny
+-     * @throws SpaceBunnyConnectionException
+-     */
+-    public void connect() throws SpaceBunnyConnectionException {
+-        connect(null, null);
+-    }
+-
+-    /**
+-     * Open RabbitMQ connection with SpaceBunny
+-     * @param onConnectedListener callback
+-     * @throws SpaceBunnyConnectionException
+-     */
+-    public void connect(OnConnectedListener onConnectedListener) throws SpaceBunnyConnectionException {
+-        connect(null, onConnectedListener);
+-    }
+-
+-    /**
+-     * Open RabbitMQ connection with SpaceBunny
+-     * @param protocol custom protocol defined by the user
+-     * @param onConnectedListener callback
+-     * @throws SpaceBunnyConnectionException
+-     */
+-    public void connect(SBProtocol protocol, OnConnectedListener onConnectedListener) throws SpaceBunnyConnectionException {
+-        try {
+-            configure();
+-            if (protocol == null)
+-                protocol = SBProtocol.findProtocol(Costants.DEFAULT_PROTOCOL, device.getProtocols());
+-            rabbitConnection = new RabbitConnection(protocol, ssl);
+-            if (rabbitConnection.connect(device) && onConnectedListener != null)
+-                onConnectedListener.onConnected();
+-        } catch (Exception ex) {
+-            throw new SpaceBunnyConnectionException(ex);
+-        }
+-    }
+-
+-    /**
+-     *
+-     * @return connection status
+-     */
+-    public boolean isConnected() {
+-        return rabbitConnection.isConnected();
+-    }
+-
+-    /**
+-     * Test the connection with SpaceBunny
+-     * Throws an exception if it is not
+-     * @throws SpaceBunnyConnectionException
+-     */
+-    public void testConnection() throws SpaceBunnyConnectionException {
+-        if (!isConnected())
+-            throw new SpaceBunnyConnectionException("Space Bunny is not connected. Try spaceBunny.connect().");
+-    }
+-
+-    /**
+-     * Set a custom CA
+-     * @param path of CA
+-     */
+-    public void setPathCustomCA(String path) throws SpaceBunnyConfigurationException {
+-        Utilities.addCA(path);
+-    }
+-
+-    /**
+-     * Download device configuration from SpaceBunny
+-     * @throws KeyManagementException
+-     * @throws NoSuchAlgorithmException
+-     * @throws IOException
+-     * @throws JSONException
+-     * @throws SpaceBunnyConnectionException
+-     */
+-    private void configure() throws KeyManagementException, NoSuchAlgorithmException, IOException, JSONException, SpaceBunnyConnectionException {
+-
+-        URLConnection uc;
+-        BufferedReader reader;
+-
+-        try {
+-
+-            URL url = new URL(Costants.generateHostname(ssl));
+-            uc = url.openConnection();
+-            uc.setRequestProperty("Device-Key", device_key);
+-            reader = new BufferedReader(new InputStreamReader(uc.getInputStream(), "UTF-8"));
+-
+-        } catch (Exception ex) {
+-
+-            if (!verify_ca) {
+-                // Create a trust manager that does not validate certificate chains
+-                TrustManager[] trustAllCerts = new TrustManager[]{
+-                        new X509TrustManager() {
+-                            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+-                                return null;
+-                            }
+-
+-                            public void checkClientTrusted(
+-                                    java.security.cert.X509Certificate[] certs, String authType) {
+-                            }
+-
+-                            public void checkServerTrusted(
+-                                    java.security.cert.X509Certificate[] certs, String authType) {
+-                            }
+-                        }
+-                };
+-
+-                SSLContext sc = SSLContext.getInstance("SSL");
+-                sc.init(null, trustAllCerts, new java.security.SecureRandom());
+-                HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+-
+-
+-                URL url = new URL(Costants.generateHostname(ssl));
+-                uc = url.openConnection();
+-                uc.setRequestProperty("Device-Key", device_key);
+-                reader = new BufferedReader(new InputStreamReader(uc.getInputStream(), "UTF-8"));
+-            } else {
+-                throw new SpaceBunnyConnectionException("Error with ssl connection!");
+-            }
+-
+-        }
+-
+-        StringBuilder responseStrBuilder = new StringBuilder();
+-
+-        String inputStr;
+-        while ((inputStr = reader.readLine()) != null)
+-            responseStrBuilder.append(inputStr);
+-
+-        device = new SBDevice(new JSONObject(responseStrBuilder.toString()));
+-
+-        if (configCallBack != null)
+-            configCallBack.onConfigured(this.device);
+-
+-    }
+-
+-    /**
+-     *
+-     * @param callBack
+-     */
+-    public void setOnFinishConfigiurationListener(OnFinishConfigiurationListener callBack) {
+-        configCallBack = callBack;
+-    }
+-
+-    /**
+-     * Publish msg on channel to SpaceBunny
+-     * @param channel
+-     * @param msg to publish
+-     * @throws SpaceBunnyConnectionException
+-     */
+-    public void publish(SBChannel channel, String msg) throws SpaceBunnyConnectionException {
+-        testConnection();
+-        try {
+-            rabbitConnection.publish(device.getDevice_id(), channel, msg);
+-        } catch (Exception ex) {
+-            throw new SpaceBunnyConnectionException(ex);
+-        }
+-    }
+-
+-    /**
+-     * Receive one message from inbox
+-     * @param onMessageReceived
+-     * @throws SpaceBunnyConnectionException
+-     */
+-    public void receive(OnMessageReceivedListener onMessageReceived) throws SpaceBunnyConnectionException {
+-        testConnection();
+-        try {
+-            onMessageReceived.onReceived(rabbitConnection.receive(device.getDevice_id()));
+-        } catch (Exception ex) {
+-            throw new SpaceBunnyConnectionException(ex);
+-        }
+-    }
+-
+-    /**
+-     * Subscribe to input channel
+-     * @param onMessageReceived callBack on message received
+-     * @throws SpaceBunnyConnectionException
+-     */
+-    public void subscribe(RabbitConnection.OnSubscriptionMessageReceivedListener onMessageReceived) throws SpaceBunnyConnectionException {
+-        testConnection();
+-        try {
+-            rabbitConnection.subscribe(device.getDevice_id(), onMessageReceived);
+-        } catch (Exception ex) {
+-            throw new SpaceBunnyConnectionException(ex);
+-        }
+-    }
+-
+-    /**
+-     * Unsubscribe to input channel
+-     * @throws SpaceBunnyConnectionException
+-     */
+-    public void unsubscribe() throws SpaceBunnyConnectionException {
+-        testConnection();
+-        try {
+-            rabbitConnection.unsubscribe(device.getDevice_id());
+-        } catch (Exception ex) {
+-            throw new SpaceBunnyConnectionException(ex);
+-        }
+-    }
+-
+-    public void setSsl(boolean ssl) {
+-        this.ssl = ssl;
+-    }
+-
+-    public boolean isSsl() {
+-        return this.ssl;
+-    }
+-
+-    public void setVerifyCA(boolean verify) {
+-        this.verify_ca = verify;
+-    }
+-
+-    public boolean isCAVerifed() {
+-        return this.verify_ca;
+-    }
+-
+-    public ArrayList<SBProtocol> getProtocols() {
+-        return device.getProtocols();
+-    }
+-
+-    public ArrayList<SBChannel> getChannels() {
+-        return device.getChannels();
+-    }
+-
+-    /**
+-     * Close connection to SpaceBunny
+-     * @throws SpaceBunnyConnectionException
+-     */
+-    public void close() throws SpaceBunnyConnectionException {
+-        testConnection();
+-        try {
+-            rabbitConnection.close();
+-        } catch (Exception ex) {
+-            throw new SpaceBunnyConnectionException(ex);
+-        }
+-    }
+-
+-    public interface OnFinishConfigiurationListener
+-    {
+-        void onConfigured(SBDevice device) throws SpaceBunnyConnectionException;
+-    }
+-
+-    public interface OnConnectedListener
+-    {
+-        void onConnected() throws SpaceBunnyConnectionException;
+-    }
+-
+-    public interface OnMessageReceivedListener
+-    {
+-        void onReceived(String message) throws SpaceBunnyConnectionException;
+-    }
+-
+-}
+diff --git a/SpaceBunnyClientMaven/src/main/java/io/spacebunny/SpaceBunnyConfigurationException.java b/SpaceBunnyClientMaven/src/main/java/io/spacebunny/SpaceBunnyConfigurationException.java
+deleted file mode 100644
+index e145ad6..0000000
+--- a/SpaceBunnyClientMaven/src/main/java/io/spacebunny/SpaceBunnyConfigurationException.java
++++ /dev/null
+@@ -1,15 +0,0 @@
+-package io.spacebunny;
+-
+-/**
+- * Custom exception for configuration errors
+- */
+-
+-public class SpaceBunnyConfigurationException extends Exception {
+-    public SpaceBunnyConfigurationException(String message){
+-        super(message);
+-    }
+-
+-    public SpaceBunnyConfigurationException(Exception ex){
+-        super(ex.getMessage());
+-    }
+-}
+diff --git a/SpaceBunnyClientMaven/src/main/java/io/spacebunny/SpaceBunnyConnectionException.java b/SpaceBunnyClientMaven/src/main/java/io/spacebunny/SpaceBunnyConnectionException.java
+deleted file mode 100644
+index b856e66..0000000
+--- a/SpaceBunnyClientMaven/src/main/java/io/spacebunny/SpaceBunnyConnectionException.java
++++ /dev/null
+@@ -1,15 +0,0 @@
+-package io.spacebunny;
+-
+-/**
+- * Custom exception for connection errors
+- */
+-
+-public class SpaceBunnyConnectionException extends Exception {
+-    public SpaceBunnyConnectionException(String message){
+-        super(message);
+-    }
+-
+-    public SpaceBunnyConnectionException(Exception ex){
+-        super(ex.getMessage());
+-    }
+-}
+diff --git a/SpaceBunnyClientMaven/src/main/java/io/spacebunny/Utilities.java b/SpaceBunnyClientMaven/src/main/java/io/spacebunny/Utilities.java
+deleted file mode 100644
+index 08bb115..0000000
+--- a/SpaceBunnyClientMaven/src/main/java/io/spacebunny/Utilities.java
++++ /dev/null
+@@ -1,54 +0,0 @@
+-package io.spacebunny;
+-
+-import javax.net.ssl.SSLContext;
+-import javax.net.ssl.TrustManagerFactory;
+-import java.io.BufferedInputStream;
+-import java.io.File;
+-import java.io.FileInputStream;
+-import java.io.InputStream;
+-import java.nio.file.Files;
+-import java.nio.file.Path;
+-import java.nio.file.Paths;
+-import java.security.KeyStore;
+-import java.security.cert.Certificate;
+-import java.security.cert.CertificateFactory;
+-
+-public class Utilities {
+-
+-    /**
+-     * Function that add custom CA
+-     * @param path of the certificate
+-     */
+-    public static void addCA(String path) throws SpaceBunnyConfigurationException {
+-        try {
+-            KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+-            Path ksPath = Paths.get(System.getProperty("java.home"),
+-                    "lib", "security", "cacerts");
+-            keyStore.load(Files.newInputStream(ksPath),
+-                    "changeit".toCharArray());
+-
+-            CertificateFactory cf = CertificateFactory.getInstance("X.509");
+-
+-            File f = new File(path);
+-            if (f.exists()) {
+-                try (InputStream caInput = new BufferedInputStream(
+-                        new FileInputStream(path))) {
+-                    Certificate crt = cf.generateCertificate(caInput);
+-
+-                    keyStore.setCertificateEntry(f.getName(), crt);
+-                }
+-
+-                TrustManagerFactory tmf = TrustManagerFactory
+-                        .getInstance(TrustManagerFactory.getDefaultAlgorithm());
+-                tmf.init(keyStore);
+-                SSLContext sslContext = SSLContext.getInstance("TLS");
+-                sslContext.init(null, tmf.getTrustManagers(), null);
+-                SSLContext.setDefault(sslContext);
+-            } else {
+-                throw new SpaceBunnyConfigurationException("Error with custom CA path.");
+-            }
+-        } catch (Exception e) {
+-            throw new SpaceBunnyConfigurationException("Error with custom CA.");
+-        }
+-    }
+-}
+diff --git a/SpaceBunnyClientMaven/src/main/java/io/spacebunny/connection/RabbitConnection.java b/SpaceBunnyClientMaven/src/main/java/io/spacebunny/connection/RabbitConnection.java
+new file mode 100644
+index 0000000..85a482b
+--- /dev/null
++++ b/SpaceBunnyClientMaven/src/main/java/io/spacebunny/connection/RabbitConnection.java
+@@ -0,0 +1,129 @@
++package io.spacebunny.connection;
++
++import com.rabbitmq.client.*;
++import io.spacebunny.device.SBChannel;
++import io.spacebunny.device.SBDevice;
++import io.spacebunny.device.SBProtocol;
++import io.spacebunny.device.SBSubscription;
++
++import java.io.IOException;
++import java.math.BigInteger;
++import java.security.KeyManagementException;
++import java.security.NoSuchAlgorithmException;
++import java.security.SecureRandom;
++import java.util.HashMap;
++import java.util.Map;
++
++public class RabbitConnection {
++    private Connection conn = null;
++    private SBProtocol protocol = null;
++    private boolean tls = true;
++    private Map<String, SBSubscription> channelSubscribes = new HashMap<String, SBSubscription>();
++
++    public RabbitConnection(SBProtocol protocol, boolean tls)
++    {
++        this.protocol = protocol;
++        this.tls = tls;
++    }
++
++    public boolean connect(SBDevice device) throws KeyManagementException, NoSuchAlgorithmException, IOException {
++        ConnectionFactory factory = new ConnectionFactory();
++        factory.setHost(device.getHost());
++        factory.setPort(tls ? protocol.getTls_port() : protocol.getPort());
++        factory.setVirtualHost(device.getVhost());
++        factory.setUsername(device.getDevice_id());
++        factory.setPassword(device.getSecret());
++        if (tls)
++            factory.useSslProtocol();
++        conn = factory.newConnection();
++
++        return true;
++
++    }
++
++    public boolean isConnected() {
++        return ((conn != null) && (conn.isOpen()));
++    }
++
++    public void close() throws IOException {
++        conn.close(0, "Close Connection");
++    }
++
++    public void publish(String device_id, String channelName, String msg) throws IOException {
++        Channel rabbitChannel = conn.createChannel();
++
++        //String queueName = device_id + ".inbox";
++        String exchangeName = device_id;
++        String routingKey = exchangeName + "." + channelName;
++
++        rabbitChannel.basicPublish(exchangeName, routingKey, null, msg.getBytes());
++
++        rabbitChannel.close(0, "Close Channel");
++
++    }
++
++    public String receive(String device_id) throws IOException {
++        String message = "";
++        Channel channel = conn.createChannel();
++
++        String queueName = device_id + ".inbox";
++
++        GetResponse response = channel.basicGet(queueName, false);
++        if (response == null) {
++            message = "-1";
++        } else {
++            byte[] body = response.getBody();
++            long deliveryTag = response.getEnvelope().getDeliveryTag();
++
++            message = new String(body);
++
++            channel.basicAck(deliveryTag, false);
++        }
++
++        channel.close(0, "Close Channel");
++        return message;
++    }
++
++    public void subscribe(String device_id, final OnSubscriptionMessageReceivedListener onSubscriptionMessageReceivedListener) throws IOException {
++        final Channel channel = conn.createChannel();
++
++        final String random_consumer_tag = new BigInteger(130, new SecureRandom()).toString(32);
++        String queueName = device_id + ".inbox";
++
++        channelSubscribes.put(device_id, new SBSubscription(channel, random_consumer_tag));
++
++        boolean autoAck = false;
++        channel.basicConsume(queueName, autoAck, random_consumer_tag,
++                new DefaultConsumer(channel) {
++                    @Override
++                    public void handleDelivery(String consumerTag,
++                                               Envelope envelope,
++                                               AMQP.BasicProperties properties,
++                                               byte[] body)
++                            throws IOException
++                    {
++                        String routingKey = envelope.getRoutingKey();
++                        String contentType = properties.getContentType();
++                        long deliveryTag = envelope.getDeliveryTag();
++
++                        onSubscriptionMessageReceivedListener.onReceived(new String(body), envelope);
++
++                        channel.basicAck(deliveryTag, false);
++                    }
++                });
++
++    }
++
++    public void unsubscribe(String device_id) throws IOException {
++        SBSubscription subscription = channelSubscribes.get(device_id);
++        subscription.getChannel().basicCancel(subscription.getConsumerTag());
++        subscription.getChannel().close(0, "Close Channel");
++        channelSubscribes.remove(device_id);
++    }
++
++    public interface OnSubscriptionMessageReceivedListener
++    {
++        void onReceived(String message, Envelope envelope);
++    }
++
++}
+diff --git a/SpaceBunnyClientMaven/src/main/java/io/spacebunny/device/SBChannel.java b/SpaceBunnyClientMaven/src/main/java/io/spacebunny/device/SBChannel.java
+new file mode 100644
+index 0000000..5f95221
+--- /dev/null
++++ b/SpaceBunnyClientMaven/src/main/java/io/spacebunny/device/SBChannel.java
+@@ -0,0 +1,79 @@
++package io.spacebunny.device;
++
++/**
++ * A module that exports a channel
++ * @module SBChannel
++ */
++
++import io.spacebunny.SpaceBunny;
++import org.json.JSONException;
++import org.json.JSONObject;
++
++import java.util.ArrayList;
++import java.util.logging.Logger;
++
++public class SBChannel {
++
++
++    private final static Logger LOGGER = Logger.getLogger(SpaceBunny.class.getName());
++
++    private final static String ID_KEY = "id";
++    private final static String NAME_KEY = "name";
++
++    private String id;
++    private String name;
++
++    /**
++     *
++     * @constructor
++     * @param id of the channel
++     * @param name of the channel
++     */
++
++    public SBChannel(String id, String name) {
++        this.id = id;
++        this.name = name;
++    }
++
++    /**
++     *
++     * @constructor
++     * @param jsonObject that contains all the information about the channel
++     */
++
++    public SBChannel(JSONObject jsonObject) throws JSONException {
++        this.id = jsonObject.getString(ID_KEY);
++        this.name = jsonObject.getString(NAME_KEY);
++    }
++
++    /**
++     *
++     * @return id of the channel
++     */
++    public String getId() {
++        return id;
++    }
++
++    /**
++     *
++     * @return name of the channel
++     */
++    public String getName() {
++        return name;
++    }
++
++    /**
++     *
++     * @return string with channel information
++     */
++    public String toString() {
++        return "\nChannel:\nID: " + id + "\nNAME: " + name;
++    }
++
++    public static SBChannel findChannel(String name, ArrayList<SBChannel> channels) throws SpaceBunny.ConfigurationException {
++        for (SBChannel channel : channels)
++            if (channel.getName().equals(name))
++                return channel;
++        return null;
++    }
++}
+diff --git a/SpaceBunnyClientMaven/src/main/java/io/spacebunny/device/SBDevice.java b/SpaceBunnyClientMaven/src/main/java/io/spacebunny/device/SBDevice.java
+new file mode 100644
+index 0000000..a058453
+--- /dev/null
++++ b/SpaceBunnyClientMaven/src/main/java/io/spacebunny/device/SBDevice.java
+@@ -0,0 +1,202 @@
++package io.spacebunny.device;
++
++
++import io.spacebunny.SpaceBunny;
++import io.spacebunny.util.Costants;
++import org.json.JSONArray;
++import org.json.JSONException;
++import org.json.JSONObject;
++
++import java.util.ArrayList;
++import java.util.Iterator;
++import java.util.logging.Logger;
++
++public class SBDevice {
++
++    private final static String CONNECTION_KEY = "connection";
++    private final static String CHANNELS_KEY = "channels";
++    private final static String HOST_KEY = "host";
++    private final static String PROTOCOLS_KEY = "protocols";
++    private final static String DEVICE_NAME_KEY = "device_name";
++    private final static String DEVICE_ID_KEY = "device_id";
++    private final static String SECRET_KEY = "secret";
++    private final static String VHOST_KEY = "vhost";
++    private final static Logger LOGGER = Logger.getLogger(SpaceBunny.class.getName());
++
++    private String host;
++    private ArrayList<SBProtocol> protocols = new ArrayList<>(1);
++    private ArrayList<SBChannel> channels = new ArrayList<>();
++    private String device_name;
++    private String device_id;
++    private String secret;
++    private String vhost;
++
++    /**
++     *
++     * @param device_name
++     * @param device_id
++     * @param secret
++     * @param protocols
++     * @param channels
++     * @param host
++     * @param vhost
++     * @throws SpaceBunny.ConfigurationException
++     */
++
++    public SBDevice(String device_name, String device_id, String secret, ArrayList<SBProtocol> protocols, ArrayList<SBChannel> channels, String host, String vhost) throws SpaceBunny.ConfigurationException {
++        this.host = host;
++        this.protocols = protocols;
++        this.device_name =  device_name;
++        this.device_id = device_id;
++        this.secret =  secret;
++        this.vhost =  vhost;
++        this.channels = channels;
++
++        // Check if default protocol already exists
++        if (SBProtocol.findProtocol(Costants.DEFAULT_PROTOCOL.getName(), this.protocols) == null)
++            this.protocols.add(0, Costants.DEFAULT_PROTOCOL);
++
++        if (this.host == null ||
++                this.host.equals("") ||
++                this.device_name == null ||
++                this.device_name.equals("") ||
++                this.device_id == null ||
++                this.device_id.equals("") ||
++                this.secret == null ||
++                this.secret.equals("") ||
++                this.vhost == null ||
++                this.vhost.equals(""))
++            throw new SpaceBunny.ConfigurationException("Error in Device Configuration!");
++
++        if (this.channels.size() == 0)
++            LOGGER.warning("No channel has been added.");
++
++    }
++
++    /**
++     *
++     * @param jsonObject
++     * @throws JSONException
++     */
++    public SBDevice(JSONObject jsonObject) throws JSONException {
++        // Connection
++        JSONObject conn = jsonObject.getJSONObject(CONNECTION_KEY);
++        this.host = conn.getString(HOST_KEY);
++
++        JSONObject pr = conn.getJSONObject(PROTOCOLS_KEY);
++        Iterator<?> keys = pr.keys();
++
++        this.protocols.add(Costants.DEFAULT_PROTOCOL);
++
++        while( keys.hasNext() ) {
++            String key = (String)keys.next();
++            SBProtocol newProtocol = new SBProtocol(key, pr.getJSONObject(key));
++
++            // Check default protocol updates
++            if (newProtocol.getName().equals(Costants.DEFAULT_PROTOCOL.getName()))
++                this.protocols.remove(Costants.DEFAULT_PROTOCOL);
++
++            this.protocols.add(newProtocol);
++        }
++        this.device_name =  conn.getString(DEVICE_NAME_KEY);
++        this.device_id =  conn.getString(DEVICE_ID_KEY);
++        this.secret =  conn.getString(SECRET_KEY);
++        this.vhost =  conn.getString(VHOST_KEY);
++
++        // Channels
++        JSONArray ch = jsonObject.getJSONArray(CHANNELS_KEY);
++        for (int i = 0; i < ch.length(); i++) {
++            channels.add(new SBChannel(ch.getJSONObject(i)));
++        }
++    }
++
++    public ArrayList<SBProtocol> getProtocols() {
++        return protocols;
++    }
++
++    public ArrayList<SBChannel> getChannels() {
++        return channels;
++    }
++
++    public String getHost() {
++        return host;
++    }
++
++    public String getDevice_name() {
++        return device_name;
++    }
++
++    public String getDevice_id() {
++        return device_id;
++    }
++
++    public String getSecret() {
++        return secret;
++    }
++
++    public String getVhost() {
++        return vhost;
++    }
++
++    public String toString() {
++        return "\nHOST: " + host + "\nPROTOCOLS: " + protocols.toString() +  "\nDEVICE NAME: " + device_name + "\nDEVICE_ID: " + device_id + "\nSECRET: " + secret + "\nVHOST: " + vhost
++        + "\n" + channels.toString();
++    }
++
++    /**
++     * Device Custom Builder
++     */
++    public static class Builder{
++
++        private String host;
++        private ArrayList<SBProtocol> protocols = new ArrayList<>(1);
++        private ArrayList<SBChannel> channels = new ArrayList<>();
++        private String device_name;
++        private String device_id;
++        private String secret;
++        private String vhost;
++
++        public Builder() {
++        }
++
++        public Builder setHost(String host) {
++            this.host = host;
++            return this;
++        }
++
++        public Builder setDeviceName(String device_name) {
++            this.device_name = device_name;
++            return this;
++        }
++
++        public Builder setDeviceId(String device_id) {
++            this.device_id = device_id;
++            return this;
++        }
++
++        public Builder setSecret(String secret) {
++            this.secret = secret;
++            return this;
++        }
++
++        public Builder setVHost(String vhost) {
++            this.vhost = vhost;
++            return this;
++        }
++
++        public Builder setProtocols(ArrayList<SBProtocol> protocols) {
++            this.protocols = protocols;
++            return this;
++        }
++
++        public Builder setChannels(ArrayList<SBChannel> channels) {
++            this.channels = channels;
++            return this;
++        }
++
++        public SBDevice getDevice() throws SpaceBunny.ConfigurationException {
++            return new SBDevice(device_name, device_id, secret, protocols, channels, host, vhost);
++        }
++    }
++}
++
+diff --git a/SpaceBunnyClientMaven/src/main/java/io/spacebunny/device/SBProtocol.java b/SpaceBunnyClientMaven/src/main/java/io/spacebunny/device/SBProtocol.java
+new file mode 100644
+index 0000000..4b00f93
+--- /dev/null
++++ b/SpaceBunnyClientMaven/src/main/java/io/spacebunny/device/SBProtocol.java
+@@ -0,0 +1,97 @@
++package io.spacebunny.device;
++
++/**
++ * A module that exports a protocol
++ * @module SBProtocol
++ */
++
++
++import io.spacebunny.SpaceBunny;
++import org.json.JSONException;
++import org.json.JSONObject;
++
++import java.util.ArrayList;
++
++public class SBProtocol {
++
++    private final static String PORT_KEY = "port";
++    private final static String TLS_PORT_KEY = "ssl_port"; // TODO da cambiare in tls
++
++    private String name;
++    private int port;
++    private int tls_port;
++
++    /**
++     *
++     * @constructor
++     * @param name of the protocol
++     * @param port of the protocol
++     * @param tls_port of the protocol for secure connection
++     */
++
++    public SBProtocol(String name, int port, int tls_port) {
++        this.name = name;
++        this.port = port;
++        this.tls_port = tls_port;
++    }
++
++    /**
++     *
++     * @constructor
++     * @param name of the protocol
++     * @param js JSONObject that contains all the information about the protocol
++     */
++
++    public SBProtocol(String name, JSONObject js) throws JSONException {
++        this.name = name;
++        this.port = js.getInt(PORT_KEY);
++        this.tls_port = js.getInt(TLS_PORT_KEY);
++    }
++
++
++    /**
++     *
++     * @return name of the protocol
++     */
++    public String getName() {
++        return name;
++    }
++
++    /**
++     *
++     * @return port of the protocol
++     */
++    public int getPort() {
++        return port;
++    }
++
++    /**
++     *
++     * @return tls_port of the protocol
++     */
++    public int getTls_port() {
++        return tls_port;
++    }
++
++    /**
++     *
++     * @return string with protocol information
++     */
++    public String toString() {
++        return "\nPROTOCOL:\nNAME: " + name + "\nPORT: " + port + "\nTLS_PORT: " + tls_port;
++    }
++
++
++
++    /**
++     * Find protocol by his name
++     * @param name
++     * @return searched protocol
++     */
++    public static SBProtocol findProtocol(String name, ArrayList<SBProtocol> protocols) {
++        for (SBProtocol protocol : protocols)
++            if (protocol.getName().equals(name))
++                return protocol;
++        return null;
++    }
++}
+diff --git a/SpaceBunnyClientMaven/src/main/java/io/spacebunny/device/SBSubscription.java b/SpaceBunnyClientMaven/src/main/java/io/spacebunny/device/SBSubscription.java
+new file mode 100644
+index 0000000..b4778c6
+--- /dev/null
++++ b/SpaceBunnyClientMaven/src/main/java/io/spacebunny/device/SBSubscription.java
+@@ -0,0 +1,42 @@
++package io.spacebunny.device;
++
++/**
++ * A module that exports a subscription
++ * @module SBSubscription
++ */
++
++import com.rabbitmq.client.Channel;
++
++public class SBSubscription {
++    private Channel channel = null;
++    private String consumerTag = "";
++
++    /**
++     *
++     * @constructor
++     * @param channel to subscribe
++     * @param consumerTag that identify channel conncetion
++     */
++
++    public SBSubscription(Channel channel, String consumerTag) {
++        this.channel = channel;
++        this.consumerTag = consumerTag;
++    }
++
++    /**
++     *
++     * @return open channel
++     */
++
++    public Channel getChannel() {
++        return channel;
++    }
++
++    /**
++     *
++     * @return consumerTag that identify the open connection
++     */
++    public String getConsumerTag() {
++        return consumerTag;
++    }
++}
+diff --git a/SpaceBunnyClientMaven/src/main/java/io/spacebunny/util/Costants.java b/SpaceBunnyClientMaven/src/main/java/io/spacebunny/util/Costants.java
+new file mode 100644
+index 0000000..18882b4
+--- /dev/null
++++ b/SpaceBunnyClientMaven/src/main/java/io/spacebunny/util/Costants.java
+@@ -0,0 +1,13 @@
++package io.spacebunny.util;
++
++import io.spacebunny.device.SBProtocol;
++
++public class Costants {
++
++    public final static String URL_ENDPOINT = "http://api.demo.spacebunny.io";
++    public final static String URL_ENDPOINT_TLS = "https://api.demo.spacebunny.io";
++    public final static String API_VERSION = "/v1";
++    public final static String PATH_ENDPOINT = "/device_configurations";
++
++    public static SBProtocol DEFAULT_PROTOCOL = new SBProtocol("amqp", 5672, 5671);
++}
+diff --git a/SpaceBunnyClientMaven/src/main/java/io/spacebunny/util/Utilities.java b/SpaceBunnyClientMaven/src/main/java/io/spacebunny/util/Utilities.java
+new file mode 100644
+index 0000000..63c6d49
+--- /dev/null
++++ b/SpaceBunnyClientMaven/src/main/java/io/spacebunny/util/Utilities.java
+@@ -0,0 +1,57 @@
++package io.spacebunny.util;
++
++import io.spacebunny.SpaceBunny;
++
++import javax.net.ssl.SSLContext;
++import javax.net.ssl.TrustManagerFactory;
++import java.io.BufferedInputStream;
++import java.io.File;
++import java.io.FileInputStream;
++import java.io.InputStream;
++import java.nio.file.Files;
++import java.nio.file.Path;
++import java.nio.file.Paths;
++import java.security.KeyStore;
++import java.security.cert.Certificate;
++import java.security.cert.CertificateFactory;
++
++public class Utilities {
++
++
++    public static String generateHostname(boolean tls) {
++        return (tls ? Costants.URL_ENDPOINT_TLS : Costants.URL_ENDPOINT) + Costants.API_VERSION + Costants.PATH_ENDPOINT;
++    }
++
++    public static void addCA(String path) throws SpaceBunny.ConfigurationException {
++        try {
++            KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
++            Path ksPath = Paths.get(System.getProperty("java.home"),
++                    "lib", "security", "cacerts");
++            keyStore.load(Files.newInputStream(ksPath),
++                    "changeit".toCharArray());
++
++            CertificateFactory cf = CertificateFactory.getInstance("X.509");
++
++            File f = new File(path);
++            if (f.exists()) {
++                try (InputStream caInput = new BufferedInputStream(
++                        new FileInputStream(path))) {
++                    Certificate crt = cf.generateCertificate(caInput);
++
++                    keyStore.setCertificateEntry(f.getName(), crt);
++                }
++
++                TrustManagerFactory tmf = TrustManagerFactory
++                        .getInstance(TrustManagerFactory.getDefaultAlgorithm());
++                tmf.init(keyStore);
++                SSLContext sslContext = SSLContext.getInstance("TLS");
++                sslContext.init(null, tmf.getTrustManagers(), null);
++                SSLContext.setDefault(sslContext);
++            } else {
++                throw new SpaceBunny.ConfigurationException("Error with custom CA path.");
++            }
++        } catch (Exception e) {
++            throw new SpaceBunny.ConfigurationException("Error with custom CA.");
++        }
++    }
++}
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/Costants.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/Costants.class
+deleted file mode 100644
+index dc5e2469c4abddc00ef11b80188c2d26e3a92ae9..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 966
+zcmbV~-%b-j6vn^lmUdf;U=;)u6#oKhS7V}y5))G)l2mJK<${}Lx*f~lc4pn(Ht|t>
+z3yc>gUibh$l=0h^lwLGkxXI4!cV^EwzjJ2({QdPCz!N+wB9A+H+;wr!#iom`0y5an
+z<Gw(t9|bLCI-%7j5h&M=<v@CYG+nQeMA~#;2+UQji4$p(0~z#{iw6P=lWDCu4qQAG
+zn3bV!4OA3sYg|;A8Or2nZ12KjsHaUUjBH|k8^i))-yvj{maljBUVW@JTkk*AoAqkF
+zCXn0FMkg-?oXxERfo#=wl)!vV8}+W=YpbX!+W{lxn)PLHAS0dX(_l6^()3@hY3s$I
+z^i{iW%vY~!ho!`<YoV)*ie#eRFlJ<rPK%p|Thm(Lutc&RlE0Bi|MOcJo^Ipr_`xY<
+zv0?j>ul97x#HNils-zt)VF_0RmZq}^JUdE~Fn;cN>|mv%dbV<gTw&7SvDZ-p?W>k=
+z%_rUM6PrzDeNWTO|4Gcs-j}e1MHJYHvs16PkCo4xuy(Gm!20>bJTpSG;_2Mj;0?_4
+z;B#1kivk3SR2j@tmnQTa^@RyNPrWdqFH)CrX`FwVYb=Rg4r6RO$7L#yv*0|l{S)H*
+zaH|!Lxna=3D!)skA8-}ds0vuaIwNWFF6T74xcUvbvU5_-o=`d58iY&l?>w@^$`j?x
+psfg>i!L<#(gvqncn`55TI(>5GnIFidKw@Y&0-B||#aITn{{cH-)*}D_
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/Main$1.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/Main$1.class
+index d98b722e34ddf18e09d6179f8a1cd0e8f2e5acb0..d2c7e668b0313b5d9712603818608f3180d2a2a1 100644
+GIT binary patch
+delta 411
+zcmah^%Syvg5Is|4Zj;7mYa3g&4+B1^L=bV|PU}W=CAbtcW|2)&sERJcZz%CcL_u)j
+z2Z*2GFSv6po|}Lh7cOS*nK=*cysLZDefxfS1+W3n#t2-6S%td7+;Hjkq_cbwCH|m)
+z8iZ$;aeU*ShgVS$`bRsx3~a9)3(R~eX#OJ>*n8JO*uRL9c%ZN_{8}ru9JJAKFbXs6
+zN!M5uY^5IsSG@E|TIr*-rK{(fx0}Rq7-;Wrh@hN)%D%W-affvjc!9v+IRzFoIVmEa
+zujtL{Gvpzoi|m>PDzMm{TmYL0#A6s|h&FGsble}Kn;EM)iNoBfy%U&ZpQ6X$JIzm(
+dvy2L6vRxH5l!)qNbTUw+vVnQiqPl@5tRDa!L1+K~
+
+literal 972
+zcmah{T~8B16g|_grOPT>+KQs}tLm023!+b`4^&7@ikQ^!;?s0HwnMfv&F(CbpQR6&
+z_}~xlM;Y&IQ7lM&*ts8j=G=SFogY8HeFw0C=PpWEF5@O{xoF_Fi#xdM;GTo~4jwR+
+zUPvX)D~7z^+Gi+q^gu8ybfpq+({W$K?|DC>Or@(s9_{m3+V~_{Fe8~TcyE*vaVO$Q
+zA}FkPr4Et_4@Ey!>L}RdQZ?5%38z&@tB-P+#$v#*?4JSlwqA=v8H!EYNokPz3`-ZG
+z7~Jhop_mw{RpQ_g#XX(Iq1chO<Fc*0dcY4k&9kk-NGDPacZC`0fdk(|3o9PxP<GJv
+z@EA`Vta=Er=3w2!Q*1C)|1}816-ydKTn&T0{(%UMgJ%pcXTd!yz?K!D6G@>=b5HG%
+z)X8WnflOm=8}G`*2vU!s@jpQO!UCG~4=vjtJ!oOGXe$P-cbu8J|Dk(2L(jw{OeXqY
+zll6|Mu`#_1of?MP6i=M*2yEzz;A2{8eYVQ)4KmCbJ>?}8{nq(v42xL@vy2SR#PUbf
+zYt27@%RY?8nUZI8#u|$B<cW#ie~v!dFhwqT0a-@2xbhY3bM||lP74OE!lToh0&ocn
+z6w#_FpUW<H$XdGjFUYlzkv~S^l)}w^RS8(jXzEkw2@PFB1&c&iC4vIk8uF-<pTjjQ
+XWx4CPfy?AoC|4wF`*zU8!&3PdvM29J
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/Main$2$1.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/Main$2$1.class
+index 8e9ad0be3567827a141824e0c6364fd3ba4285a2..043f4ce28e1555b86cd9a4d561329453b3ff05fe 100644
+GIT binary patch
+delta 83
+zcmaFK{-1rrO-4!o%zXXgg2d$1q|&^+O8w;gyu8%plFa<P$<G<TN^0VieZ>^Us5se?
+Q*^^a;ft^8hazAqv0D-L@!T<mO
+
+delta 60
+zcmey*{*ryeO-4SK%zXXgg2d$1q|&^+%E_M?zw*hU2u)%RV^o+N&g{vm%)ri|GI=R;
+F6adwd6(Rrt
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/Main$2.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/Main$2.class
+index f90574fc6c4bebeeebad3bbd51bd271675788683..3589170bf948e62cd1a58a62f210a79f379069a8 100644
+GIT binary patch
+delta 620
+zcmaJ<%Wl&^6g}5*J+b4YX-U&Ip?QEqUJdSpP?{9FsMw$)BtS?konRHC)QO0TKnNjz
+zpvBBjumlMe2?Xr<0saDsA3)qBRawDe?mg!|&uHdn?48m4{`=Ec0PEP+p`&QPz_}>S
+zM`0OApd@g?fQIsjR0OI5HG$=DyD%+qk)ZALJl78h#qek`WldO{<6EBZ1=k2xc$gt8
+ze7m18u0QR%gTU+iLjha9p+<ex#2VI3#E~>HgGGY+zzH0J{ycE^2d%>D3lo>nB&6kv
+zk}@rBn89Te8)(UfQqu%@*K+uJfh>8X%*jI~O?jrqiIPcj-rDK=zS|w`J{3VYBfls&
+za$<1M>3PG4gmPu~k@Li{dyc<n-w7Uj{$5-DQquBUq@rFWl;kV5oV{Dw_4@X3;B?*2
+zf$u-FyQi~dU)|8!)q8{m){qn6```Lc@n);~udIFB>2$o{uWqdH>lh%!K*=QH@`u`_
+zB^jT}zq|>R<3P6d0W=$#RgW<>f}f$?uYH6#M)W<W6{OfE5Mf*3F-2rh#vC(q(vCFd
+znPvEl24=bPEMo;r$c<xp?lT#!@rTga15rk$G2+2>OmjHKzM<*dULR||f-P)n`X2zm
+Be!2hv
+
+literal 1518
+zcmbVMYflqF6g@+0w=Jub0!36FLV-S%^72Iyg#y~7NJ0&X@zd^h(hga6o9>oKh(F3i
+zYodwqvp>psXIsE7H5xzc&dk|+&%O8DJNx73mu~=8P>i4-vr(v+i(($BDALF%$cAxG
+zp6@GIh$4)fJS-|$Qn0LGg+VP^7H<?x&2hNHaN|TXlTKYT_*T=hP8p_3!p?bsE`eP6
+z;#<KK+;Z~_p><&icY|Rj^*7`6Aw#fWS2)8!Nm%?<^H}GN*P3n;5--_?W*%w{A<rE!
+z=+*?~mGCj|X~Ie_Q}BM<D%ezl;qnSYASEM&jhaS~Nq!@xBke@XHC<umHX9A?v?Lsv
+zbD}%eY5hFjVlRhvU-a@;p&cQ=L0r+DcLuM!!nPa*59nOBn+=2S3RzS{X1XAgppthi
+z!?Yb?Rrk1CvnvW7s(6IQDh3c!F^Dk*PgJZSuV7upQ;?>kKKaih6Z4tNkLznwOYc=Y
+z!*i;s+q5lFa!C?zs@TE~!*DMXhL|Uksae(BzJ5enGAwsn`rDq|zm#1{%4vughI*pe
+zKT@?DN5WkwNK?>lEvulJIrf%B>TSC{UaDocK~m;r$0xd-{Mpi&RJq&f8BN7#D&4Ei
+z)XSkB<3eLa-ZV?8V#n<_rN~FAH+54uHHL*N7vQ{I`QCYt`5oF#^J<DXP2DjXLgxxz
+zFwE{-<u>4r+8%ctt;!F$!Nm!$T=t;or##SfUAUb~LRwSn{(*>6Q1FsryIa}+BfHWd
+zKMfY?@1=s_I#?_wuLJ$m`sf)%oX{cKt<qT{(M<LeSmrbOK6p06^bU~?a0?^!mMmn2
+z1V(9PxQQ|HlMH7FdJO5zN3a$GCAnq;Ed;;gT0GQ(B7v_6zajQW3sD&$02v@ouE03`
+zKqrZA3MtHa!4hr4POvcUQWCc*=pC|_iL{Y%+D#A=q;--Qr)b|tw$mOqgCuUyZkoRL
+W(+ctmdn-ted8~#aC}0=cp~x>|`IJEb
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/Main$3.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/Main$3.class
+index d35d5368f258bbf4a18937665c84216e1a1e750f..ce0aa03a410fb16aa10ad23095dc3a8a5ae9a36f 100644
+GIT binary patch
+delta 467
+zcmXYu&rTCj6vlsNT6*np#R|2QDYl>^XtA__{B0ow;=;rya5o_nQ`20Dtpr!<*4;QO
+zAHu|~E_eVIY<&pdfq15HlXLF*?)mbaKliu!XWZrWp9^4v{UVcuK9(m%mRO$9*X;Pd
+zqNhGnJj-0uu;NqXxuIoP6{gOjK{z~(PU54F&V4d;gu?NlAG?uYUpW_lI37g9VLTKT
+zlP`1S@Fv++TCeZ=qXQvKJ_iyeKMuXh>-3kDlk1+Wq+Mwpty$LDu-xUoWtzb7!m`Ph
+zWt$z#E`eo_K$v+Koki_I<leSlo}a|0qyBqm=@O(rrCBiaghukUYHq8if8~4n&0ER|
+zRei40(dn&@E2UCaOe0Tini+(0dgaxYA1E#;f+iL9b{zZ6QdK0(5sbN|-0peCtz*=;
+zbXTjCXe)1B869e@(a?ow8WpWlBd<0;R$I7Ld#E{s_r_4qlT&)u&H{^i=Xu0q70jCR
+O^h4U*(-M=4;m&`I|3TCM
+
+delta 429
+zcmXX?yG{Z@6g{&bBf|)&h>NJ8pu+MH1RtO=Mk;D!V<j<LkdT!Kn)n$jg_R#+;j{1q
+z{1r=k<5_f)IrrSxxp(GEzR8o%pZ5;{H8g_=VO2pR6GRqk6O4LCDSGP)8_0Q(m#`Fq
+zC`c3~N&?}VPA@y?cP{MXYsa}2NV`rV*6MX_XSgpAIOsav;h{h#$GH1^q;=bI?5kF<
+zGZ@(J_o=W(ZBeqy8k?wSOd+fhfhked*g{RCj%|q@ja`@;doV{2!t^z0U)d^+JF)Cu
+znt{K8qkAKFjtXC*xw?o(Jv}mmH-abxrpfB`y@;|3PY~7%jK^`!3^BkOAdgw19&?2l
+z;`9XOVR{OqrmxZWYL_92MgB&K+GXaeSl}~~+#to}J&iagCE-Vc8BaO=ua+d2FwP_v
+Y{qSLlu0g>Rt)E3Jm?Kkc3DE+Rzv+iHWB>pF
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/Main.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/Main.class
+index 0d7ed7b3b6e1d44e3397ea4beecc6e73025c5e15..a8480435803a85fc30cefe20186ecc4d108ea5ea 100644
+GIT binary patch
+delta 525
+zcmZvZOHWf#5XXP#p3{5i?M+CahElb)Qb9|#+!iU10&0DMARBhFDR>i`n2ShR7)@OG
+z1vF>nNAVFKTfc@M!L^UMbxS6hng5yJ%sH9!Gxs~U`{U2YFF=c(fHCSLT(vX;G;@|H
+zAVWPB&D6Cl^8s0|r((g<4hT~bvS?Wf7-iYAV(GlweINMUr~Nn?C@Suoo>Wz5)rp<5
+ztP1Mhs6F4ZrYO7by6~j>pAE^guE_Tf8^_Oj2l4(%lDuea_xedS3b{cy<TiIs2byW~
+z-H>~1o({A^9=M)YR9o(qx2_85#qNW*X0{b2x2j88(Q#jO(M6{09_gYyS(Ny<`b_bm
+zVtgm*9wteAFo+*-^^XT}5<gc&!<HkHcfWL5wTDw9Q&II{c4RhH&V4p7UysVl#$;1@
+zCOFGE&U2X>bIi-;7g-Q%i><IsL4Ko#5q3tXGM=0pE>MvSI$UH*qGpLImrzWL8pr!9
+sBRtEDmBGq##Ry)LlE<u+Gtk6$pE8pZnroEg7jH_u<!8Asal_C414NEqssI20
+
+delta 535
+zcmZvZ&rTCj6vlsd?zEQ<lQd8gk!S^4wH39rBh=FJw}65*Zip)rgLPt>n5mJnFfLrU
+zGhu;u<*T^x0Z8B_<TXIgFkwN$=A8ST^PTUWKWD>#hj)(7fByjjIv%6U4DrzL$V2nk
+zQ1M7H6NA~<R1Gzc3_%Q@80I|u82HQ^>K<918XAU$!<}EwWXD$BaXX^+&9tE@1bd*~
+zXhlAbe`tT~h0(xgjFw`o*RSk-+U<t#_M_-a<>hWKDpq|KS@BtA?Rr8jE^hm*^Xz&;
+z;Pc$}oe8yNe>ltb)M=@0JEaSHt#r{_I_bf_)eT)pLe(VHEWcKmZa<2`?!fRuk$V-j
+z6Bxel^!5f}6n<9JuL_;%KrP18nM9`eQ|D#iS{%Ck?7O?IhU|&^^_wqC%*yUYxWPEL
+zn4m<NS-C_&oq6UiY?Fp$;Q_92?{k|xj$~Z!Fexu+F~ziaEzAN%6n6#XaQ=yiW4LFe
+iOc_e9(94o?L@XzV6_>Kdshim)sa;NI*bu*&&in`QO=Fz^
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/RabbitConnection$1.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/RabbitConnection$1.class
+deleted file mode 100644
+index 75cfc0f0b5f222599e85254b9a630c9761d15c85..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 2127
+zcma)84O0_W6g@9rOOh2RY83p68f_B6NU*g9YYPEdFbD=pt4yb}**wG6WjEd3F!Fo)
+z3p!J9Y-jod`lC8MZvl1aP7-E#@9ul&-E;1J_wMGOfB*a&zzkldq2qHkJW|6K8JxqH
+z8O&lXgFGH9>njaUG8n?wS&ZPDEatJGp{8L`ptNt;1=rc^Hht5xI)UXnYtr|PwrogK
+zTKlq9xBNgl($lacaA$oGsDQrW@JP)zd|&zk%XQ1G_#MNP&937dR2oLJX$3WxAX8Bm
+z268(mkX3TcU4sX0fopZs-K%(^v%Oy{rfo?lsML<PiB1K(mS1=vknh8<u#YXr3Z4l3
+zR_q7v$=c`efRXm3C~XTQYHmvkjMObhKI`r^rMG1?ZLW;fUDL3)4bM`~CyNP{2!UJu
+z#7#31u{TWEFmu?l<)XA%0^Wg!Z^^Y__?EfhxgF^Rmb%uTi}hcOeWPL<PP?)hc$U+i
+zi&Vbk>`R;HqIc)lo^KS+IG@{DP+?|G*YUf1D!R6c?SFIvL-NGA!1dnb0-4T7>dTSn
+zNHNTJ(`_9vIXesV;<?>`u|AbtQ3}}~!PY^C+0V94G8XC;s{}8-F=g0SzJ~Akyy<p5
+zQ!ZQTvM!!&g!?K$rh3USZPzEqnhbW`mWCA_t9Yv8B62#0F{a}@F6g*~x`s6!&#<mz
+zLk-W-5Ewn1CxzV9v4!t7Z0q;|Ke8$M^yIX_?Wq1*l&_4gt-3e78G*$<js|LO4KD<W
+zQG8K1B5*zok<2UW?=#E_=q*Jc?H|ACn#}%ARQdLHFkt(t(#;nm>+AIGq##$L!aeO3
+zfpcvcG(IY|3&m1Y0}K<!%lJ@)YT>kV!#a!?ORU6X@wlflu5<cs7nq64K`&WzO8Av1
+z#7SiA$fkNx%$u(j=juy!;BwRfb+P<J>HJ^;@zGIL*8pdhb~v-xxfA36C0vHUIIS%{
+zCpqWJ_YNV-Q-_F^#}kK$mnYvM@q37$;FuyF_z71y<`L(Z!&O}4tSseO?dNcvTrt`=
+zaEr5II6?wx&eh2yBxjRTM@Y@4XlswO@*jx(g`pSYiML2kzC$JsF2!?N{2j6hd|;m-
+zKOi~2Vtj4JW#JB9V;Xj-sKKu>8Qv?Z;x-DQqAGEB!<ei16va?^6(y9ZDuqehBQ8mw
+zcWD>6GREkpa32~f^q8QJ2Rt)PJ4XLA;o3udhEHfsaAyP$F`81p6psJ$SjJ7H{{sl$
+BQeyxB
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/RabbitConnection$OnSubscriptionMessageReceivedListener.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/RabbitConnection$OnSubscriptionMessageReceivedListener.class
+deleted file mode 100644
+index dc5a0f075671145635803833146af5910cfd4bb8..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 347
+zcma)&u}T9$5QhJW@y?tH*w|VrXyX<sQ$_>ANgxOIyX$alxXhlrcL%<jg%99EiJO23
+z7Gg6q#Wz3S%*W^3JAgT6IZkq%5(+OHw(JIeCd{wPtsb;$wA8BVf|GhtTEA048{@j&
+zi?WSl>D0Xp-1wFkH%}>|@_n$pat#yCHwSd-Mc8)E%k4ff$CPmAyo#;1Y<iJb^&7lg
+zOVyibgKPJDj~t_}`CG1Zv18#txcVnIeMkyn+2|NK63%`uTbpfiBV7C~lo1G{^e%wL
+Wgd>d8G{W(rW++lG5<$o@$tGXUkZ4^1
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/RabbitConnection.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/RabbitConnection.class
+deleted file mode 100644
+index 7e992266fbb553103ebd6a5b130644439a9b77e6..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 5583
+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
+F9tYE%$>jh5
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/SBChannel.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/SBChannel.class
+deleted file mode 100644
+index 2385c6d6098ccf69e6bbbd8faf87a606f85a6249..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 1222
+zcma)5YflqF6g|_|Zr26s@~oip5GdubDk=&_BM%d_ln*r|d@|dzDND+1({7FaD@_Cv
+zP5c4=DC3#kQjylg4?B16oqNx@=g#cUU*CQJSjD=5e$1zlKu#?S8uB^@4J=|w$B>3)
+z13Kn)tSD>ixUcL34G#rUyW8*I?i>nOg%jt4W7iy6wM#+6lhqA@zAaxi14jl2POaq%
+z=*3riJ5hejI}%7p=ak{pb5DA~3xWAuH%fP8;eeG}{t+t&3Z8U}t<$pGc;}RBj93M~
+z;?xeDhNt{?FcBPkO@VB|^X+Ecskr5ql%MR<=GL(zrCVdGW4VIgsM;q@U)pa<`^Ek8
+ziCYOa6qlibkuNaZGmS|*A1iJ>@F-Zrsz9>p2D_9vlw0UlAfWNM7>d^eKbjXYN`9+R
+zabJ5%NPnlh6*XBC!+2z35E&Cg$Ow%7LyLyTCZ1r88P{)Qv*p!}+y=3Yw(xahcYA%(
+z#8W(DPlmc4<=(@zK;}>RrTCG*M$}O(5YMSW4gPg}S(K*KONDbiF1Y7>Qck_@O3rWj
+zzbe|wHZaBa+s{Xxz%2|Q1A&|LVo1`ruJ{^boMm{%andH4JB$&oqx24W9;Y41UqIv+
+z&k)Nmogw}uEEwZzkpcuwU>s>okn}dPj7&ylJQ=4)fRILnJ4F-=X(nhRnmBhrHlneT
+z=SV58MN12JU4*kFoKt@*#*hmMM<Rd@VU~^DA<13BCTJ)5O<|g=BD85$Gs*l{#6EKq
+zBM^`ZgLVjLMhR^|ftjAg@$1EFJ&XC02&b6$NTrx(zC%B}K-x0SaYJ=MW0}!DPIHdF
+R>(DQ+K+kmgnhm?3`wc(6=V1T<
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/SBDevice$Builder.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/SBDevice$Builder.class
+deleted file mode 100644
+index 468bb46ec6399f6dbcefc7bf921fd359eef94381..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 2195
+zcma);U2oG?7{~t(O<kuh?ZQ^xq1(!qhSBi;vX-(Yz~~fp8$p%0LaytjM!~LZr=p(#
+z!4*hw0T*zwU5txOu&s&&5+7h63hn>cPTF8+MA3QtoMWHgbDp=O{QLgRI{>HfLk?p&
+zui}D=Z*$0CM#Cs(MLRFrMG<o%E{XU~#Jq^Iib@V6xUAxeimM6+R$V_(kgwi0){Rob
+zaO$O6;Mq=nMuE2Gxq)lC4PU`$(Fe`IZj|Od&)BHiejwk}?7CwFP0vzrBJG>ms_mBi
+zHN&))n~t+ls+E6=sWWrjKV+^Nj$?_5<Na-~L>t20!z<RhZCbY+;|}d>@yuRPFz8#R
+zXVJ6ldgS5YtnJvroPr&NsU`YdaaXuyv}!xnV)M?j<=rrr8(hg(UDIeR8J;ckcyS<D
+zwRu9d+_W1jmZv~p;Gw-r!|;8JFD4RBUJeg78E>GYs&56?!dRa!B!fNmali-x5p^;2
+zcDOTNpuZYtwb<n$>PwL=ooYMYJm<OC^ap9|!}@r4ST@$$p{b=J|2OM>m=ovXMDy6!
+z`?RrD8hx11>g{+c*jMPaftkx)xocW$f$ciJitjnExlPZsuG&&ABeimrlxb-o9S3np
+z!LG2Gx`V7>yt@%9EC#~~eA#nN$1Z%TW4DM;kk_$S#6A)GMI1mr0ccwmz=DE9-T3y~
+zb_psN+iLM2mv37pn`8QeJ<_ISY14}9{9@Oeo*`~`{Ab$~7NmRbrIc{8sC%t+2WBR%
+z?c>Gm_fe8IwS>=kr;YJORC)6;ZqzaoN$|o7^>NM_)Xsbl=L~K5j?oRD3~=~ljQP~~
+zEt5!jn6v8`pavW$wxAT>B6Cx1VPF&4P;X&y6YA@5_XK60Ujq**@AFg-n7T(iA)rSL
+ze1RjJDfkLs$NWn?Plju1@#rRoim#|<FhMC-Iq(=+JP8rvh`1RcL=$%v{tD?ZEdhH<
+z*s~rmiHX3b(qXv->^WgCdcY*G0xPD&h7+(~3Hz-FOtK@eqv<d`0sEb>mpx#TVu5{w
+zV~nRH_-8&l3CM=99orJ{2VsBqfJJpSO-Phqm6bP6cvN{MYRA*fs0lNF(ahgH%tYn8
+z-OO(6>6ke|?IiyYMBXfh<qJ%{#mLR#KhQXG9K#%04wYkwLvLZ{R;>+^0klH<kt>sN
+cot@^oG{711&r;9e947h9acz`;Bff<8A61agG5`Po
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/SBDevice.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/SBDevice.class
+deleted file mode 100644
+index 837296185c96d4de30f8d0b4c09fc68e65712e17..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 4480
+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
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/SBProtocol.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/SBProtocol.class
+deleted file mode 100644
+index 7394b15400a1458532d7efcb4ea8c515622be2c1..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 2363
+zcma)7Yf~F#6n-|hO_rs!p-^lKr1b{j5=*^Qz_x(YrVU9Xh*C@Ak}P3q*o~V_r~H(D
+zcg8P%s525qJEMN~SNJ;|M}6MiTp?u~hWB#bJ?A;kd7ty<kAHso6~IkY6ug1u2!dD<
+z!>3|cm2oeOaRr~@ei+weBo#!k9L57NKMW%!=Cv@=V$LYY;`2VNBPWIpg%Q3`u!%2a
+zd=<u)f?+(8@wJ3-HnYBwf4I6OA)4CPo@t4)W|k5;$2QE;f`tAR%d9$@>1=A{nl3@j
+z<x=^!Pr%d;Xbn^>+mRq88L(O{=e=!c(J&3?wuDO)r$Z-`lbdv0v5NE`NExP{t{v>?
+z_J+1orX`xP3R-znvkkFt7z56pQI&8xWmt)7MJwn#HPbvy<d(Cx<yZx)%!K1Tuu_&?
+zO6*rHGw~poNoRKU^@6h?;C=fHH`Mc3g0lL&pjRA&1(5Mrf?U#_v`hEm#N=s0-UnH?
+z5dMitmZFaixmGp8j^$OAMcg&aVl!t6E4@;7@1o`y<;0S0YlkVL%9PI{9<DTsz<a1j
+zh%~n@!(P!O40jj#u+l8_4Ub+o{Nn4;Zwsa59IfzlO{=(<C1aa8<cyN3IW?OXn*X09
+z&qO)107}lP*#-TcA@noQ7R9U}ui`qMs2IZ)72}AhxQ3X7k=F@HMqb4?(5T&$O|e`v
+z%0=Cla6!qgXErh`nbf?JURqn7XVe`Or~^ebh_@|L21>JMgy|*{GISNYD6vK=_F$;k
+z$5R!v;-swN0H%c56PXFMFAKG^A9syX&DMl4TMCtMhvhemnq7=FFFs~kPHfkznZ?=I
+zhJ6@wtXQGptjDyHW|%Q&PmdM#XGTGv6$P>+oNv?h`h+U!>YfhBXj@fDM`uPBt3v6s
+zu?D+*nvp_mh@{DfVyK50M8|}*N<}wWvzcBWoa(v8RZx6aCz7XIvVA<*&a~A{e5#CA
+z*2B$?b|v3r!@%;MR!!^AnKOw!;)7+no9-8&@uGB9ui5J%{o9&W7ERbmsrd#mVwb(~
+z?oMt}pF#c#fa7KUT>&|A=R=6Q(T;tXHmce^qp;nX+U6|N=Q`fx_!f6%eiz_;F@6jw
+zK6M0N{OS?>@zEm$ex%)pw>b_I4{VSCBSe_PIYt;{jCW{_d;WMA6WlS9iz~S+f$Vcv
+z0^9E*PtxKc`)L8j+Q`$<P#v;>pN@vz)u|k&i8jL=W{IC5<M-SgL~KTC<uKODVT}1r
+z5pkO50pic_pB>d;FJ_TxF#Z#KFS+pOhFs$<H?-<~&<HIN@CGe{K&P|+hZD|sdpghc
+zbPk+!zTeZCPecQGi+PH)6R!~2I))PMt3wqOI7R!twZD#Y(E)EA;JS|UCkbXdU=j_2
+z5xkENSWQ9jJI+EIb5nI(SeyPCQ3)?F%Eh3B-w{mD)Tx^~hF%~z^YZ(D|9pkvt>~p=
+zjQmEgK!<W3V+7mO%M;qRsgt~mEN*QC{rHd;aes68$W^RZ-NMJDI8Up00m8CC%c5)X
+a|BaxGPsac1xY=Rc=9v$7_|;u^we%mUs|%F?
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/SBSubscription.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/SBSubscription.class
+deleted file mode 100644
+index f49d5b10bb14c6d27160d165da543971b0f0031f..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 737
+zcmaJ;%Sr=55Uk#;c^Ngv_gintDlX_z@u1*o(L*Hn*>Q*yHnY0f75pm&MeyJU_)%id
+z8t_S&Ls$27Rdv&E?=P<a_OVe#5sMX!VX2H|8&^tLEn$sNl2^hQ6%p0~8Tb7}grQFR
+zH@=LtGO2&^`F%hbm$4aSeU)5@E};?h#I5inVY+@hO|<E9OYu+}ogNYPnj^*ja$6mO
+zdlFwN!c?G*I?MW@bqXV{G=f-)s3Q_>^I_3Vuk?Vh9_ZK~Tnnkf%$PgBecaB%flTyu
+zs$;`5Rl6!3E<xC6wnh#{n6&NR7oBCwKdV;Tah6DRs_lR?KV5fie+}bUuc3r80X0-m
+zC9IB`l~DikIS+eEri4PX)xj1YtjLFS__1D&SdU`?d>2+HOmG(Qe}Ut&_YCsr369q&
+zJi+z0E!<)BkaH((Pp&uzm-!V|n8G|}v4ABkG6pt3l~BhtXSUxu^D2z2x5K!BnW3}K
+s(f*Bjk8ti8IIt$gyttVQ+9A1NC`fEJ#}zyFce4AN-29h3pIa<^0M0L!IsgCw
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunny$Client$1.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunny$Client$1.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..3b5d98e0b7e6acfadb0af7cde4c434b96eecf87d
+GIT binary patch
+literal 1074
+zcma)4O>Yx15PeRTZj%NQ!uMA{=$0e}v8@mXC@O*oq)KTyB&v`&IgXpSEZ)f8t;oMY
+zTsUxn1481!58y{3#+#H@NGRFW+B38B-n<$6*Y6)c0X#sXfIOCp@UZM-#m8+Qs|<6=
+zK-pl!#~RtqNJ*VAly<b1rWtW-rDa%YsW`MlE@U^=dK9*u`P`Yo7_mjzCrYbin<1!A
+z&2H>7c+I#c8OklC<zD)(D@})YBZ^d8vEb1@H_G{wpyyOFtWKj2Hc3jgFOz3N$YCOT
+zJJzPs5VTfrylEZsBOY2QQlpYlD5Ock*AF)yHOWv1O7KKFxEM(BcHCIUq?TA19@l3=
+zk1Ir6_rrE#l<sf2UeCBnq+x9)4u*N2CWFpsm`x+oe46oCVOyFbn%c3#VmnTakS~=R
+zV)^8V?mGgCywD<wElJvy$sq2Pa0j&#=1?qQ0W~`0DQ6sPGE`2)yy_lGL04tbh2Do+
+zCZV-aHqK1aF4w#-jgLCR(iCcjf{68j>ZgXZ=j(1}SO15>GF@X2G*z%l#Wg^;+oNv*
+zC5oOUYa2Owf#UkzZ(!@+k^4$s4(Di{qa5G^%Cue{XQ6`g<WYXc#weqT3lpw;v^zwO
+zeR1n4j*l6KtLfrn4u*@kG(kS4c%DA?Z}CqV(6vE7{}yK?=SoIK&EpzTGF+cd_IXCK
+cJZ@w<Z{im19(*jKKvtCs`3Nvio)bjRA12xFYybcN
+
+literal 0
+HcmV?d00001
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunny$Client.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunny$Client.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..d259104a7a5e208bbe172781f6a9ccccfab49c4a
+GIT binary patch
+literal 8388
+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
+
+literal 0
+HcmV?d00001
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunny$ConfigurationException.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunny$ConfigurationException.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..359c5ba4abf13d7d9dbff1b9ddde6489587ac450
+GIT binary patch
+literal 663
+zcmb7B$xZ@66s#VWVGu>x#O+|>fhBQbJVJ0GnwX#$4EJVi$2QPIW-<6#UNrIG2l!FO
+z*N8x(9_+*GSJf}|s?zTtuWtYjv6Ds|MO{iJ$|g1#l1-^(*kUMFI`{m6+XJp#yBqpa
+zxs7U%A>Q_G1VgqXmAHzAec@m8{(zWV$8-3g$9<{sl#GXWGGHjRJ#{PH$mgN-)Y;e(
+zBi%4$E|d~}d%%N0(A+^sdUi14j_5~9J=$H}p6Yh*cZCLnITS&_-HC%Ajv2~}IcA$D
+zQ4BGroC`7M&kX6V7x|7jmpWT^Ze(BY$RL4a2AkM2vCUxr(=|hW?sT@4cDf?G{7zG-
+zR2QsGe}MA*wF|q5(NF4QfN6tNO+qcg2HnY8{RQl4@}8oa)+}ov!J4oLm%gTmUnWHJ
+zSV5LFwASiW>tw2B)#}eMevvyuiXAV=Su;5cYsis|fjo&DC?G?3nwS{Yu>|WAL^+zn
+
+literal 0
+HcmV?d00001
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunny$ConnectionException.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunny$ConnectionException.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..8a3dbb721b4836d23644cd3f8e265273ed6d1743
+GIT binary patch
+literal 654
+zcmb7B%TB^T6g^WOrHG=u#Mi>a1rGxYmlzTykYK7C4Ev!@a12aITMT}d8%<pJ0e+P6
+z4k9!W7j`jo@0mO2G5z>_dk1iaqa>op>!o0#Xkw2celC>^nhg1p{lFi2eZ<wU-U~db
+zhK+KcA=+~91Vh@EO59Ax1L58B!HAHI?K*ta=bqI40*nUt(r3uFT&08)NLRIIj+p3z
+zA=M?&YmK<?3mU4~(yjXw?ufxusi%5RmzTOcS#!O?V2*|F^Wj|kmsf^jIKfhO9>Nea
+zN*D^bI%Y`r+^Oe?j?}5rD;G7bkwOgd6!vjo;*jC=KbGkoRyLQ4Bsdho^-q*ssT}gP
+zcz6o)mk^E-p&zI}15CT4)ugUTy+M1tQhfz`o}VXZO=^_25n~-#)EB;|2;ZcR=COq|
+wacHjX1=q!b%c@jgV636*BEhagbk>s2!VWS-V<1c9269Nzo+KoKU2MSm0%k3j3IG5A
+
+literal 0
+HcmV?d00001
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunny$OnConnectedListener.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunny$OnConnectedListener.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..57289982bfb61f4dbe9533b8ec411538b5923877
+GIT binary patch
+literal 349
+zcmaKo%}T>i5QWdgm}`D&Tf6ZATquZH_y!FY1R;w+_qTB<DdFCbn~1(z7e0UwB~GB2
+zO>{ML&I~i(%-8qv6Tl;u3X#H$5L=U3W4P@2m2h@@w<SbR?<F@~WsOs~6kXW9EqPPb
+zOqdsqE_vM>^YL)dZ(3nNxUX#L27fpB>DY3UkK<n|*RkQ2u$pv}XW?kGT06&%uo$MN
+zwKn@S-yH<-zcr^D1o@X;)=awBf3XGxf+z0*$d_Nh7kw^jh=Ej;<Q^`NNW7Aa5F!pj
+JsfCy$`~g-~UPJ%@
+
+literal 0
+HcmV?d00001
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunny$OnFinishConfigiurationListener.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunny$OnFinishConfigiurationListener.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..5d19f533365dbef5447e8dbd13e0830a74cb4daa
+GIT binary patch
+literal 403
+zcmah_u}T9$5PcKltrt%dwXw1g3k7kD6c%=g282M01N+Toj2n)*aC;Z@*DU-1KT4ca
+zP=o}ld2i><dpq;~@%jd!j{}2_!5$$gWLU_fpVuYN2&d;`U)Zp88Bc4G7dzvX&)BAe
+z+b?i)@j&R@J!ibEd?CSLUwK;8WyT|)GohO{!-Hn{YT;JSphvj=Yx*lWo5;wE4^Q8p
+z@O9}L-?0xB3zvkG{{+dssBoCO5I7KeO{UGA%<W{l;H)BCZVcB@QHcirY(zL(`+B^|
+oBq9)6dQ^bgge|m{Z!2qRq#dKUg&ibX4;2w&>_)NnVssII0;1$|ga7~l
+
+literal 0
+HcmV?d00001
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunny$OnMessageReceivedListener.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunny$OnMessageReceivedListener.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..7d9c0dd54b79285f9e00f8a4d923e8a070d0e75d
+GIT binary patch
+literal 378
+zcmaJ-y-EW?5dJ2{TQ5cv6+wFo1@S=3bOr?>67ax&vku3GV>aAgg1(xC58y+IvxTNH
+zRx{tv{C<ADe*n0_fkDq;kI)P9#E$)nUkJzNlet~lqP9{MW!reEMi<X&x_foJXnl}q
+zu&=lb%f|7&ubD6?7uNCZQsnI_RT~Tm*FF?6@w3DiYs=YG9yvx^@z2<ak1Y!~gwubt
+z{)4DzT-z8q5{BzNr?WY`mT<Xo<Tz-pOY8sMK{)!8J=xSGBM>_JJAk@`Ep!!cD@rj_
+X#c1Ba4*D7oH6!HM&2rUp43K{V8HQ;`
+
+literal 0
+HcmV?d00001
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunny.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunny.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..c1b7fca87f7235c6e3ca80104fe4cbddbb3723cb
+GIT binary patch
+literal 1172
+zcmaJ=T~8B16g`)gZd+Gd3nE|zKdQEf-CF#3koaH&#H7*$3_fp{u?$&u$?lfuzw#qd
+z<AXoIA7wn-F1CrZFLUnRxo6JZxo3X=`S}aL2A<`R!ks)axND%2$35K7;{mD$Y6jK>
+zOC9fx3PZc6_LQUanL2FiFjAfh1m<gx*mCVKRH1=~g1L^@@|kp^QJsNx!Ai&5)}9WJ
+zxcy%DbU&~o?R)2E8F)l;LS=sIgQHI40t0oy!jP13#`Y{hrsZnoMGV@Vot>>c!E*c9
+zKC`WUq+QGPdp+&-tTs^vFIct7E~1x$RJC>>NVoh$B`CDDr*``%T@}2wyDl@Ow(r>P
+zfgR}hJ4vRaBOS&9+PA_}+fm)V=Y6#H<M34+QXp?T4)3edXfy=nYHeCG*-ghy+R5+x
+z{lHP%Iu<XCPOQiOVqzZGOf2BKU~!VRfrg34Xd2is@dQr=#lbzeHvhlVJ?2aV%}MOa
+zlrgVQA^kUP!SgBQ(>x%UEOdc01lB~Mi~S;4oy<sFR2bdaz}Et!r=nf^gkzaMpXT67
+z_oIN$;=~sx*-elmcW6C9y*jkQIC+XYaGUQk!zW6=#p7p`VoVQkT^u}JVFb*seaFma
+z1~XXVnkRykw7laAn8PC6Kp7}zaT6=a0p-CCkp2Ss#7e$(u9-o08Ck6Uld2?@W-0Xz
+z=^vQ=3W*iR8D;9;Vs3_w=ZH<7WU%FICdZyqxI{FGmx))11y&V_SBWL!9CCjFDmpX-
+
+literal 0
+HcmV?d00001
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunnyClient$1.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunnyClient$1.class
+deleted file mode 100644
+index a8255a91423f8e0636a5e1a862a0d7c3ec71c162..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 1028
+zcma)4O>Yx15PeRz`C_4=P(BKj&?b-+#I`~lpr{BUkSe8cNE9J)avV2tS-g?gTamwk
+zxNzV<zyTp~;0N%d5aUe>RS!*eWqUk+^X7TRzyJLF1>ga07m>wk2_A0dQOV<09%~Fa
+zJ5+IXlcCa5Q4o)~kiA6fanN?=b7wX~CAHlq>=UJx-C<a-&jL5P3|=$pONPak((+aE
+zz9&tG_d@b4wIad8E;q{Ur%ulaVeoggmZll<IF__sn~|uxMY@&-(moSHj;!qO#&IGI
+zMc%15-nI_-ArE3H5~J)m5YpJ-&BM({O)}KJ65L7`E{0OPo7}Qvl9*T+9@poJo@5BQ
+z9t3S`lpbumn=iObq@gw!2Sb4;cGww@(%Ph&k24-AY)f-UH9S&SYDb9?@}+VmT|U{a
+z`;LZ+|3Zr}ib>d>w8N;M$GVRyYCdwv`zWABoj<+t)h&kde^IY{2U1vuRp<H;Xla8u
+z4%4!x()PIK18E3wIxRy{M0#Hh5<~j4^+p#JdY~Std|>6W6G-pYqftPSyd|=Bkf9$a
+zZQT71w($d*Z?wzc49z*h03YGgd})HhSuE0y@F^Q3L>cF&T=!^o5gGQ?&Br)Cr5yg`
+zbjm?Zz=dh#Q^IFyu#?F@r-AMoboehh!$mBoWQ>Gerc?}9W|MuHlPrs?ss0sQqt(N8
+O+`u`qN|eS4q3<vI(Bvcl
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunnyClient$OnConnectedListener.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunnyClient$OnConnectedListener.class
+deleted file mode 100644
+index 93b415a255133019fee1302f6f4ba140d7ef5cc2..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 336
+zcmZ`#%W48a5UlpG6IT-j$u%brhCmj~A7n`&5bz*)AJ-;~EIqQb2K_Y;et;h(_8L%-
+zc<QdIhN|lQVY>tHhMqxea8GD^NxcYXCC>@<;q#Obf2=cJmd;Bscu+j?t0Lo1mowpU
+zva}h$uS7O!?pVs#h5fY#UBbxuBvk6GQj_b$!T4hJ?Lx`I1)={h+xgN=MVi|XI1qZ3
+zN0M9lNyf8<h9$h*H2bTg>CZI?PdBem9U=murk??*p>IG#aZ^z>BUOy<HQb@2Gggk!
+ILOW_50pSB(NdN!<
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunnyClient$OnFinishConfigiurationListener.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunnyClient$OnFinishConfigiurationListener.class
+deleted file mode 100644
+index 45372f3c6fb8272c87026815faa624f1c7e1f7cb..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 383
+zcmah_u}T9$5PcKlojEU>#!9fVPz0~A6q}p|gg}Y|`^`GW4aaP_y$j~oEc^gJN}N@&
+z2n4H{H}l@Snfd&B{{V1<QHm_ZkdS*Ry}Y<Z*YGpp^kV9K5mv_Xyc5|J)%c#*&hqW$
+z6Crzev%G4ZmyqH}apk+l^2F6lIH{s)993oQSla8QS(_BcguAVoTg3C3Oq{sz`n!qi
+z8WTOHF0?G%5YGN1<d34nvNj=bAdI4OQ5#tlv-y&3OSsy(f>)`Het*ZQ;ZF9?WeI`M
+g(?<f-C+wlGcwbSBiFQ)WdpJO@G1D4hfWu_)4KNdL;{X5v
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunnyClient$OnMessageReceivedListener.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunnyClient$OnMessageReceivedListener.class
+deleted file mode 100644
+index 6afef00f053c8d71bd7f7d20bf0988e20e6fa240..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 365
+zcmaJ-Jxc>Y5PcKltvREnv9PhSPz0~A5$p^Rgh;>x`^`EW8;;p<y9xT&Ec^lfC~;O$
+zL5S7NoA>79&HKme8-PoU3`&DNLK)<N9s4yu5e`qM3%j;eYo)2`)Ol&H&mL7Yd3L-^
+zK1ej!S6qix=lIsQtWEXOI=)$nyo_7Vk}mQLg9E~q4^_<UJhRnb;mJ(yIY!&?_X$%U
+z6AO2Qqkp*Jov3Eq+88+!M!z@D<_mU-aK3SI&{mh7{8%C!Z&ZKzDF}p~z73#0VGDi5
+X+lq25lrft3u!Et-Qfq_(c8kF$6_{vD
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunnyClient.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunnyClient.class
+deleted file mode 100644
+index 340c2743f8bb867690c9283bf40014fd2c0291f9..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 7973
+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
+J^qaoY{{yY_;Y<Jk
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunnyConfigurationException.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunnyConfigurationException.class
+deleted file mode 100644
+index 076d37aae357372cbcedb3b138df73aa58bc68e8..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 597
+zcmb7>%TB^T6o&t)NNEL8ZsO8~373SLxWtes(N%SWVL#Ndj)5uZ#o%MP(Zq!h;6oYD
+z)Cwe;7`vFB|IF#vZ`${d*Eayi*td~GRWCIYbrTJS{E1XD9x&8f?md6t&Xg<P8O5Pg
+ze!o3t$PI%V!BBRk5?9G=BEoAvnNp|X1|FY|c_?+xnz{H+Mhr);44i1rJuyj?dUQs*
+zJk#YcP`A=gLLSRNoi98w*F~SfoQWvnehU5}!q8mTTRo=@4Y45oHT%^zgFOn8&=VI@
+zD<A&l(bI1(ViWly_RwVL{qGzM)s_2FgDiXzUw)sj)@rZGW}g}d*r5NSF9S>)&}vc|
+zP&VkE?{r_lp3?mSt#;bAXwrs7x$!kcX^RrgqlgkQG;2F!on|bn(|v~V3$BC$4X<$4
+P5@(@|ofNlAa08W3ldg)#
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunnyConnectionException.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/SpaceBunnyConnectionException.class
+deleted file mode 100644
+index 9fb0d623205bc7551e977ab92b6e202ea8fbc111..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 588
+zcmb7>&rZTX5XQf)NNEL8{)tCD0gd+H5ksOxPt^;C`%*V`4QxqU3_g|@O+5GjK9q5`
+zR!X8Vv4`n=v$MbXcK7|`^$oxY_H7hU*P&seX`;nYJe5i&1BPbDyXOzwopKepqa>0l
+z=y%5qg<*Ir7^<FB;(9Tgi0Fn-rc|kUq0gsd9!agUVj;PcF~gB3LpPptUrZKCJ-Q>E
+zp6hfNDkc0xhU#MJi@8qv4CYM4F%MGe4;KvWb#M7TZO;%(^1fz0UuLjJ;Ue<IrPO{8
+z|1@!|$Cj~)Vi|jAGdTY^0Yg1^y)r=a1Cd;PpRCd8uG!3P7zfy(=g^-4rpHq>NexIF
+z^e^_D7qF*vy+qMYs}^<Iut>MQx=3x2qJET7A%<pcXRNb~W%ZnA7{A~uC{c5cvsO3@
+NRqUj=U4k2^eFD4{hUNeO
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/Utilities.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/Utilities.class
+deleted file mode 100644
+index cf3bd8cf3854abaef1c9ad1c1874828b1998c729..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 3335
+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
+ZH3^mn4oVaZ%+Ym>!Hn~NithtB{Xe-ZlG^|P
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/connection/RabbitConnection$1.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/connection/RabbitConnection$1.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..c606ac4729d87d9821c229d6f1126e7e97e73b5a
+GIT binary patch
+literal 2226
+zcmb7GZByGu5Pr^Y!nOjGBu*eNrHzx?2I64Srp0MmFr<Z;0EW^g`OuN&i%}vZN0OQF
+zvpQ4A(9ZM+^hag-oOnrwY8ZtX?pAwyyU*_JbLW5G|Md@m89dKI$2V$tpoVXAxPb3+
+zm_<E@aXeJg_ZlAMFn}NO7{ZTv%wb+bL&JhVdDpOuuCvi^`=)300?Tz)r0*MD*^;KT
+zc4en&`GIt#r(sdx_G%nc0e#8gmWFNkzVrpwo0ePkdxk07eaG3Wnl6`36|CAa+HEUn
+zoGOa3BGd))3c0y$(3352qiMQ3RWEe5^QLOrmUMz@<7k=InPA)Ui}wU3;zLo}9$JnS
+zJQ6r8eZszTvBdWivlQn>D{l#;8g54l3^grBKJD+crMGFcZE8lEu4&j?hG(hoV`WNJ
+zN?_^}a89#QiMK57AnV<+<$|=?Io_UzpBQ%D@GW!Ab9>SYEY%IamzuAPU88CnPPe)d
+zc$U+xM<%i8>`I&aqF3iu*4K(>oY!B>tBmt(Fu%W}678xq{})bRKps06xOskXfn4t+
+z^p!~KNH8pY+wJVJI4|bu#dG@sbA2MIQ3y$^U~{j>gUEM|D;DAv%QRkmYs!$0zJ{Oq
+zz2WvfQ$DuTxm`X>n!74NmU_`KZP#av6&Y;19Suu5mhnW#WfXJ_VnoM9T+(p`O${qL
+zo?=zUni|&85*R*PCuO;zV-vq<*wXPUej|b6Q+Zn8RunB4<V&M(E7FIDB(NIaXRPZ%
+z!!v<WROqO461W&9P7q70r*-Gu7#o#9)<3#I+dQ6^QT-j;S4`HcHXkoV_TtH{r%bL#
+z72$+e0vEb6XnoX{mrCU*vJBFUr}d#>mEwfuVb3N@Wp-`4bi}`$>zq6v0y9zNI1g4`
+z0lyYyahw_1+g6v#ocUVCTz;-LT#eeGj+?Kb&NmTA4i7610GvsKa3(RhlHmUpT!p|W
+zrA>aPITtDu`w*3>eIzQQseL3XlkbrFBeWmmn4vw;#x;)PNOCOTI&N@QlJcz93%JQx
+z3Cf@2OU^370aD0vu1y{wJ)537KxQ^WS$m*W{zT$$3_Kf6y+d~L5V<6%N*1)_A@V7F
+zh(5;nz$=cgnV-$P9Nb0^(|8jiYVpBmgi}N{+(I!#RHNOUFy|V+LMcRELm3sK%3u-`
+zv`f?H9m+*&Mws0c?m|PA9#iyjk9(#mC+L4B)ZNF|_>9sRSB7vO!x{Bs<mhi4kMRYv
+F{{fRYdO!dG
+
+literal 0
+HcmV?d00001
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/connection/RabbitConnection$OnSubscriptionMessageReceivedListener.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/connection/RabbitConnection$OnSubscriptionMessageReceivedListener.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..649710057662bc95a4cb21167bd9622b98eb529c
+GIT binary patch
+literal 369
+zcma)&!AiqG5QhJ$HL<aR7vDg^Ufe^EJr)Ha5@^8t?mC1m>1^Ch0=}9DAHataw*?hE
+z^)fSuZ+^a+&#(6n083otILmQPD7<XgvK#q@u)Hm|deo}b(x|!*PMTF|{Z0jKjO%x=
+z%C?TBSNAe<>pNa8o>N5ahhX`^wM@9$9MH8FVcR<|cl*Q~b3*03ik-G>29Y;qe-ZV6
+z=em-5Fwq9r?IWHzM&0m_XX#?k!hvveBsYIdHeucB7&#Iy|BkH8Hfa(TN4sSN!X!Nr
+Ypef-5(=<(RdZ-zS)QdzAa?G;XH~2kqF#rGn
+
+literal 0
+HcmV?d00001
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/connection/RabbitConnection.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/connection/RabbitConnection.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..c1329f1f00d81d7743045283c7d3a6386e9d49a6
+GIT binary patch
+literal 5790
+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
+Z_ku+_$k5t_-H{sRmG|dAq6z;+&65D!5%B;3
+
+literal 0
+HcmV?d00001
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/device/SBChannel.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/device/SBChannel.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..f4787aba3eda8adb59571fb28dbc96db5e70e94b
+GIT binary patch
+literal 2402
+zcma)8Yf~Fl7=BIyY_cq+h7xWTuwV<}61Cb|pjhq(LeQq7)Jt8$5*ETHO*WnKQ##{!
+zzt*u$z05d%_E-2j97lc5*$pHRER!McdoJ($ytn6sKmPgUHvl*BSVtG`h0%mL`8BU$
+zA%uP%i&zR_K*O?*5blMrBIU;+B&1x`v4&(T){&B58#*mN(eWwnYe?&OAQzuuQ#$-y
+z!xsWA$&HnjrTYTC$$j&Q885qbE}qM0v$m6sCn>GsG;bvqAFVBI2}HbGIg_Vpx5!I8
+zZCl7YCD(M^O*2=v1VX8~^(F6qz}^vPa?C?+x6Ig%?am6^7&+_Z?9S*WEf?}Tv}{k>
+zj+H7OZd=6%=5~%dkz_t&<~GfuE!X~Lle=e^1O}6KK3*!A8Ed=jI7jgv>xrGQ;_3N?
+zJ=1Zl93$=?N#={$_<kwx#8=ZBsg3P@E8|W}NL_AvYk|&&*LZ2^X~rtJHuKiNvNUHc
+zH^EG=jEtU5L_p(lO4T6b=Do5BwC>u@jvtah;@q03j?5K{=26lvF~-+tr)9iE*$H1`
+zRXV-EPI(iE)>rbVP_5?eMg}vlL!XuNkao??!Ma&cebMkx!<Pc#w4HTKw_IfV4lbDO
+z1>i1FkI+me=Z{`+MD;kGFBdb`vMopH((zzSN(LAh#9agZ=rb^YK7s!KpC%387<hzl
+z1-cZ0YN#<^wsSjHkr2Ay=P5n0I5lX%#5SiwmpqZnI3_e?4D7&SwG8YcYhVwyfk}C?
+zZ{PqqPHlZ8X*uHaa>O+pYH$qXQ83Vr9)Zgzu~cU{S~u~>157TR5I^BsMbphQ<oJ15
+z!zBBzoh|bo$G^r+^t=NjLDm%)a%QPyaS%J|;;2R!CPk{uxZYqo8uF^eEEFt<yqma?
+zh2IZOXvay)$IK#I?Bn#KRU#|CRLeq3ZO<&Ftf#I3N9mz_+ti|-`2KTJ*M@3xE!N|*
+znUjR9joG)59@|e^r)tK&pF~^#GLuv+oA*i!Ox8N|A7{U8jb3%U#UFt#{?s(1R}Kxe
+zUVi!@@Fw+u+P_+}*0@Jns53HyQsdo0`VqLs)fUf#l<l!s5V5hB2*k!;BKU(c7~*$?
+zfKag45XKNLVVED#g)+n2xXu+FC>WtM2^3H;Hz+-rAT^-JgNZa(&?2$MBAU|90FD!O
+zf?$)(GOhrlo`Yk+9*kg=AThdaq8#JjIBmSV;*>I&=GY4ao>K`hcA!OV-ck+??}G1;
+zt!QW*JZ(JN(3r0Q-N{tf2_=z-enn{O6~Ym{f>s#?Ma1y*AVmdjr(G}CxE}K33gaET
+z%UVm<-_f<~Mr^EtOY7r5qg~(`u2Q)y@H?7P6BWD>t03|W%@fbR|MyQJ5t>xyQH}<%
+z%5tu8ouv0Q7I0l5%3gM(4ezm+va2!qh*C=JCf;W{A5iz|C3kLd=eF7j{*7i09}fJ*
+z$f}LFgDIW`FwK8$W^mUp%djd6y+k@HxbhP^e?(MHnW*VYgjTc4_9J{vsq^#>I`9?3
+F{{dc2C*=SD
+
+literal 0
+HcmV?d00001
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/device/SBDevice$Builder.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/device/SBDevice$Builder.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..fbeae7860f3a15171a63ff8f1c07827ed77e59f5
+GIT binary patch
+literal 2315
+zcmb7_U31$+6o%h*94m5^rge#1pat5x)Nwxyw2*>BO6`6HJmJHg%=D@#ig46%rHmwJ
+z$S>e8z!l8E1zf=Jl?g)&GjPELKdRIBNQ#qSskr0Wvu9Vk&)Ku@?)u+HzyAr~BHk-v
+z8gm*h7m>r8Iu771@#e&9h?y7jwwMJmSH!%d;c5{Eni^Uft|{c#ydYF4weOi5X1!;+
+z-FheV9k<(1(ARx0^enFzD9pqI`k~XSU-f-+v+V?-jOjRC*9`l<t#CPQ%zWGN>cP5c
+z*(-h5-K?+L8;)hyJIxOgcw>Q>32V)CU0Wi}Jr$)D&x;_FG5fA--sfucq~)wC6aw4w
+zZRR<?5$9W&cU&i2P#CMuE^`-J-YTa|w;k7B>fc|n{oCeBk3FTfXPLca(|4qubmqe~
+zhYQu3eW$l-`wGS)*Y3A^W)Rr?a3(9|Yf<i%WFFJj0z14F3DBqxD=<4UXNsH{z7*v?
+zIcP63d!4OLvH=tHm*bEI-5n9Q>V;$l|B-m~MU?mN)#m!newnG{Q4YrF!6oD5EHIak
+zpDyC=AsRiP-rd=9g%j2PnMbLM*FUxF_0aL$K*J5TJ6_+n>>G|8v#CxqmhXaGLj%Wf
+zT;XtZCHKoApKci_;jn?Sn1eWE;Ha2q#XKkGc^pzWo^kEsIKo*}IQ_&yI|o(a;O^`2
+z{>nYu3N^f|P~ShhBbU4>m%P&Q+)tct-!~=SLE;MKtPlC>qTIvJQf|TUy~yg>zg3O2
+zcO>cD`_2v1WF<$la>EHeqtkqWH9of7eR?_30}9VX{tVlcX3##uHU)~lQKP7)Oi@jx
+zSnC{1#c5w)>m%gp0mo|FP_+lh-N|obYzz6w-^TbB3O_}&U!*N@H1H+u=UmMf)cz~H
+z#2zDNaJ3b-s5D-t75){jC&yZ=o!z4Ok!}uxl7A22YmDQY2vLrQB?w7a(pCJONrz1g
+z!M-Kzy9}7@iNLDqFntL2Jz+m&z+__uHk%GB4#9pV?3WCfs3WjiI&5+XMp5uv223Ot
+z*jb$8eu@AevK|PKk6>ea1b9f;9~rRtoSi2m)>otcGla({?*hGgdYHmcn7<h2?~E|<
+z@!cDyj3a|Euh4rHuO-<mMaLJYJb-bh_A4e>be1AZo~6K|u}p4bYWJ)a$N>I{;>W2}
+il5=*E{c-^=k^egV9Nxew)+KrenD$A=yM*hw3H>qn)A}a>
+
+literal 0
+HcmV?d00001
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/device/SBDevice.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/device/SBDevice.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..19bc1d4ca1ef159d9ad55b304a4e5fe27b0161d2
+GIT binary patch
+literal 5283
+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
+
+literal 0
+HcmV?d00001
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/device/SBProtocol.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/device/SBProtocol.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..2d8ab293d703396206bc162cfe4f3b434dc695ab
+GIT binary patch
+literal 2239
+zcma)8Yf~F#6n-|hO_rs!p<Jw7t5pclt@joX1*94p5=tTpmg16Z!(!Ntn@y+ul+O6w
+zFMg;qB^`Cf>F53me~06!&%2uoA(<&3@?Orq=RD6j?{nVCtABt06Tk;B6%1l2hA=)8
+z!{=gHma!7Wh=Nso5yhH}y9#1hisDN#e-%Yi%<ECy6LU(z2GTvqU{ehD6-L-nkVQ_$
+z*Ak+enXTOZy|o<)@zjz2Sl3FrRn)SsV_L-p3B9YfRdIF8-PTK0LxP%1W%pY?Axl4|
+zHB`18SAvveK(|!c_qUNn(=y#92}4tzp_9q!Z91;n1^V};Ov^}Dj}HtdryrDPiKpzm
+zUfR|jQ|#-;kb7uWBuu7ETdS1yym3&qtP`zZJT~)&mR;F&Y}d})CGt*mflS#>Q9G*G
+zmbRYFq%#LcM&4ZzECNT2I?(mA1ZC|>-YB~!>mY-N<)Y!Hy{xZJO?T$yAK3Kj5uBQ4
+zMSAFvYZfKy+J13a%SWbFXmFOW-i@+%B~{lfY0HkIpQOwRDPJJ}Xt`bs39-h~OR`%)
+z34`tBJ}Ea!e%sHmox$R32`mZeWL-V~!-ih=ZcoNHq>?p@mhM&^-th4S)4d4TMJl3X
+z?W&VE?wUegeJ!!v6ctf1j&D`GiD4BZ7*#QbQ3>O((V2`L6}$M3s;^W^b=41@@1m8e
+zSt=Ngge%JCRwkEO&7|g)^zz2q{Dg`J*rQ?;(NX^PAqAr}noO8(VOGYzitnMbhAIw_
+zS5bhWVn%#<q@svJ371>2zOs3#ZF+CYn9bD^LDDrG-L=V%Vx_wK+k6_4B9w5_VuufO
+zxiq2ih+ZxmRzbpCw*wtrQZETbGBTCyY@*iZ{ua}w{#k9a$$GHSgPuYg*)Xtts8`a)
+z6LMx^yL@RZZ`0nh^*5lcdX4Uk7(Z6^lIWSUDK%b=T}<*J9pob&#x)FK7!uy#E`SL4
+z*Us#tv{6^yH%iN!sV>ekea11tagw_d&xJT&O}v1Vm^notF>;DvV)PWDUp=qu90!R9
+z`h@5c!*yK3Tj<Bz9D#)I&)p5~7|Fwxyp=!>cq@S&^pM}7#YYa(0*tkgXXB9?WC1@L
+zk9w;P4s%4iNe&wEZ!zY39)}4(Qj^12lfxL^#S{^zi4-D!f<G#lqu`)%7EHs5=LkIG
+zBEaOpVhZCOFSP0(sE4N12;b=({N<eUa#v@qt8?hQbF!;5Te6P4L!N@6_6K4+FQCMG
+zYEVTAoZ`LyI#|P{c%Q!xab3gZ^9kNR1EbXwjIpBc*Kg=2&O#fBnHsKa%>IVBgr^wg
+zqF=&Ggwu01>ZXQ)rwGqI`}x1WB!Lj}O6V)*0TsAMl!w&D9`9k_Lln0)j9&iHxZ&Mf
+tqOMe-r4R8DQ~Q{4{K5;%C$!x5EWv*emT_nNZ!(*wC4dEfTl7|+{tuT)=CA+&
+
+literal 0
+HcmV?d00001
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/device/SBSubscription.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/device/SBSubscription.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..89d38c6a61d73fd5baa1a036df7f432db5fcf6d8
+GIT binary patch
+literal 751
+zcma)3O-my|5PdZn6BA?9#BYrsh>*;R4eQax!wP#E)<Y!sp0-I^COtZt5%yp0!iEJ8
+z{s4cJZ1osecNJOsP_L@%y;ns&KHWb6IKgfWWvo{*gN<2iy0}%rb_H!hMGd93IwrJ3
+zm5f9xqsU~VTcKj3Z6?m2zfTEsDzW2yq|-||AT+~kc_&3I?LhRh)Yt*Hls_43vNOWR
+z&bwl-x!pd&KTobSVIeeDf6YgcbBbcFG{Z#6xGz)V@@dh}hGtAS3{4`&H&W>+xAvR3
+z(sxE_(fi!Xqp?cOO=c3yqtymFo9;r`?R4LrkI-=KFZW$$${QQkdP$xt{l&OBTYtMA
+zyZ$=nuv13`vjo&pMU8OqA0rbM|JYqb*IH$SQm5O;KA*45XZ858Y=KyoV+njEHX+P&
+z7W03J<7V&+6wm}-&@4^h2Ok_fV)UcnHe64kxB{Q~RaRKQDweT^4XiT;_MVlnh$YTk
+zzjNk|7&&i`aTBenv*76dW`dvazBBOPOv*)ZuMl)Ya>G=R*ldL>ZtRz2|6g+FP4a4C
+GvGyCj>6(TB
+
+literal 0
+HcmV?d00001
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/util/Costants.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/util/Costants.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..5eba1f447a451565746b52f228d6917df4634598
+GIT binary patch
+literal 784
+zcmah{(QXn!6g>kJwsdO?RcftmMXQCHura=AV}g`Mk`23oEs0NLShjSUWe0a>N&GD1
+zLlaH>06)rj7f4Gr(S4Y`=gypS?>#d=e|`G_;5Cl($YDQ+0}W5|NTIxnES~1@EQdn|
+z{k&uLo9$EEYPB7PqIt!q-0*oYGP)`h!RRf+dP4@0;(_XMKlU^{XV_e(^&PXT;RVB5
+z-EQ@J%}%#vwKW_O)2=%oZsavoh<VyPtDl=r-|kqB)v!#4vMHnyO}Og~;vo2J485sv
+zJ)`^H4yBT=^r?sJi3o&x$B?d6dkmR|9C{2JrU<-tJRW$V!v{WPil%hA-{YZ3@FJN}
+zmm*@=`=d^*gl{zDY_y1KXeX|}sFLr>ICQ-;k!aHV^E0)?93A)ZfZ^ajJyVZ-{ArS$
+zuIeaai(&UJ<xY7r=GJ*@aOJs*8opF&^2RXuMAU}fSk`V$stL)kpX^8fIFL4`uNX=T
+zNBgb}F2pDfxe|1v4BM5zue;T%_E4rLlB3tNf*ojB1w)=t3TuS*CA?1f-V)v*yt#x6
+z6w~N4E=znPr4k{7{w&cyz6Sd;+uo)%J5S;v#rh)N!6QN%c5lcpsjcMO`i|7cV!BYO
+Z6iP?e$b7|0B1L1-I+sdB9urDo?>E$tu08+&
+
+literal 0
+HcmV?d00001
+
+diff --git a/SpaceBunnyClientMaven/target/classes/io/spacebunny/util/Utilities.class b/SpaceBunnyClientMaven/target/classes/io/spacebunny/util/Utilities.class
+new file mode 100644
+index 0000000000000000000000000000000000000000..efeaf75e6568ce11e3531a952d96f18452ccc869
+GIT binary patch
+literal 3868
+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
+P8eig5@z=h9FQV&z!7nf|
+
+literal 0
+HcmV?d00001
+
+-- 
+1.9.5.msysgit.0
+

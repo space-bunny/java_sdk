@@ -31,7 +31,7 @@ Maven:
 
 Devices can publish messages on configured channels and receive messages on their `inbox` channel
 
-#### Connection
+#### Configuration
 
 Configure the instance of the SpaceBunny's Client with a valid Device Key:
 
@@ -60,6 +60,8 @@ spaceBunny.setVerifyCA(false);
 // Set a custom certificate
 spaceBunny.setPathCustomCA("<absolute_path>\\cert.pem");
 ```
+
+#### Connection
 
 Connect to SpaceBunny with multiple parameters 
 

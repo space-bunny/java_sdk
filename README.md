@@ -141,7 +141,6 @@ try {
     spaceBunny.connect(new SpaceBunnyClient.OnConnectedListener() {
         @Override
         public void onConnected() throws SpaceBunnyConnectionException {
-            ArrayList<SBChannel> channels = spaceBunny.getChannels();
             spaceBunny.subscribe(new RabbitConnection.OnSubscriptionMessageReceivedListener() {
                 @Override
                 public void onReceived(String message, Envelope envelope) {

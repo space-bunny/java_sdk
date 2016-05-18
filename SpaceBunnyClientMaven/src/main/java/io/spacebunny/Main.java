@@ -20,16 +20,15 @@ public class Main {
             spaceBunny.setOnFinishConfigiurationListener(new SpaceBunny.OnFinishConfigiurationListener() {
                 @Override
                 public void onConfigured(SBDevice device) throws SpaceBunny.ConnectionException {
-                    System.out.println(device.toString());
+                    //System.out.println(device.toString());
                 }
             });
-
-            spaceBunny.setVerifyCA(false);
+            spaceBunny.setTls(false);
 
             spaceBunny.connect(new SpaceBunny.OnConnectedListener() {
                 @Override
                 public void onConnected() throws SpaceBunny.ConnectionException {
-                    spaceBunny.publish("data", "{temp: 1}");
+                    spaceBunny.publish("data", "{temp: 2}", null, null);
                     spaceBunny.subscribe(new RabbitConnection.OnSubscriptionMessageReceivedListener() {
                         @Override
                         public void onReceived(String message, Envelope envelope) {

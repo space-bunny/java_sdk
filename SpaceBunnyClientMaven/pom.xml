@@ -4,7 +4,7 @@
 
   <groupId>io.spacebunny</groupId>
   <artifactId>device-sdk</artifactId>
-  <version>0.5</version>
+  <version>0.0.1</version>
   <build>
     <plugins>
       <plugin>

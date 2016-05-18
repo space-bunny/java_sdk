@@ -29,15 +29,10 @@ public class RabbitConnection {
     public boolean connect(SBDevice device) throws KeyManagementException, NoSuchAlgorithmException, IOException {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost(device.getHost());
-        System.out.println(factory.getHost());
         factory.setPort(tls ? protocol.getTls_port() : protocol.getPort());
-        System.out.println(factory.getPort());
         factory.setVirtualHost(device.getVhost());
-        System.out.println(factory.getVirtualHost());
         factory.setUsername(device.getDevice_id());
-        System.out.println(factory.getUsername());
         factory.setPassword(device.getSecret());
-        System.out.println(factory.getPassword());
         if (tls)
             factory.useSslProtocol();
         conn = factory.newConnection();
@@ -54,14 +49,22 @@ public class RabbitConnection {
         conn.close(0, "Close Connection");
     }
 
-    public void publish(String device_id, String channelName, String msg) throws IOException {
+    public void publish(String device_id, String channelName, String msg, Map<String, Object> headers, ConfirmListener confirmListener) throws IOException, InterruptedException {
         Channel rabbitChannel = conn.createChannel();
 
         //String queueName = device_id + ".inbox";
         String exchangeName = device_id;
         String routingKey = exchangeName + "." + channelName;
 
-        rabbitChannel.basicPublish(exchangeName, routingKey, null, msg.getBytes());
+        rabbitChannel.addConfirmListener(confirmListener);
+
+        rabbitChannel.confirmSelect();
+
+        rabbitChannel.basicPublish(exchangeName, routingKey, new AMQP.BasicProperties.Builder()
+            .headers(headers)
+            .build(), msg.getBytes());
+
+        rabbitChannel.waitForConfirmsOrDie();
 
         rabbitChannel.close(0, "Close Channel");
 

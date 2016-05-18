@@ -1,5 +1,6 @@
 package io.spacebunny;
 
+import com.rabbitmq.client.ConfirmListener;
 import io.spacebunny.connection.RabbitConnection;
 import io.spacebunny.device.SBChannel;
 import io.spacebunny.device.SBDevice;
@@ -21,6 +22,7 @@ import java.net.URLConnection;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class SpaceBunny {
@@ -214,17 +216,22 @@ public class SpaceBunny {
          * @param msg     to publish
          * @throws ConnectionException
          */
-        public void publish(String channelName, String msg) throws ConnectionException {
+        public void publish(final String channelName, final String msg, final Map<String, Object> headers, ConfirmListener confirmListener) throws ConnectionException {
             testConnection();
-            try {
-                SBChannel channel = SBChannel.findChannel(channelName, this.getChannels());
-                if (channel != null)
-                    rabbitConnection.publish(device.getDevice_id(), channelName, msg);
-                else
-                    LOGGER.warning("The channel does not exist!");
-            } catch (Exception ex) {
-                throw new ConnectionException(ex);
-            }
+            new Thread() {
+                public void run() {
+                    try {
+                        SBChannel channel = SBChannel.findChannel(channelName, device.getChannels());
+                        if (channel != null)
+                            rabbitConnection.publish(device.getDevice_id(), channelName, msg, headers, null);
+                        else
+                            LOGGER.warning("The channel does not exist!");
+                    } catch (Exception ex) {
+                        LOGGER.warning(ex.getMessage());
+                    }
+                }
+            }.start();
+
         }
 
         /**

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class SBProtocol {
 
     private final static String PORT_KEY = "port";
-    private final static String TLS_PORT_KEY = "ssl_port"; // TODO da cambiare in tls
+    private final static String TLS_PORT_KEY = "tls_port"; // TODO da cambiare in tls
 
     private String name;
     private int port;

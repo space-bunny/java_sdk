@@ -6,7 +6,6 @@ import io.spacebunny.device.SBChannel;
 import io.spacebunny.device.SBDevice;
 import io.spacebunny.device.SBProtocol;
 import io.spacebunny.util.Costants;
-import io.spacebunny.util.Utilities;
 import org.json.JSONException;
 import org.json.JSONObject;
 

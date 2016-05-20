@@ -21,11 +21,11 @@ Maven:
 <dependency>
     <groupId>io.spacebunny</groupId>
     <artifactId>device-sdk</artifactId>
-    <version>0.0.1</version>
+    <version>0.1.0</version>
 </dependency>
 ```
 
-Download library: [Jar file](http://linkonsdk.github.io)
+Download library: [Jar file](https://github.com/space-bunny/java_sdk/device-sdk-0.1.0.jar)
 
 ## Device basic usage
 

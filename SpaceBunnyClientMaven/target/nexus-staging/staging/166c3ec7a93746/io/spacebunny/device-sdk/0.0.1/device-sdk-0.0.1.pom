@@ -42,6 +42,76 @@
         </plugin>
 
 
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>3.0.0</version>
+            <executions>
+                <execution>
+                    <id>attach-sources</id>
+                    <phase>verify</phase>
+                    <goals>
+                        <goal>jar-no-fork</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>2.10.3</version>
+            <configuration>
+                <show>private</show>
+                <nohelp>true</nohelp>
+            </configuration>
+            <executions>
+                <execution>
+                    <id>attach-javadocs</id>
+                    <goals>
+                        <goal>jar</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-release-plugin</artifactId>
+            <version>2.4.1</version>
+            <configuration>
+                <tagBase>https://svn.mycompany.com/repos/myapplication/releases</tagBase>
+            </configuration>
+        </plugin>
+
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.6</version>
+            <executions>
+                <execution>
+                    <id>sign-artifacts</id>
+                    <phase>verify</phase>
+                    <goals>
+                        <goal>sign</goal>
+                    </goals>
+                    <configuration>
+                        <keyname>F3CD934F</keyname>
+                        <passphraseServerId>09111991</passphraseServerId>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-scm-plugin</artifactId>
+            <version>1.9.4</version>
+            <configuration>
+                <connectionType>connection</connectionType>
+            </configuration>
+        </plugin>
+
     </plugins>
   </build>
   <packaging>jar</packaging>
@@ -59,6 +129,12 @@
 
   <name>SpaceBunny Device SDK</name>
   <url>http://www.spacebunny.io/</url>
+    <scm>
+        <connection>scm:svn:http://somerepository.com/svn_repo/trunk</connection>
+        <developerConnection>scm:svn:https://somerepository.com/svn_repo/trunk</developerConnection>
+        <url>http://somerepository.com/view.cvs</url>
+    </scm>
+
     <description>Space Bunny is the IoT platform that makes it easy for you and your devices to send and exchange messages with a server or even with each other.</description>
     <licenses>
         <license>
@@ -84,9 +160,6 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
-
-    <scm>
-    </scm>
 
   <dependencies>
     <dependency>

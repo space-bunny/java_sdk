@@ -12,23 +12,22 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String device_key = "2440a806-f9c1-4b0a-a711-20fbdefadd3e:GDZGztyXcCtnztK85yC_hA";
+        String device_key = "98ee7883-db36-4690-9fde-63d363902bb2:nthoGiwqQz9sh1tYDNz6xw";
 
         try {
             final SpaceBunny.Client spaceBunny = new SpaceBunny.Client(device_key);
-            //spaceBunny.setPathCustomCA("C:\\Users\\Tommaso\\Desktop\\Fancy Pixel\\api.demo.spacebunny.io\\api.demo.spacebunny.io\\cert1.pem");
+
             spaceBunny.setOnFinishConfigiurationListener(new SpaceBunny.OnFinishConfigiurationListener() {
                 @Override
                 public void onConfigured(SBDevice device) throws SpaceBunny.ConnectionException {
                     System.out.println(device.toString());
                 }
             });
-            spaceBunny.setTls(false);
 
             spaceBunny.connect(new SpaceBunny.OnConnectedListener() {
                 @Override
                 public void onConnected() throws SpaceBunny.ConnectionException {
-                    spaceBunny.publish("data", "{temp: 2}", null, null);
+                    spaceBunny.publish("alarms", "{temp: 2}", null, null);
                     spaceBunny.subscribe(new RabbitConnection.OnSubscriptionMessageReceivedListener() {
                         @Override
                         public void onReceived(String message, Envelope envelope) {

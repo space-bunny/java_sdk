@@ -23,7 +23,6 @@ public class SBProtocol {
 
     /**
      *
-     * @constructor
      * @param name of the protocol
      * @param port of the protocol
      * @param tls_port of the protocol for secure connection
@@ -37,7 +36,6 @@ public class SBProtocol {
 
     /**
      *
-     * @constructor
      * @param name of the protocol
      * @param js JSONObject that contains all the information about the protocol
      */
@@ -85,7 +83,7 @@ public class SBProtocol {
 
     /**
      * Find protocol by his name
-     * @param name
+     * @param name of the protocol to search
      * @return searched protocol
      */
     public static SBProtocol findProtocol(String name, ArrayList<SBProtocol> protocols) {

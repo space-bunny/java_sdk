@@ -33,14 +33,14 @@ public class SBDevice {
 
     /**
      *
-     * @param device_name
-     * @param device_id
-     * @param secret
-     * @param protocols
-     * @param channels
-     * @param host
-     * @param vhost
-     * @throws SpaceBunny.ConfigurationException
+     * @param device_name name of the device
+     * @param device_id id of the device
+     * @param secret secret password for the device connection
+     * @param protocols all protocols available for device
+     * @param channels all channels available for device
+     * @param host to which you must connect
+     * @param vhost to which you must connect
+     * @throws SpaceBunny.ConfigurationException configuration error
      */
 
     public SBDevice(String device_name, String device_id, String secret, ArrayList<SBProtocol> protocols, ArrayList<SBChannel> channels, String host, String vhost) throws SpaceBunny.ConfigurationException {
@@ -75,8 +75,8 @@ public class SBDevice {
 
     /**
      *
-     * @param jsonObject
-     * @throws JSONException
+     * @param jsonObject json object with all information
+     * @throws JSONException json read error
      */
     public SBDevice(JSONObject jsonObject) throws JSONException {
         // Connection

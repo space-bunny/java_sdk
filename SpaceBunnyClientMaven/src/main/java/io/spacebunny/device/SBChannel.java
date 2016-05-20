@@ -25,7 +25,6 @@ public class SBChannel {
 
     /**
      *
-     * @constructor
      * @param id of the channel
      * @param name of the channel
      */
@@ -37,7 +36,6 @@ public class SBChannel {
 
     /**
      *
-     * @constructor
      * @param jsonObject that contains all the information about the channel
      */
 

@@ -34,7 +34,7 @@ public class RabbitConnection {
         factory.setUsername(device.getDevice_id());
         factory.setPassword(device.getSecret());
         if (tls)
-            factory.useSslProtocol();
+            factory.useSslProtocol("TLS");
         conn = factory.newConnection();
 
         return true;
@@ -56,15 +56,19 @@ public class RabbitConnection {
         String exchangeName = device_id;
         String routingKey = exchangeName + "." + channelName;
 
-        rabbitChannel.addConfirmListener(confirmListener);
+        if (confirmListener != null) {
+            rabbitChannel.addConfirmListener(confirmListener);
 
-        rabbitChannel.confirmSelect();
+            rabbitChannel.confirmSelect();
+        }
 
         rabbitChannel.basicPublish(exchangeName, routingKey, new AMQP.BasicProperties.Builder()
             .headers(headers)
             .build(), msg.getBytes());
 
-        rabbitChannel.waitForConfirmsOrDie();
+        if (confirmListener != null) {
+            rabbitChannel.waitForConfirmsOrDie();
+        }
 
         rabbitChannel.close(0, "Close Channel");
 

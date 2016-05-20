@@ -15,7 +15,11 @@ import java.util.ArrayList;
 public class SBProtocol {
 
     private final static String PORT_KEY = "port";
+<<<<<<< HEAD:SpaceBunnyClientMaven/src/main/java/io/spacebunny/device/SBProtocol.java
     private final static String TLS_PORT_KEY = "ssl_port"; // TODO da cambiare in tls
+=======
+    private final static String TLS_PORT_KEY = "tls_port"; // TODO da cambiare in tls
+>>>>>>> release/Release_0.1.0:SpaceBunnyClientMaven/src/main/java/io/spacebunny/device/SBProtocol.java
 
     private String name;
     private int port;
@@ -23,7 +27,6 @@ public class SBProtocol {
 
     /**
      *
-     * @constructor
      * @param name of the protocol
      * @param port of the protocol
      * @param tls_port of the protocol for secure connection
@@ -37,7 +40,6 @@ public class SBProtocol {
 
     /**
      *
-     * @constructor
      * @param name of the protocol
      * @param js JSONObject that contains all the information about the protocol
      */
@@ -85,7 +87,11 @@ public class SBProtocol {
 
     /**
      * Find protocol by his name
+<<<<<<< HEAD:SpaceBunnyClientMaven/src/main/java/io/spacebunny/device/SBProtocol.java
      * @param name
+=======
+     * @param name of the protocol to search
+>>>>>>> release/Release_0.1.0:SpaceBunnyClientMaven/src/main/java/io/spacebunny/device/SBProtocol.java
      * @return searched protocol
      */
     public static SBProtocol findProtocol(String name, ArrayList<SBProtocol> protocols) {

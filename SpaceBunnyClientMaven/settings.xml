@@ -1,0 +1,9 @@
+<settings>
+    <servers>
+        <server>
+            <id>ossrh</id>
+            <username>tommaso.berlose</username>
+            <password>09111991</password>
+        </server>
+    </servers>
+</settings>

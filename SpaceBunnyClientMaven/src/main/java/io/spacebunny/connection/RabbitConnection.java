@@ -34,7 +34,11 @@ public class RabbitConnection {
         factory.setUsername(device.getDevice_id());
         factory.setPassword(device.getSecret());
         if (tls)
+<<<<<<< HEAD:SpaceBunnyClientMaven/src/main/java/io/spacebunny/connection/RabbitConnection.java
             factory.useSslProtocol();
+=======
+            factory.useSslProtocol("TLS");
+>>>>>>> release/Release_0.1.0:SpaceBunnyClientMaven/src/main/java/io/spacebunny/connection/RabbitConnection.java
         conn = factory.newConnection();
 
         return true;
@@ -49,14 +53,30 @@ public class RabbitConnection {
         conn.close(0, "Close Connection");
     }
 
+<<<<<<< HEAD:SpaceBunnyClientMaven/src/main/java/io/spacebunny/connection/RabbitConnection.java
     public void publish(String device_id, String channelName, String msg) throws IOException {
+=======
+    public void publish(String device_id, String channelName, String msg, Map<String, Object> headers, ConfirmListener confirmListener) throws IOException, InterruptedException {
+>>>>>>> release/Release_0.1.0:SpaceBunnyClientMaven/src/main/java/io/spacebunny/connection/RabbitConnection.java
         Channel rabbitChannel = conn.createChannel();
 
         //String queueName = device_id + ".inbox";
         String exchangeName = device_id;
         String routingKey = exchangeName + "." + channelName;
 
-        rabbitChannel.basicPublish(exchangeName, routingKey, null, msg.getBytes());
+        if (confirmListener != null) {
+            rabbitChannel.addConfirmListener(confirmListener);
+
+            rabbitChannel.confirmSelect();
+        }
+
+        rabbitChannel.basicPublish(exchangeName, routingKey, new AMQP.BasicProperties.Builder()
+            .headers(headers)
+            .build(), msg.getBytes());
+
+        if (confirmListener != null) {
+            rabbitChannel.waitForConfirmsOrDie();
+        }
 
         rabbitChannel.close(0, "Close Channel");
 

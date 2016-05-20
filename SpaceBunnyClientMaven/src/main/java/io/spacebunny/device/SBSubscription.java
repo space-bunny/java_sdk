@@ -13,7 +13,6 @@ public class SBSubscription {
 
     /**
      *
-     * @constructor
      * @param channel to subscribe
      * @param consumerTag that identify channel conncetion
      */

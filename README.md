@@ -12,7 +12,7 @@ Please feel free to contribute!
 Gradle: 
 
 ```
-compile 'io.spacebunny:device-sdk:0.5'
+compile 'io.spacebunny:device-sdk:0.0.1'
 ```
 
 Maven: 
@@ -21,73 +21,109 @@ Maven:
 <dependency>
     <groupId>io.spacebunny</groupId>
     <artifactId>device-sdk</artifactId>
-    <version>0.5</version>
+    <version>0.1.0</version>
 </dependency>
 ```
 
-## Basic usage
+Download library: [Jar file](https://github.com/space-bunny/java_sdk/device-sdk-0.1.0.jar)
 
-### Device
+## Device basic usage
 
 Devices can publish messages on configured channels and receive messages on their `inbox` channel
 
 #### Configuration
 
-Configure the instance of the SpaceBunny's Client with a valid Device Key:
+Configure the instance of the SpaceBunny's Client with a valid Device Key, or with a custom device:
 
 ```java
 try {
-    final SpaceBunnyClient spaceBunny = new SpaceBunnyClient("device_key");
-    SpaceBunnyClient.OnFinishConfigiurationListener() {
-        @Override
-        public void onConfigured(SBDevice device) throws SpaceBunnyConnectionException {
-            System.out.println(device.toString());
-        }
-    });
-} catch (SpaceBunnyConfigurationException ex) {
+    final SpaceBunny.Client spaceBunny = new SpaceBunny.Client("your_device_key");
+} catch (SpaceBunny.ConfigurationException ex) {
     ex.printStackTrace();
 }
 ```
 
-Set up the client if needed:
+Build an instance of a device, configure and use it:
 
 ```java
+try {
+    String host = "host_to_connect";
+    String device_name = "name_of_the_device";
+    String device_id = "device_identifer";
+    String secret = "password_for_connection";
+    String vhost = "virtual_host_to_connect";
+    ArrayList<SBChannel> channels = new ArrayList<>();
+    
+    SBDevice device = new SBDevice.Builder()
+                        .setDeviceId(device_id)
+                        .setDeviceName(device_name)
+                        .setHost(host)
+                        .setSecret(secret)
+                        .setVHost(vhost)
+                        .setChannels(channels)
+                        .getDevice();
+
+    SBDevice custom_device = new SBDevice(<device_custom_configuration>);
+    final SpaceBunny.Client spaceBunny = new SpaceBunny.Client(device);
+} catch (SpaceBunny.ConfigurationException ex) {
+    ex.printStackTrace();
+}
+```
+
+Add a FinishConfigiurationListener to reach all device information:
+
+```java
+[...]
+final SpaceBunny.Client spaceBunny = new SpaceBunny.Client(device_key);
+spaceBunny.setOnFinishConfigiurationListener(new SpaceBunny.OnFinishConfigiurationListener() {
+                @Override
+                public void onConfigured(SBDevice device) throws SpaceBunny.ConnectionException {
+                    System.out.println(device.toString());
+                }
+            });
+[...]
+```
+
+After configuration, set up the client if needed:
+
+```java
+[...]
 // Turn off secure connection or certificate verification
-spaceBunny.setSsl(false);
+spaceBunny.setTls(false);
 
 spaceBunny.setVerifyCA(false);
 
 // Set a custom certificate
 spaceBunny.setPathCustomCA("<absolute_path>\\cert.pem");
+[...]
 ```
 
 #### Connection
 
+<<<<<<< HEAD
 Connect to SpaceBunny with multiple parameters 
+=======
+After you have configurated your Space Bunny client connect with simple methods.
+Connection use default protocol [AMQP](https://www.amqp.org/), to use a different one please contact us.
+>>>>>>> release/Release_0.1.0
 
 ```java
-// Connection with default protocol (AMQP)
+[...]
 spaceBunny.connect();
 
 // Connection with custom callback
-spaceBunny.connect(new SpaceBunnyClient.OnConnectedListener() {
-    @Override
-    public void onConnected() throws SpaceBunnyConnectionException {
+spaceBunny.connect(new SpaceBunny.OnConnectedListener() {
+                @Override
+                public void onConnected() throws SpaceBunny.ConnectionException {
         
     }
 });
-
-// Connection with custom protocol and custom callback
-spaceBunny.connect(new SBProtocol(), new SpaceBunnyClient.OnConnectedListener() {
-    @Override
-    public void onConnected() throws SpaceBunnyConnectionException {
-        
-    }
-});
+[...]
 ```
 
 Close connection when you have done:
 ```java
+[...]
 try {
     spaceBunny.close();
 } catch (SpaceBunnyConfigurationException ex) {
@@ -95,125 +131,43 @@ try {
 }
 ```
 
-#### SpaceBunnyClient Read Attributes
-
-```java
-spaceBunny.getProtocols();
-
-spaceBunny.getChannels();
-```
-
 #### AMQP publisher
 
-In this example a device publishes a single message on the first configured channel
+In this example a device publishes a single message on one `channel`:
 
 ```java
-String device_key = "device_identifer";
+[...]
+spaceBunny.publish(channel_name, msg, headers, callBack);
+[...]
+```
 
-try {
-    final SpaceBunnyClient spaceBunny = new SpaceBunnyClient(device_key);
+*channel_name* [String] is the name of the selected channel (It would be send a warning if channel does not exist.);
+*msg* [String] is the message to send to channel
+*headers* [@Nullable HashMap<String, Object>] are the headers to send to the channel
+*callBack* [@Nullable com.rabbitmq.client.ConfirmListener] callBack to publish Ack and Nack
 
-    spaceBunny.connect(new SpaceBunnyClient.OnConnectedListener() {
-        @Override
-        public void onConnected() throws SpaceBunnyConnectionException {
-            ArrayList<SBChannel> channels = spaceBunny.getChannels();
+It can be useful to get all avaiable channel of the device with:
 
-            spaceBunny.publish(channels.get(0), "Something to share");
-            
-        }
-    });
-
-} catch (SpaceBunnyConnectionException ex) {
-    ex.printStackTrace();
-}
+```java
+[...]
+ArrayList<SBChannel> channels = spaceBunny.getChannels();
+[...]
 ```
 
 #### AMQP subscribe
 
-In this example a device waits for incoming messages on its `inbox` channel
+In this example a device waits for incoming messages on its `inbox` channel.
+You have to configure and connect your client, then you can add a callBack function on subscribe to inbox channel.
 
 ```java
-String device_key = "device_identifer";
-
-try {
-    final SpaceBunnyClient spaceBunny = new SpaceBunnyClient(device_key);
-
-    spaceBunny.connect(new SpaceBunnyClient.OnConnectedListener() {
-        @Override
-        public void onConnected() throws SpaceBunnyConnectionException {
-            ArrayList<SBChannel> channels = spaceBunny.getChannels();
-            spaceBunny.subscribe(new RabbitConnection.OnSubscriptionMessageReceivedListener() {
-                @Override
-                public void onReceived(String message, Envelope envelope) {
-                    System.out.println(message);
-                }
-            });
-        }
-    });
-
-} catch (SpaceBunnyConnectionException ex) {
-    ex.printStackTrace();
-}
-```
-
-## Some useful concepts
-
-#### Device
-
-Build an instance of a device, configure and use it:
-
-```java
-String host = "host_to_connect";
-String device_name = "name_of_the_device";
-String device_id = "device_identifer";
-String secret = "password_for_connection";
-String vhost = "virtual_host_to_connect";
-ArrayList<SBProtocol> protocols = new ArrayList<>(Costants.min_protocols); // At least one protocol
-ArrayList<SBChannel> channels = new ArrayList<>(); // At least one channel
-
-SBDevice device = new SBDevice.Builder()
-                    .setDeviceId(device_id)
-                    .setDeviceName(device_name)
-                    .setHost(host)
-                    .setSecret(secret)
-                    .setVHost(vhost)
-                    .setChannels(channels)
-                    .setProtocols(protocols)
-                    .getDevice();
-```
-
-#### Protocol
-
-Get all device protocols and use it:
-
-```java
-ArrayList<SBProtocol> protocols = spaceBunny.getProtocols();
-```
-
-Or create one:
-
-```java
-String name = "name_of_the_protocol";
-int port = port_to_connect;
-int ssl_port = ssl_port_for_secure_connection;
-
-SBProtocol protocol = new SBProtocol(name, port, ssl_port);
-```
-
-#### Channel
-
-Get all device channels and use it:
-
-```java
-ArrayList<SBChannel> channels = spaceBunny.getChannels();
-```
-
-Or create one:
-```java
-String id = "id_of_the_channel";
-String name = "name_of_the_channel";
-
-SBChannel channel = new SBChannel(id, name);
+[...]
+spaceBunny.subscribe(new RabbitConnection.OnSubscriptionMessageReceivedListener() {
+                        @Override
+                        public void onReceived(String message, Envelope envelope) {
+                            System.out.println(message);
+                        }
+                    });
+[...]
 ```
 
 ## License

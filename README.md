@@ -25,7 +25,7 @@ Maven:
 </dependency>
 ```
 
-Download library: [Jar file](https://github.com/space-bunny/java_sdk/device-sdk-0.1.0.jar)
+Download library: [Jar file](https://github.com/space-bunny/java_sdk/blob/master/device-sdk-0.1.0.jar)
 
 ## Device basic usage
 

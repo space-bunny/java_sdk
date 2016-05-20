@@ -1,32 +1,13 @@
 package io.spacebunny;
 
-<<<<<<< HEAD
-=======
 import com.rabbitmq.client.ConfirmListener;
->>>>>>> release/Release_0.1.0
 import io.spacebunny.connection.RabbitConnection;
 import io.spacebunny.device.SBChannel;
 import io.spacebunny.device.SBDevice;
 import io.spacebunny.device.SBProtocol;
 import io.spacebunny.util.Costants;
-import io.spacebunny.util.Utilities;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-<<<<<<< HEAD
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-=======
 import javax.net.ssl.*;
 import java.io.*;
 import java.net.URL;
@@ -41,7 +22,6 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
 import java.util.ArrayList;
 import java.util.Map;
->>>>>>> release/Release_0.1.0
 import java.util.logging.Logger;
 
 public class SpaceBunny {
@@ -58,13 +38,7 @@ public class SpaceBunny {
         private String device_key;
         private boolean tls = true;
         private boolean verify_ca = true;
-<<<<<<< HEAD
 
-
-        /**
-         * @param device_key unique key device
-         * @constructor
-=======
         private boolean custom_certificate = false;
 
 
@@ -72,7 +46,6 @@ public class SpaceBunny {
          *
          *
          * @param device_key unique key device
->>>>>>> release/Release_0.1.0
          */
 
         public Client(String device_key) throws ConfigurationException {
@@ -82,14 +55,10 @@ public class SpaceBunny {
         }
 
         /**
-<<<<<<< HEAD
-         * @param device custom device created by the user
-         * @constructor
-=======
+
          *
          *
          * @param device custom device created by the user
->>>>>>> release/Release_0.1.0
          */
         public Client(SBDevice device) throws ConfigurationException {
             if (device == null)
@@ -100,11 +69,8 @@ public class SpaceBunny {
         /**
          * Open RabbitMQ connection with SpaceBunny
          *
-<<<<<<< HEAD
-         * @throws ConnectionException
-=======
+
          * @throws ConnectionException connection error
->>>>>>> release/Release_0.1.0
          */
         public void connect() throws ConnectionException {
             connect(null, null);
@@ -114,11 +80,8 @@ public class SpaceBunny {
          * Open RabbitMQ connection with SpaceBunny
          *
          * @param onConnectedListener callback
-<<<<<<< HEAD
-         * @throws ConnectionException
-=======
+
          * @throws ConnectionException connection error
->>>>>>> release/Release_0.1.0
          */
         public void connect(io.spacebunny.SpaceBunny.OnConnectedListener onConnectedListener) throws ConnectionException {
             connect(null, onConnectedListener);
@@ -129,28 +92,17 @@ public class SpaceBunny {
          *
          * @param protocol            custom protocol defined by the user
          * @param onConnectedListener callback
-<<<<<<< HEAD
-         * @throws ConnectionException
-=======
+
          * @throws ConnectionException connection error
->>>>>>> release/Release_0.1.0
          */
         public void connect(SBProtocol protocol, io.spacebunny.SpaceBunny.OnConnectedListener onConnectedListener) throws ConnectionException {
             try {
                 configure();
-<<<<<<< HEAD
-                if (protocol == null) {
-                    protocol = Costants.DEFAULT_PROTOCOL;
-                } else {
-                    LOGGER.warning("Custom protocol not supported!");
-                    protocol = Costants.DEFAULT_PROTOCOL;
-                }
-=======
+
                 if (protocol != null) {
                     LOGGER.warning("Custom protocol not supported!");
                 }
                 protocol = Costants.DEFAULT_PROTOCOL;
->>>>>>> release/Release_0.1.0
 
                 rabbitConnection = new RabbitConnection(protocol, tls);
                 if (rabbitConnection.connect(device) && onConnectedListener != null)
@@ -161,10 +113,7 @@ public class SpaceBunny {
         }
 
         /**
-<<<<<<< HEAD
-=======
          *
->>>>>>> release/Release_0.1.0
          * @return connection status
          */
         public boolean isConnected() {
@@ -175,11 +124,7 @@ public class SpaceBunny {
          * Test the connection with SpaceBunny
          * Throws an exception if it is not
          *
-<<<<<<< HEAD
-         * @throws ConnectionException
-=======
          * @throws ConnectionException connection error
->>>>>>> release/Release_0.1.0
          */
         public void testConnection() throws ConnectionException {
             if (!isConnected())
@@ -192,12 +137,8 @@ public class SpaceBunny {
          * @param path of CA
          */
         public void setPathCustomCA(String path) throws ConfigurationException {
-<<<<<<< HEAD
-            Utilities.addCA(path);
-=======
             addCA(path);
             custom_certificate = true;
->>>>>>> release/Release_0.1.0
         }
 
         /**
@@ -216,58 +157,6 @@ public class SpaceBunny {
 
             try {
 
-<<<<<<< HEAD
-                URL url = new URL(Utilities.generateHostname(tls));
-                uc = url.openConnection();
-                uc.setRequestProperty("Device-Key", device_key);
-                reader = new BufferedReader(new InputStreamReader(uc.getInputStream(), "UTF-8"));
-
-            } catch (Exception ex) {
-
-                if (!verify_ca) {
-                    // Create a trust manager that does not validate certificate chains
-                    TrustManager[] trustAllCerts = new TrustManager[]{
-                            new X509TrustManager() {
-                                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                                    return null;
-                                }
-
-                                public void checkClientTrusted(
-                                        java.security.cert.X509Certificate[] certs, String authType) {
-                                }
-
-                                public void checkServerTrusted(
-                                        java.security.cert.X509Certificate[] certs, String authType) {
-                                }
-                            }
-                    };
-
-                    SSLContext sc = SSLContext.getInstance("SSL");
-                    sc.init(null, trustAllCerts, new java.security.SecureRandom());
-                    HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-
-
-                    URL url = new URL(Utilities.generateHostname(tls));
-                    uc = url.openConnection();
-                    uc.setRequestProperty("Device-Key", device_key);
-                    reader = new BufferedReader(new InputStreamReader(uc.getInputStream(), "UTF-8"));
-                } else {
-                    throw new ConnectionException("Error with ssl connection!");
-                }
-
-            }
-
-            StringBuilder responseStrBuilder = new StringBuilder();
-
-            String inputStr;
-            while ((inputStr = reader.readLine()) != null)
-                responseStrBuilder.append(inputStr);
-
-            device = new SBDevice(new JSONObject(responseStrBuilder.toString()));
-
-            if (configCallBack != null)
-                configCallBack.onConfigured(this.device);
-=======
                 if (tls) {
                     if (!verify_ca) {
                         // Create a trust manager that does not validate certificate chains
@@ -316,17 +205,11 @@ public class SpaceBunny {
             } catch (Exception e) {
                 throw new SpaceBunny.ConnectionException(e);
             }
->>>>>>> release/Release_0.1.0
-
         }
 
         /**
-<<<<<<< HEAD
-         * @param callBack
-=======
          *
          * @param callBack function to do when configuration is finished
->>>>>>> release/Release_0.1.0
          */
         public void setOnFinishConfigiurationListener(io.spacebunny.SpaceBunny.OnFinishConfigiurationListener callBack) {
             configCallBack = callBack;
@@ -335,23 +218,6 @@ public class SpaceBunny {
         /**
          * Publish msg on channel to SpaceBunny
          *
-<<<<<<< HEAD
-         * @param channelName
-         * @param msg     to publish
-         * @throws ConnectionException
-         */
-        public void publish(String channelName, String msg) throws ConnectionException {
-            testConnection();
-            try {
-                SBChannel channel = SBChannel.findChannel(channelName, this.getChannels());
-                if (channel != null)
-                    rabbitConnection.publish(device.getDevice_id(), channelName, msg);
-                else
-                    LOGGER.warning("The channel does not exist!");
-            } catch (Exception ex) {
-                throw new ConnectionException(ex);
-            }
-=======
          * @param channelName name of channel where you want to publish
          * @param msg     to publish
          * @throws ConnectionException
@@ -371,18 +237,12 @@ public class SpaceBunny {
                     }
                 }
             }.start();
-
->>>>>>> release/Release_0.1.0
         }
 
         /**
          * Receive one message from inbox
          *
-<<<<<<< HEAD
-         * @param onMessageReceived
-=======
          * @param onMessageReceived function to do when message is received
->>>>>>> release/Release_0.1.0
          * @throws ConnectionException
          */
         public void receive(io.spacebunny.SpaceBunny.OnMessageReceivedListener onMessageReceived) throws ConnectionException {
@@ -496,8 +356,6 @@ public class SpaceBunny {
     {
         void onReceived(String message) throws ConnectionException;
     }
-<<<<<<< HEAD
-=======
 
 
     private static String generateHostname(boolean tls) {
@@ -536,5 +394,4 @@ public class SpaceBunny {
             throw new SpaceBunny.ConfigurationException("Error with custom CA.");
         }
     }
->>>>>>> release/Release_0.1.0
 }

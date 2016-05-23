@@ -8,7 +8,7 @@ import io.spacebunny.device.SBDevice;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-public class Main {
+public class Sample {
 
     public static void main(String[] args) {
 

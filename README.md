@@ -12,7 +12,7 @@ Please feel free to contribute!
 Gradle: 
 
 ```
-compile 'io.spacebunny:device-sdk:0.0.1'
+compile 'io.spacebunny:device-sdk:0.1.0'
 ```
 
 Maven: 

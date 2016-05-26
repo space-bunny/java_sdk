@@ -68,8 +68,8 @@ public class SBChannel {
         return "\nChannel:\nID: " + id + "\nNAME: " + name;
     }
 
-    public static SBChannel findChannel(String name, ArrayList<SBChannel> channels) throws SpaceBunny.ConfigurationException {
-        for (SBChannel channel : channels)
+    public static SBChannel findChannel(String name, SBDevice device) {
+        for (SBChannel channel : device.getChannels())
             if (channel.getName().equals(name))
                 return channel;
         return null;

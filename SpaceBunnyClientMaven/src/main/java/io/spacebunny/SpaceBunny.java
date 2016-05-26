@@ -5,7 +5,7 @@ import io.spacebunny.connection.RabbitConnection;
 import io.spacebunny.device.SBChannel;
 import io.spacebunny.device.SBDevice;
 import io.spacebunny.device.SBProtocol;
-import io.spacebunny.util.Costants;
+import io.spacebunny.util.Constants;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -13,9 +13,6 @@ import javax.net.ssl.*;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.NoSuchAlgorithmException;
@@ -97,7 +94,7 @@ public class SpaceBunny {
                 if (protocol != null) {
                     LOGGER.warning("Custom protocol not supported!");
                 }
-                protocol = Costants.DEFAULT_PROTOCOL;
+                protocol = Constants.DEFAULT_PROTOCOL;
 
                 rabbitConnection = new RabbitConnection(protocol, tls);
                 if (rabbitConnection.connect(device) && onConnectedListener != null)
@@ -176,8 +173,10 @@ public class SpaceBunny {
                         HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
 
                     } else {
-                        if (!custom_certificate)
-                            addCA("certs/lets-encrypt-x3-cross-signed.pem");
+                        if (!custom_certificate) {
+                            String dir_path = SpaceBunny.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+                            addCA(dir_path + "certs/lets-encrypt-x3-cross-signed.pem");
+                        }
                     }
                 }
 
@@ -223,7 +222,7 @@ public class SpaceBunny {
             new Thread() {
                 public void run() {
                     try {
-                        SBChannel channel = SBChannel.findChannel(channelName, device.getChannels());
+                        SBChannel channel = SBChannel.findChannel(channelName, device);
                         if (channel != null)
                             rabbitConnection.publish(device.getDevice_id(), channelName, msg, headers, confirmListener);
                         else
@@ -317,6 +316,18 @@ public class SpaceBunny {
                 throw new ConnectionException(ex);
             }
         }
+
+        public SBDevice getDevice() {
+            return device;
+        }
+
+        public SBProtocol getDefaultProtocol() {
+            return Constants.DEFAULT_PROTOCOL;
+        }
+
+        public boolean existsChannel(String channelName) {
+            return (SBChannel.findChannel(channelName, this.device) != null);
+        }
     }
 
     public static class ConfigurationException extends Exception {
@@ -356,20 +367,21 @@ public class SpaceBunny {
 
 
     private static String generateHostname(boolean tls) {
-        return (tls ? Costants.URL_ENDPOINT_TLS : Costants.URL_ENDPOINT) + Costants.API_VERSION + Costants.PATH_ENDPOINT;
+        return (tls ? Constants.URL_ENDPOINT_TLS : Constants.URL_ENDPOINT) + Constants.API_VERSION + Constants.PATH_ENDPOINT;
     }
 
     private static void addCA(String path) throws SpaceBunny.ConfigurationException {
         try {
             KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
-            Path ksPath = Paths.get(System.getProperty("java.home"),
-                    "lib", "security", "cacerts");
-            keyStore.load(Files.newInputStream(ksPath),
+            String ksPath = System.getProperty("java.home") + "\\lib\\security\\cacerts\\";
+
+            keyStore.load(new FileInputStream(ksPath),
                     "changeit".toCharArray());
 
             CertificateFactory cf = CertificateFactory.getInstance("X.509");
 
             File f = new File(path);
+            System.out.println(f.getAbsolutePath());
             if (f.exists()) {
                 try (InputStream caInput = new BufferedInputStream(
                         new FileInputStream(path))) {

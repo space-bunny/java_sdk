@@ -1,9 +1,8 @@
 <settings>
     <servers>
         <server>
-            <id>ossrh</id>
-            <username>tommaso.berlose</username>
-            <password>09111991</password>
+            <id>github</id>
+            <password>OAUTH2TOKEN</password>
         </server>
     </servers>
 </settings>

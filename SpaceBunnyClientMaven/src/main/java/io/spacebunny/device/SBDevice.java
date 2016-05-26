@@ -2,7 +2,7 @@ package io.spacebunny.device;
 
 
 import io.spacebunny.SpaceBunny;
-import io.spacebunny.util.Costants;
+import io.spacebunny.util.Constants;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,8 +53,8 @@ public class SBDevice {
         this.channels = channels;
 
         // Check if default protocol already exists
-        if (SBProtocol.findProtocol(Costants.DEFAULT_PROTOCOL.getName(), this.protocols) == null)
-            this.protocols.add(0, Costants.DEFAULT_PROTOCOL);
+        if (SBProtocol.findProtocol(Constants.DEFAULT_PROTOCOL.getName(), this) == null)
+            this.protocols.add(0, Constants.DEFAULT_PROTOCOL);
 
         if (this.host == null ||
                 this.host.equals("") ||
@@ -86,15 +86,15 @@ public class SBDevice {
         JSONObject pr = conn.getJSONObject(PROTOCOLS_KEY);
         Iterator<?> keys = pr.keys();
 
-        this.protocols.add(Costants.DEFAULT_PROTOCOL);
+        this.protocols.add(Constants.DEFAULT_PROTOCOL);
 
         while( keys.hasNext() ) {
             String key = (String)keys.next();
             SBProtocol newProtocol = new SBProtocol(key, pr.getJSONObject(key));
 
             // Check default protocol updates
-            if (newProtocol.getName().equals(Costants.DEFAULT_PROTOCOL.getName()))
-                this.protocols.remove(Costants.DEFAULT_PROTOCOL);
+            if (newProtocol.getName().equals(Constants.DEFAULT_PROTOCOL.getName()))
+                this.protocols.remove(Constants.DEFAULT_PROTOCOL);
 
             this.protocols.add(newProtocol);
         }

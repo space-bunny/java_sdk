@@ -86,8 +86,8 @@ public class SBProtocol {
      * @param name of the protocol to search
      * @return searched protocol
      */
-    public static SBProtocol findProtocol(String name, ArrayList<SBProtocol> protocols) {
-        for (SBProtocol protocol : protocols)
+    public static SBProtocol findProtocol(String name, SBDevice device) {
+        for (SBProtocol protocol : device.getProtocols())
             if (protocol.getName().equals(name))
                 return protocol;
         return null;

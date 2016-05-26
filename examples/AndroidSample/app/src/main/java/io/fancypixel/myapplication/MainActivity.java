@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Set Custom view
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -81,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
         button_container.setVisibility(View.GONE);
         loading.setVisibility(View.VISIBLE);
 
+        // Create initial interface
+
         final Handler mHandler = new Handler();
 
         new Thread(new Runnable() {
@@ -99,7 +103,8 @@ public class MainActivity extends AppCompatActivity {
                             });
                         }
                     });
-                    spaceBunny.setTls(false);
+
+                    //spaceBunny.setVerifyCA(false);
                     spaceBunny.connect(new SpaceBunny.OnConnectedListener() {
                         @Override
                         public void onConnected() throws SpaceBunny.ConnectionException {
@@ -132,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showError(String error_text) {
+        // Interface with error
         error.setText(error_text);
         setTitle(getString(R.string.title_error));
         loading.setVisibility(View.GONE);
@@ -142,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showConfigure(SBDevice device) {
+        // Configuration Card with device information
         setTitle(device.getDevice_name());
 
         ((TextView) findViewById(R.id.text_device_name)).setText(device.getDevice_name());
@@ -157,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showButtons() {
+        // Show buttons for publish and subscribe actions
         action_subscribe.setText(subscribe ? getString(R.string.action_unsubscribe) : getString(R.string.action_subscribe));
 
         final Handler mHandler = new Handler();
@@ -242,6 +250,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sendOk() {
+        // Handle Ack
         ((EditText) findViewById(R.id.msg_to_send)).getText().clear();
         ((EditText) findViewById(R.id.channel_to_send)).getText().clear();
         publish_container.setVisibility(View.GONE);
@@ -249,11 +258,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sendNotOk() {
+        // Handle Nack
         Snackbar.make(toolbar, getString(R.string.send_not_ok), Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void onPause() {
+        // Close connection when activity is closed
         super.onPause();
         try {
             spaceBunny.close();

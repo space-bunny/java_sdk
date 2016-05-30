@@ -1,5 +1,7 @@
 package io.spacebunny.javasdk;
 
+import io.spacebunny.SpaceBunny;
+import io.spacebunny.device.SBDevice;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -26,11 +28,10 @@ public class AppTest
         return new TestSuite( AppTest.class );
     }
 
-    /**
-     * Rigourous Test :-)
-     */
     public void testApp()
     {
-        assertTrue( true );
+        //SpaceBunny.Client spaceBunny = new SpaceBunny.Client("not_real_device_key");
+        //assertEquals("Device Key must be correct", );
+        assertTrue(true);
     }
 }

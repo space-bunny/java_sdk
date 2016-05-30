@@ -11,8 +11,10 @@ import org.json.JSONObject;
 
 import javax.net.ssl.*;
 import java.io.*;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLDecoder;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.NoSuchAlgorithmException;
@@ -174,8 +176,7 @@ public class SpaceBunny {
 
                     } else {
                         if (!custom_certificate) {
-                            String dir_path = SpaceBunny.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
-                            addCA(dir_path + "certs/lets-encrypt-x3-cross-signed.pem");
+                            setDefaultCA();
                         }
                     }
                 }
@@ -223,9 +224,8 @@ public class SpaceBunny {
                 public void run() {
                     try {
                         SBChannel channel = SBChannel.findChannel(channelName, device);
-                        if (channel != null)
-                            rabbitConnection.publish(device.getDevice_id(), channelName, msg, headers, confirmListener);
-                        else
+                        rabbitConnection.publish(device.getDevice_id(), channelName, msg, headers, confirmListener);
+                        if (channel == null)
                             LOGGER.warning("The channel does not exist!");
                     } catch (Exception ex) {
                         LOGGER.warning(ex.getMessage());
@@ -375,20 +375,59 @@ public class SpaceBunny {
             KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
             String ksPath = System.getProperty("java.home") + "\\lib\\security\\cacerts\\";
 
-            keyStore.load(new FileInputStream(ksPath),
+            String vendor = System.getProperty("java.vendor.url");
+            if (vendor.equals("http://www.android.com/"))
+                keyStore.load(null, null);
+            else
+                keyStore.load(new FileInputStream(ksPath),
                     "changeit".toCharArray());
 
             CertificateFactory cf = CertificateFactory.getInstance("X.509");
 
-            File f = new File(path);
-            System.out.println(f.getAbsolutePath());
+            File f = new File(URLDecoder.decode(path, "UTF-8"));
             if (f.exists()) {
                 try (InputStream caInput = new BufferedInputStream(
-                        new FileInputStream(path))) {
+                        new FileInputStream(f.getPath()))) {
                     Certificate crt = cf.generateCertificate(caInput);
 
                     keyStore.setCertificateEntry(f.getName(), crt);
+
+                    TrustManagerFactory tmf = TrustManagerFactory
+                            .getInstance(TrustManagerFactory.getDefaultAlgorithm());
+                    tmf.init(keyStore);
+                    SSLContext sslContext = SSLContext.getInstance("TLS");
+                    sslContext.init(null, tmf.getTrustManagers(), null);
+                    SSLContext.setDefault(sslContext);
                 }
+            } else {
+                throw new SpaceBunny.ConfigurationException("Error with custom CA path.");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SpaceBunny.ConfigurationException("Error with custom CA.");
+        }
+    }
+
+    private static void setDefaultCA() throws SpaceBunny.ConfigurationException {
+        try {
+            KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+            String ksPath = System.getProperty("java.home") + "\\lib\\security\\cacerts\\";
+
+            String vendor = System.getProperty("java.vendor.url");
+            if (vendor.equals("http://www.android.com/"))
+                keyStore.load(null, null);
+            else
+                keyStore.load(new FileInputStream(ksPath),
+                        "changeit".toCharArray());
+
+            CertificateFactory cf = CertificateFactory.getInstance("X.509");
+
+            try (InputStream caInput = new BufferedInputStream(
+                    SpaceBunny.class.getResourceAsStream("/lets-encrypt-x3-cross-signed.pem"))) {
+                Certificate crt = cf.generateCertificate(caInput);
+
+                keyStore.setCertificateEntry("lets-encrypt-x3-cross-signed", crt);
 
                 TrustManagerFactory tmf = TrustManagerFactory
                         .getInstance(TrustManagerFactory.getDefaultAlgorithm());
@@ -396,10 +435,10 @@ public class SpaceBunny {
                 SSLContext sslContext = SSLContext.getInstance("TLS");
                 sslContext.init(null, tmf.getTrustManagers(), null);
                 SSLContext.setDefault(sslContext);
-            } else {
-                throw new SpaceBunny.ConfigurationException("Error with custom CA path.");
             }
+
         } catch (Exception e) {
+            e.printStackTrace();
             throw new SpaceBunny.ConfigurationException("Error with custom CA.");
         }
     }

@@ -1,8 +1,11 @@
 <settings>
     <servers>
         <server>
-            <id>github</id>
-            <password>OAUTH2TOKEN</password>
+            <id>ossrh</id>
+            <!--<username>fancy.pixel</username>
+            <password>{EhRA1nWF0xgH/PePYLok8vfB7hzIAUrtDFk5xQNLAjk=}</password>-->
+            <username>tommaso.berlose</username>
+            <password>{v+UGu+YjpUMHPkttOeOvcKOhcwVMElnGyysT579bS/I=}</password>
         </server>
     </servers>
 </settings>

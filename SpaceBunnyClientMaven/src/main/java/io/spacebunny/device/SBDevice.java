@@ -33,6 +33,7 @@ public class SBDevice {
 
     /**
      *
+
      * @param device_name name of the device
      * @param device_id id of the device
      * @param secret secret password for the device connection

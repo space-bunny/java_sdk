@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     boolean subscribe = false;
+    final Handler mHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +78,6 @@ public class MainActivity extends AppCompatActivity {
         loading.setVisibility(View.VISIBLE);
 
         // Create initial interface
-
-        final Handler mHandler = new Handler();
 
         new Thread(new Runnable() {
             public void run() {
@@ -157,41 +156,53 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showButtons() {
-        // Show buttons for publish and subscribe actions
-        action_subscribe.setText(subscribe ? getString(R.string.action_unsubscribe) : getString(R.string.action_subscribe));
 
-        final Handler mHandler = new Handler();
+        // Show buttons for publish and subscribe actions
+
+        mHandler.post(new Runnable() {
+            public void run() {
+                action_subscribe.setText(subscribe ? getString(R.string.action_unsubscribe) : getString(R.string.action_subscribe));
+                button_container.setVisibility(View.VISIBLE);
+            }
+        });
+
 
         action_subscribe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!subscribe) {
-                    try {
-                        spaceBunny.subscribe(new RabbitConnection.OnSubscriptionMessageReceivedListener() {
-                            @Override
-                            public void onReceived(final String message, Envelope envelope) {
-                                mHandler.post(new Runnable() {
-                                    public void run() {
-                                        Snackbar.make(toolbar, getString(R.string.text_message) + ": " + message, Snackbar.LENGTH_LONG).show();
-                                    }
-                                });
-                            }
-                        });
-                        subscribe = true;
-                        showButtons();
-                    } catch (SpaceBunny.ConnectionException ex) {
-                        ex.printStackTrace();
-                        showError(ex.getMessage());
+                new Thread(new Runnable() {
+                    public void run() {
+                    if (!subscribe) {
+                        try {
+                            spaceBunny.subscribe(new RabbitConnection.OnSubscriptionMessageReceivedListener() {
+                                @Override
+                                public void onReceived(final String message, Envelope envelope) {
+                                    mHandler.post(new Runnable() {
+                                        public void run() {
+                                            Snackbar.make(toolbar, getString(R.string.text_message) + ": " + message, Snackbar.LENGTH_LONG).show();
+                                        }
+                                    });
+                                }
+                            });
+                            subscribe = true;
+                            showButtons();
+                        } catch (SpaceBunny.ConnectionException ex) {
+                            ex.printStackTrace();
+                            showError(ex.getMessage());
+                        }
+                    } else {
+                        try {
+                            spaceBunny.unsubscribe();
+                            subscribe = false;
+                            showButtons();
+                        } catch (SpaceBunny.ConnectionException ex) {
+                            showError(ex.getMessage());
+                        }
                     }
-                } else {
-                    try {
-                        spaceBunny.unsubscribe();
-                        subscribe = false;
-                        showButtons();
-                    } catch (SpaceBunny.ConnectionException ex) {
-                        showError(ex.getMessage());
+
                     }
-                }
+                }).start();
+
             }
         });
 
@@ -208,38 +219,42 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.action_send).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        try {
-                            spaceBunny.publish(((EditText) findViewById(R.id.channel_to_send)).getText().toString(),
-                                    ((EditText) findViewById(R.id.msg_to_send)).getText().toString(),
-                                    null, new ConfirmListener() {
-                                        @Override
-                                        public void handleAck(long deliveryTag, boolean multiple) throws IOException {
-                                            mHandler.post(new Runnable() {
-                                                public void run() {
-                                                    sendOk();
+                        new Thread(new Runnable() {
+                            public void run() {
+                                try {
+                                    spaceBunny.publish(((EditText) findViewById(R.id.channel_to_send)).getText().toString(),
+                                            ((EditText) findViewById(R.id.msg_to_send)).getText().toString(),
+                                            null, new ConfirmListener() {
+                                                @Override
+                                                public void handleAck(long deliveryTag, boolean multiple) throws IOException {
+                                                    mHandler.post(new Runnable() {
+                                                        public void run() {
+                                                            sendOk();
+                                                        }
+                                                    });
                                                 }
-                                            });
-                                        }
 
-                                        @Override
-                                        public void handleNack(long deliveryTag, boolean multiple) throws IOException {
-                                            mHandler.post(new Runnable() {
-                                                public void run() {
-                                                    sendNotOk();
+                                                @Override
+                                                public void handleNack(long deliveryTag, boolean multiple) throws IOException {
+                                                    mHandler.post(new Runnable() {
+                                                        public void run() {
+                                                            sendNotOk();
+                                                        }
+                                                    });
                                                 }
                                             });
-                                        }
-                                    });
-                        } catch (SpaceBunny.ConnectionException ex) {
-                            showError(ex.getMessage());
-                        }
+                                } catch (SpaceBunny.ConnectionException ex) {
+                                    showError(ex.getMessage());
+                                }
+
+                            }
+                        }).start();
                     }
                 });
                 publish_container.setVisibility(View.VISIBLE);
             }
         });
 
-        button_container.setVisibility(View.VISIBLE);
     }
 
     public void sendOk() {

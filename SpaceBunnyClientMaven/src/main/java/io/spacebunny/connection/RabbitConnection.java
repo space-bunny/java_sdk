@@ -62,6 +62,7 @@ public class RabbitConnection {
         conn.close(0, "Close Connection");
     }
 
+
     public void publish(String device_id, String channelName, String msg, Map<String, Object> headers, ConfirmListener confirmListener) throws IOException, InterruptedException {
         Channel rabbitChannel = conn.createChannel();
 

@@ -2,105 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b744036e-3c6b-435b-a3e3-ddfd6f3a52ad" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../examples/LiveStreamSample/src/JavaSample.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/io/spacebunny/JavaSample$2$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/io/spacebunny/JavaSample$3.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/io/spacebunny/JavaSample$1.class" afterPath="$PROJECT_DIR$/target/classes/io/spacebunny/JavaSample$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/io/spacebunny/JavaSample$2.class" afterPath="$PROJECT_DIR$/target/classes/io/spacebunny/JavaSample$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/io/spacebunny/JavaSample.class" afterPath="$PROJECT_DIR$/target/classes/io/spacebunny/JavaSample.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/io/spacebunny/SpaceBunny$Client$1.class" afterPath="$PROJECT_DIR$/target/classes/io/spacebunny/SpaceBunny$Client$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/io/spacebunny/SpaceBunny$Client$2.class" afterPath="$PROJECT_DIR$/target/classes/io/spacebunny/SpaceBunny$Client$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/io/spacebunny/SpaceBunny$Client.class" afterPath="$PROJECT_DIR$/target/classes/io/spacebunny/SpaceBunny$Client.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/io/spacebunny/SpaceBunny$ConfigurationException.class" afterPath="$PROJECT_DIR$/target/classes/io/spacebunny/SpaceBunny$ConfigurationException.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/io/spacebunny/SpaceBunny$ConnectionException.class" afterPath="$PROJECT_DIR$/target/classes/io/spacebunny/SpaceBunny$ConnectionException.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/io/spacebunny/SpaceBunny.class" afterPath="$PROJECT_DIR$/target/classes/io/spacebunny/SpaceBunny.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/io/spacebunny/connection/RabbitConnection$1.class" afterPath="$PROJECT_DIR$/target/classes/io/spacebunny/connection/RabbitConnection$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/io/spacebunny/connection/RabbitConnection.class" afterPath="$PROJECT_DIR$/target/classes/io/spacebunny/connection/RabbitConnection.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/io/spacebunny/util/Constants.class" afterPath="$PROJECT_DIR$/target/classes/io/spacebunny/util/Constants.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/device-sdk-0.1.0-javadoc.jar" afterPath="$PROJECT_DIR$/target/device-sdk-0.1.0-javadoc.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/device-sdk-0.1.0-sources.jar" afterPath="$PROJECT_DIR$/target/device-sdk-0.1.0-sources.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/device-sdk-0.1.0.jar" afterPath="$PROJECT_DIR$/target/device-sdk-0.1.0.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/nexus-staging/staging/166c3ec7a93746/io/spacebunny/device-sdk/0.1.0/device-sdk-0.1.0-javadoc.jar" afterPath="$PROJECT_DIR$/target/nexus-staging/staging/166c3ec7a93746/io/spacebunny/device-sdk/0.1.0/device-sdk-0.1.0-javadoc.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/nexus-staging/staging/166c3ec7a93746/io/spacebunny/device-sdk/0.1.0/device-sdk-0.1.0-sources.jar" afterPath="$PROJECT_DIR$/target/nexus-staging/staging/166c3ec7a93746/io/spacebunny/device-sdk/0.1.0/device-sdk-0.1.0-sources.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/nexus-staging/staging/166c3ec7a93746/io/spacebunny/device-sdk/0.1.0/device-sdk-0.1.0.jar" afterPath="$PROJECT_DIR$/target/nexus-staging/staging/166c3ec7a93746/io/spacebunny/device-sdk/0.1.0/device-sdk-0.1.0.jar" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/io/spacebunny/util/Utilities.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings.xml" afterPath="$PROJECT_DIR$/settings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/io/spacebunny/SpaceBunny.java" afterPath="$PROJECT_DIR$/src/main/java/io/spacebunny/SpaceBunny.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/io/spacebunny/connection/RabbitConnection.java" afterPath="$PROJECT_DIR$/src/main/java/io/spacebunny/connection/RabbitConnection.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/io/spacebunny/util/Constants.java" afterPath="$PROJECT_DIR$/src/main/java/io/spacebunny/util/Constants.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/allclasses-frame.html" afterPath="$PROJECT_DIR$/target/apidocs/allclasses-frame.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/allclasses-noframe.html" afterPath="$PROJECT_DIR$/target/apidocs/allclasses-noframe.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/constant-values.html" afterPath="$PROJECT_DIR$/target/apidocs/constant-values.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/deprecated-list.html" afterPath="$PROJECT_DIR$/target/apidocs/deprecated-list.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/index-all.html" afterPath="$PROJECT_DIR$/target/apidocs/index-all.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/index.html" afterPath="$PROJECT_DIR$/target/apidocs/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/SpaceBunny.Client.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/SpaceBunny.Client.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/SpaceBunny.ConfigurationException.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/SpaceBunny.ConfigurationException.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/SpaceBunny.ConnectionException.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/SpaceBunny.ConnectionException.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/SpaceBunny.OnConnectedListener.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/SpaceBunny.OnConnectedListener.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/SpaceBunny.OnFinishConfigiurationListener.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/SpaceBunny.OnFinishConfigiurationListener.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/SpaceBunny.OnMessageReceivedListener.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/SpaceBunny.OnMessageReceivedListener.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/SpaceBunny.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/SpaceBunny.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/class-use/SpaceBunny.Client.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/class-use/SpaceBunny.Client.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/class-use/SpaceBunny.ConfigurationException.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/class-use/SpaceBunny.ConfigurationException.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/class-use/SpaceBunny.ConnectionException.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/class-use/SpaceBunny.ConnectionException.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/class-use/SpaceBunny.OnConnectedListener.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/class-use/SpaceBunny.OnConnectedListener.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/class-use/SpaceBunny.OnFinishConfigiurationListener.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/class-use/SpaceBunny.OnFinishConfigiurationListener.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/class-use/SpaceBunny.OnMessageReceivedListener.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/class-use/SpaceBunny.OnMessageReceivedListener.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/class-use/SpaceBunny.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/class-use/SpaceBunny.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/connection/RabbitConnection.OnSubscriptionMessageReceivedListener.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/connection/RabbitConnection.OnSubscriptionMessageReceivedListener.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/connection/RabbitConnection.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/connection/RabbitConnection.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/connection/class-use/RabbitConnection.OnSubscriptionMessageReceivedListener.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/connection/class-use/RabbitConnection.OnSubscriptionMessageReceivedListener.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/connection/class-use/RabbitConnection.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/connection/class-use/RabbitConnection.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/connection/package-frame.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/connection/package-frame.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/connection/package-summary.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/connection/package-summary.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/connection/package-tree.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/connection/package-tree.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/connection/package-use.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/connection/package-use.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/device/SBChannel.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/device/SBChannel.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/device/SBDevice.Builder.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/device/SBDevice.Builder.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/device/SBDevice.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/device/SBDevice.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/device/SBProtocol.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/device/SBProtocol.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/device/SBSubscription.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/device/SBSubscription.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/device/class-use/SBChannel.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/device/class-use/SBChannel.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/device/class-use/SBDevice.Builder.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/device/class-use/SBDevice.Builder.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/device/class-use/SBDevice.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/device/class-use/SBDevice.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/device/class-use/SBProtocol.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/device/class-use/SBProtocol.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/device/class-use/SBSubscription.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/device/class-use/SBSubscription.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/device/package-frame.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/device/package-frame.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/device/package-summary.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/device/package-summary.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/device/package-tree.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/device/package-tree.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/device/package-use.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/device/package-use.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/package-frame.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/package-frame.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/package-summary.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/package-summary.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/package-tree.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/package-tree.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/package-use.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/package-use.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/util/Constants.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/util/Constants.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/util/class-use/Constants.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/util/class-use/Constants.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/util/package-frame.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/util/package-frame.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/util/package-summary.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/util/package-summary.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/util/package-tree.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/util/package-tree.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/io/spacebunny/util/package-use.html" afterPath="$PROJECT_DIR$/target/apidocs/io/spacebunny/util/package-use.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/overview-frame.html" afterPath="$PROJECT_DIR$/target/apidocs/overview-frame.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/overview-summary.html" afterPath="$PROJECT_DIR$/target/apidocs/overview-summary.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/overview-tree.html" afterPath="$PROJECT_DIR$/target/apidocs/overview-tree.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/apidocs/serialized-form.html" afterPath="$PROJECT_DIR$/target/apidocs/serialized-form.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/device-sdk-0.1.0-javadoc.jar.asc" afterPath="$PROJECT_DIR$/target/device-sdk-0.1.0-javadoc.jar.asc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/device-sdk-0.1.0-sources.jar.asc" afterPath="$PROJECT_DIR$/target/device-sdk-0.1.0-sources.jar.asc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/device-sdk-0.1.0.jar.asc" afterPath="$PROJECT_DIR$/target/device-sdk-0.1.0.jar.asc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/device-sdk-0.1.0.pom.asc" afterPath="$PROJECT_DIR$/target/device-sdk-0.1.0.pom.asc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/nexus-staging/staging/166c3ec7a93746.properties" afterPath="$PROJECT_DIR$/target/nexus-staging/staging/166c3ec7a93746.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/nexus-staging/staging/166c3ec7a93746/.index" afterPath="$PROJECT_DIR$/target/nexus-staging/staging/166c3ec7a93746/.index" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/nexus-staging/staging/166c3ec7a93746/io/spacebunny/device-sdk/0.1.0/device-sdk-0.1.0-javadoc.jar.asc" afterPath="$PROJECT_DIR$/target/nexus-staging/staging/166c3ec7a93746/io/spacebunny/device-sdk/0.1.0/device-sdk-0.1.0-javadoc.jar.asc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/nexus-staging/staging/166c3ec7a93746/io/spacebunny/device-sdk/0.1.0/device-sdk-0.1.0-sources.jar.asc" afterPath="$PROJECT_DIR$/target/nexus-staging/staging/166c3ec7a93746/io/spacebunny/device-sdk/0.1.0/device-sdk-0.1.0-sources.jar.asc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/nexus-staging/staging/166c3ec7a93746/io/spacebunny/device-sdk/0.1.0/device-sdk-0.1.0.jar.asc" afterPath="$PROJECT_DIR$/target/nexus-staging/staging/166c3ec7a93746/io/spacebunny/device-sdk/0.1.0/device-sdk-0.1.0.jar.asc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/nexus-staging/staging/166c3ec7a93746/io/spacebunny/device-sdk/0.1.0/device-sdk-0.1.0.pom.asc" afterPath="$PROJECT_DIR$/target/nexus-staging/staging/166c3ec7a93746/io/spacebunny/device-sdk/0.1.0/device-sdk-0.1.0.pom.asc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/nexus-staging/staging/166c3ec7a93746/io/spacebunny/device-sdk/maven-metadata-nexus.xml" afterPath="$PROJECT_DIR$/target/nexus-staging/staging/166c3ec7a93746/io/spacebunny/device-sdk/maven-metadata-nexus.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-io.spacebunny.javasdk.AppTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-io.spacebunny.javasdk.AppTest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/surefire-reports/io.spacebunny.javasdk.AppTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/io.spacebunny.javasdk.AppTest.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../examples/JavaSample/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../examples/JavaSample/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBDevice.java" afterPath="$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBDevice.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBProtocol.java" afterPath="$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBProtocol.java" />
     </list>
     <ignored path="SpaceBunnyClientMaven.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -161,22 +68,17 @@
         <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/SBProtocol.java" />
         <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/Costants.java" />
         <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/SpaceBunnyClient.java" />
-        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/util/Costants.java" />
-        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBSubscription.java" />
-        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/util/Utilities.java" />
-        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/Main.java" />
-        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBDevice.java" />
-        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBChannel.java" />
-        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBProtocol.java" />
-        <option value="$PROJECT_DIR$/src/test/java/io/spacebunny/javasdk/AppTest.java" />
         <option value="$PROJECT_DIR$/settings.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/util/Constants.java" />
-        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBLiveStream.java" />
-        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/SpaceBunny.java" />
-        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/JavaSample.java" />
-        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/connection/RabbitConnection.java" />
-        <option value="$PROJECT_DIR$/../examples/LiveStreamSample/src/JavaSample.java" />
+        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/util/Costants.java" />
+        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBChannel.java" />
+        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBSubscription.java" />
+        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/Main.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/connection/RabbitConnection.java" />
+        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBProtocol.java" />
+        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBDevice.java" />
+        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/util/Utilities.java" />
+        <option value="$PROJECT_DIR$/src/main/java/io/spacebunny/SpaceBunny.java" />
       </list>
     </option>
   </component>
@@ -267,6 +169,7 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -289,16 +192,145 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SpaceBunnyClientMaven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SpaceBunnyClientMaven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SpaceBunnyClientMaven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SpaceBunnyClientMaven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spacebunny" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SpaceBunnyClientMaven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SpaceBunnyClientMaven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spacebunny" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="util" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SpaceBunnyClientMaven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SpaceBunnyClientMaven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spacebunny" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="device" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SpaceBunnyClientMaven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SpaceBunnyClientMaven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spacebunny" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="connection" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.runner" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../examples/JavaSample" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
@@ -307,24 +339,18 @@
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Tommaso\Desktop\Fancy Pixel\java_sdk\SpaceBunnyClientMaven" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.spacebunny.test.javasdk" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Tommaso\Desktop\Fancy Pixel\java_sdk\SpaceBunnyClientMaven\target\classes\io\spacebunny" />
       <recent name="C:\Users\Tommaso\IdeaProjects\SpaceBunnyClientMaven\src\main\java\com\spacebunny\test" />
       <recent name="C:\Users\Tommaso\IdeaProjects\SpaceBunnyClientMaven\src\main\java\com\spacebunny\test\javasdk" />
     </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="io.spacebunny" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Tommaso\Desktop\Fancy Pixel\java_sdk\SpaceBunnyClientMaven\src" />
-      <recent name="C:\Users\Tommaso\Desktop\Fancy Pixel\java_sdk\SpaceBunnyClientMaven" />
-      <recent name="C:\Users\Tommaso\Desktop\Fancy Pixel\java_sdk\SpaceBunnyClientMaven\src\main\java\io\spacebunny" />
-    </key>
   </component>
-  <component name="RunManager" selected="Application.JavaSample">
+  <component name="RunManager" selected="Application.Main (2)">
     <configuration default="false" name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -365,10 +391,10 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration default="false" name="Main (2)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
-          <option name="PATTERN" value=".*" />
+          <option name="PATTERN" value="io.spacebunny.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -382,26 +408,6 @@
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
       <module name="SpaceBunnyClientMaven" />
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="false" name="JavaSample" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value=".*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="MAIN_CLASS_NAME" value="JavaSample" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="" />
       <envs />
       <method />
     </configuration>
@@ -624,18 +630,16 @@
       <listeners />
       <method />
     </configuration>
-    <list size="4">
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Application.Main" />
       <item index="1" class="java.lang.String" itemvalue="Application.Main (1)" />
-      <item index="2" class="java.lang.String" itemvalue="Application.Main" />
-      <item index="3" class="java.lang.String" itemvalue="Application.JavaSample" />
+      <item index="2" class="java.lang.String" itemvalue="Application.Main (2)" />
     </list>
     <recent_temporary>
-      <list size="4">
-        <item index="0" class="java.lang.String" itemvalue="Application.JavaSample" />
-        <item index="1" class="java.lang.String" itemvalue="Application.Main" />
-        <item index="2" class="java.lang.String" itemvalue="Application.Main (1)" />
-        <item index="3" class="java.lang.String" itemvalue="Application.Main" />
+      <list size="3">
+        <item index="0" class="java.lang.String" itemvalue="Application.Main (2)" />
+        <item index="1" class="java.lang.String" itemvalue="Application.Main (1)" />
+        <item index="2" class="java.lang.String" itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -656,31 +660,31 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.14220877" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26172465" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28150573" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19213313" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2193646" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39934534" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32242227" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -695,9 +699,7 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <option name="time" value="1" />
-    </breakpoint-manager>
+    <breakpoint-manager />
     <watches-manager />
   </component>
   <component name="antWorkspaceConfiguration">
@@ -705,116 +707,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/SpaceBunny.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5746">
-          <caret line="388" column="60" selection-start-line="388" selection-start-column="60" selection-end-line="388" selection-end-column="60" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="class#Client#0;class#SpaceBunny#0" expanded="false" />
-            <element signature="e#16945#16946#0" expanded="true" />
-            <element signature="e#17006#17007#0" expanded="true" />
-            <element signature="class#ConfigurationException#0;class#SpaceBunny#0" expanded="false" />
-            <element signature="class#ConnectionException#0;class#SpaceBunny#0" expanded="false" />
-            <element signature="class#OnFinishConfigiurationListener#0;class#SpaceBunny#0" expanded="false" />
-            <element signature="class#OnMessageReceivedListener#0;class#SpaceBunny#0" expanded="false" />
-            <element signature="method#addCA#0;class#SpaceBunny#0" expanded="false" />
-            <element signature="method#setDefaultCA#0;class#SpaceBunny#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/settings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/SpaceBunny.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5746">
-          <caret line="388" column="60" selection-start-line="388" selection-start-column="60" selection-end-line="388" selection-end-column="60" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="class#Client#0;class#SpaceBunny#0" expanded="false" />
-            <element signature="e#16945#16946#0" expanded="true" />
-            <element signature="e#17006#17007#0" expanded="true" />
-            <element signature="class#ConfigurationException#0;class#SpaceBunny#0" expanded="false" />
-            <element signature="class#ConnectionException#0;class#SpaceBunny#0" expanded="false" />
-            <element signature="class#OnFinishConfigiurationListener#0;class#SpaceBunny#0" expanded="false" />
-            <element signature="class#OnMessageReceivedListener#0;class#SpaceBunny#0" expanded="false" />
-            <element signature="method#addCA#0;class#SpaceBunny#0" expanded="false" />
-            <element signature="method#setDefaultCA#0;class#SpaceBunny#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/settings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/SpaceBunny.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2584">
-          <caret line="176" column="133" selection-start-line="176" selection-start-column="133" selection-end-line="176" selection-end-column="133" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="class#Client#0;class#SpaceBunny#0" expanded="false" />
-            <element signature="e#16945#16946#0" expanded="true" />
-            <element signature="e#17006#17007#0" expanded="true" />
-            <element signature="class#ConfigurationException#0;class#SpaceBunny#0" expanded="false" />
-            <element signature="class#ConnectionException#0;class#SpaceBunny#0" expanded="false" />
-            <element signature="class#OnFinishConfigiurationListener#0;class#SpaceBunny#0" expanded="false" />
-            <element signature="class#OnMessageReceivedListener#0;class#SpaceBunny#0" expanded="false" />
-            <element signature="method#addCA#0;class#SpaceBunny#0" expanded="false" />
-            <element signature="method#setDefaultCA#0;class#SpaceBunny#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../examples/LiveStreamSample/src/JavaSample.java" />
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/SpaceBunny.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="class#Client#0;class#SpaceBunny#0" expanded="false" />
-            <element signature="e#16945#16946#0" expanded="true" />
-            <element signature="e#17006#17007#0" expanded="true" />
-            <element signature="class#ConfigurationException#0;class#SpaceBunny#0" expanded="false" />
-            <element signature="class#ConnectionException#0;class#SpaceBunny#0" expanded="false" />
-            <element signature="class#OnFinishConfigiurationListener#0;class#SpaceBunny#0" expanded="false" />
-            <element signature="class#OnMessageReceivedListener#0;class#SpaceBunny#0" expanded="false" />
-            <element signature="method#addCA#0;class#SpaceBunny#0" expanded="false" />
-            <element signature="method#setDefaultCA#0;class#SpaceBunny#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../examples/LiveStreamSample/src/JavaSample.java" />
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -846,6 +738,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3247">
           <caret line="218" column="138" selection-start-line="218" selection-start-column="138" selection-end-line="218" selection-end-column="138" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -853,6 +746,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -869,6 +765,13 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/io/spacebunny/javasdk/AppTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -886,133 +789,85 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/SpaceBunnyConnectionException.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/SpaceBunnyConfigurationException.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/SpaceBunnyClient.java" />
+    <entry file="file://$PROJECT_DIR$/settings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="41" selection-start-line="5" selection-start-column="41" selection-end-line="5" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/util/Costants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/Main.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/util/Utilities.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBSubscription.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/io/spacebunny/javasdk/AppTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="30" column="23" selection-start-line="30" selection-start-column="23" selection-end-line="30" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/target/classes/io/spacebunny/certs/lets-encrypt-x3-cross-signed.pem" />
-    <entry file="file://$PROJECT_DIR$/.idea/compiler.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-204">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/modules.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="91">
+          <caret line="14" column="6" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBProtocol.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="17" column="58" selection-start-line="17" selection-start-column="58" selection-end-line="17" selection-end-column="58" />
+        <state relative-caret-position="329">
+          <caret line="88" column="0" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBDevice.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/SpaceBunny.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="7" column="35" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/util/Utilities.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="17" column="24" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="7" column="9" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBChannel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="20" selection-end-column="50" />
-          <folding>
-            <element signature="e#1306#1307#0" expanded="true" />
-            <element signature="e#1372#1373#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBDevice.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="13" column="23" selection-start-line="13" selection-start-column="23" selection-end-line="22" selection-end-column="52" />
+        <state relative-caret-position="544">
+          <caret line="37" column="6" selection-start-line="37" selection-start-column="6" selection-end-line="37" selection-end-column="6" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/settings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="88" selection-start-line="5" selection-start-column="88" selection-end-line="5" selection-end-column="88" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/util/Constants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="56" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/device/SBLiveStream.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="35" column="133" selection-start-line="35" selection-start-column="133" selection-end-line="35" selection-end-column="133" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/SpaceBunny.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="205">
-          <caret line="495" column="37" selection-start-line="495" selection-start-column="37" selection-end-line="495" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="class#Client#0;class#SpaceBunny#0" expanded="false" />
-            <element signature="e#16945#16946#0" expanded="true" />
-            <element signature="e#17006#17007#0" expanded="true" />
-            <element signature="class#ConfigurationException#0;class#SpaceBunny#0" expanded="false" />
-            <element signature="class#ConnectionException#0;class#SpaceBunny#0" expanded="false" />
-            <element signature="class#OnFinishConfigiurationListener#0;class#SpaceBunny#0" expanded="false" />
-            <element signature="class#OnMessageReceivedListener#0;class#SpaceBunny#0" expanded="false" />
-            <element signature="method#addCA#0;class#SpaceBunny#0" expanded="false" />
-            <element signature="method#setDefaultCA#0;class#SpaceBunny#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/io/spacebunny/connection/RabbitConnection.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="179" column="70" selection-start-line="179" selection-start-column="70" selection-end-line="179" selection-end-column="70" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../examples/LiveStreamSample/src/JavaSample.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        <state relative-caret-position="-1031">
+          <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
           <folding>
-            <element signature="e#1081#1082#0" expanded="true" />
-            <element signature="e#1164#1165#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="6" column="16" selection-start-line="6" selection-start-column="16" selection-end-line="6" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1069,7 +924,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>Maven: com.rabbitmq:amqp-client:3.5.1</last-edited>
+          <last-edited>Maven: junit:junit:3.8.1</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

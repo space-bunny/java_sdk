@@ -15,7 +15,8 @@ import java.util.ArrayList;
 public class SBProtocol {
 
     private final static String PORT_KEY = "port";
-    private final static String TLS_PORT_KEY = "tls_port";
+
+    private final static String TLS_PORT_KEY = "tls_port"; // TODO da cambiare in tls
 
     private String name;
     private int port;
@@ -83,11 +84,12 @@ public class SBProtocol {
 
     /**
      * Find protocol by his name
+
      * @param name of the protocol to search
      * @return searched protocol
      */
-    public static SBProtocol findProtocol(String name, SBDevice device) {
-        for (SBProtocol protocol : device.getProtocols())
+    public static SBProtocol findProtocol(String name, ArrayList<SBProtocol> protocols) {
+        for (SBProtocol protocol : protocols)
             if (protocol.getName().equals(name))
                 return protocol;
         return null;

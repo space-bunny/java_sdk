@@ -25,7 +25,7 @@ public class JavaSample {
                 }
             });
 
-            spaceBunny.setPathCustomCA("C:\\Users\\Tommaso\\Desktop\\lets-encrypt-x3-cross-signed.pem");
+            //spaceBunny.setPathCustomCA("C:\\Users\\Tommaso\\Desktop\\lets-encrypt-x3-cross-signed.pem");
 
             spaceBunny.connect(new SpaceBunny.OnConnectedListener() {
                 @Override

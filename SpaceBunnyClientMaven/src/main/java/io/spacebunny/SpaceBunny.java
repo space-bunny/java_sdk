@@ -264,6 +264,7 @@ public class SpaceBunny {
             try {
                 rabbitConnection.subscribe(device.getDevice_id(), onMessageReceived);
             } catch (Exception ex) {
+                ex.printStackTrace();
                 throw new ConnectionException(ex);
             }
         }
@@ -493,7 +494,6 @@ public class SpaceBunny {
             try {
                 rabbitConnection.subscribeLiveStream(liveStream, cache, client, onMessageReceived);
             } catch (Exception ex) {
-                ex.printStackTrace();
                 throw new ConnectionException(ex);
             }
         }

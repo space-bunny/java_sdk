@@ -100,8 +100,12 @@ spaceBunny.setPathCustomCA("<absolute_path>\\cert.pem");
 
 #### Connection
 
+<<<<<<< HEAD
+Connect to SpaceBunny with multiple parameters 
+=======
 After you have configurated your Space Bunny client connect with simple methods.
 Connection use default protocol [AMQP](https://www.amqp.org/), to use a different one please contact us.
+>>>>>>> release/Release_0.1.0
 
 ```java
 [...]

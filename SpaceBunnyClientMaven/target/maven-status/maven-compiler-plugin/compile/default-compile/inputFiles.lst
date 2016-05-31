@@ -1,11 +1,8 @@
-C:\Users\Tommaso\IdeaProjects\SpaceBunnyClientMaven\src\main\java\com\spacebunny\test\Costants.java
-C:\Users\Tommaso\IdeaProjects\SpaceBunnyClientMaven\src\main\java\com\spacebunny\test\SBChannel.java
-C:\Users\Tommaso\IdeaProjects\SpaceBunnyClientMaven\src\main\java\com\spacebunny\test\SpaceBunnyConnectionException.java
-C:\Users\Tommaso\IdeaProjects\SpaceBunnyClientMaven\src\main\java\com\spacebunny\test\Device.java
-C:\Users\Tommaso\IdeaProjects\SpaceBunnyClientMaven\src\main\java\com\spacebunny\test\Subscription.java
-C:\Users\Tommaso\IdeaProjects\SpaceBunnyClientMaven\src\main\java\com\spacebunny\test\SpaceBunnyClient.java
-C:\Users\Tommaso\IdeaProjects\SpaceBunnyClientMaven\src\main\java\com\spacebunny\test\SpaceBunnyConfigurationException.java
-C:\Users\Tommaso\IdeaProjects\SpaceBunnyClientMaven\src\main\java\com\spacebunny\test\Main.java
-C:\Users\Tommaso\IdeaProjects\SpaceBunnyClientMaven\src\main\java\com\spacebunny\test\RabbitConnection.java
-C:\Users\Tommaso\IdeaProjects\SpaceBunnyClientMaven\src\main\java\com\spacebunny\test\Utilities.java
-C:\Users\Tommaso\IdeaProjects\SpaceBunnyClientMaven\src\main\java\com\spacebunny\test\Protocol.java
+C:\Users\Tommaso\Desktop\Fancy Pixel\java_sdk\SpaceBunnyClientMaven\src\main\java\io\spacebunny\SpaceBunny.java
+C:\Users\Tommaso\Desktop\Fancy Pixel\java_sdk\SpaceBunnyClientMaven\src\main\java\io\spacebunny\util\Constants.java
+C:\Users\Tommaso\Desktop\Fancy Pixel\java_sdk\SpaceBunnyClientMaven\src\main\java\io\spacebunny\device\SBProtocol.java
+C:\Users\Tommaso\Desktop\Fancy Pixel\java_sdk\SpaceBunnyClientMaven\src\main\java\io\spacebunny\device\SBDevice.java
+C:\Users\Tommaso\Desktop\Fancy Pixel\java_sdk\SpaceBunnyClientMaven\src\main\java\io\spacebunny\connection\RabbitConnection.java
+C:\Users\Tommaso\Desktop\Fancy Pixel\java_sdk\SpaceBunnyClientMaven\src\main\java\io\spacebunny\device\SBChannel.java
+C:\Users\Tommaso\Desktop\Fancy Pixel\java_sdk\SpaceBunnyClientMaven\src\main\java\io\spacebunny\device\SBSubscription.java
+C:\Users\Tommaso\Desktop\Fancy Pixel\java_sdk\SpaceBunnyClientMaven\src\main\java\io\spacebunny\device\SBLiveStream.java

@@ -12,7 +12,7 @@ Please feel free to contribute!
 Gradle: 
 
 ```
-compile 'io.spacebunny:device-sdk:0.0.1'
+compile 'io.spacebunny:device-sdk:0.1.0'
 ```
 
 Maven: 
@@ -25,7 +25,7 @@ Maven:
 </dependency>
 ```
 
-Download library: [Jar file](https://github.com/space-bunny/java_sdk/device-sdk-0.1.0.jar)
+Download library: [Jar file](https://github.com/space-bunny/java_sdk/blob/master/SpaceBunnyClientMaven/target/device-sdk-0.1.0.jar)
 
 ## Device basic usage
 

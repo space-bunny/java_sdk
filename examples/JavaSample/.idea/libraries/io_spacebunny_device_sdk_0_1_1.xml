@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="io.spacebunny:device-sdk:0.1.1" type="repository">
+    <properties maven-id="io.spacebunny:device-sdk:0.1.1" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/io/spacebunny/device-sdk/0.1.1/device-sdk-0.1.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/rabbitmq/amqp-client/3.5.1/amqp-client-3.5.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/json/json/20160212/json-20160212.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

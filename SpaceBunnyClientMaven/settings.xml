@@ -2,8 +2,10 @@
     <servers>
         <server>
             <id>ossrh</id>
-            <username>tommaso.berlose</username>
-            <password>09111991</password>
+            <username>fancy.pixel</username>
+            <password>{xT1udvZcnRAHNuTDOccui9agpRSi5tIA9TK3S9I99vpecD/LXTFxI8t1a6Tu+Fao}</password>
+            <!--<username>tommaso.berlose</username>
+            <password>{v+UGu+YjpUMHPkttOeOvcKOhcwVMElnGyysT579bS/I=}</password>-->
         </server>
     </servers>
 </settings>

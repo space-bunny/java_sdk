@@ -5,29 +5,35 @@
   <groupId>io.spacebunny</groupId>
   <artifactId>device-sdk</artifactId>
   <version>0.1.0</version>
+
+    <properties>
+        <github.global.server>github</github.global.server>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
   <build>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.0</version>
         <configuration>
           <source>1.7</source>
           <target>1.7</target>
         </configuration>
       </plugin>
 
-
-      <plugin>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
-        <version>1.6.3</version>
-        <extensions>true</extensions>
-        <configuration>
-          <serverId>ossrh</serverId>
-          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-          <autoReleaseAfterClose>true</autoReleaseAfterClose>
-        </configuration>
-      </plugin>
+        <plugin>
+            <groupId>org.sonatype.plugins</groupId>
+            <artifactId>nexus-staging-maven-plugin</artifactId>
+            <version>1.6.3</version>
+            <extensions>true</extensions>
+            <configuration>
+                <serverId>ossrh</serverId>
+                <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                <autoReleaseAfterClose>true</autoReleaseAfterClose>
+            </configuration>
+        </plugin>
 
         <plugin>
             <groupId>org.sonatype.plugins</groupId>
@@ -96,8 +102,7 @@
                         <goal>sign</goal>
                     </goals>
                     <configuration>
-                        <keyname>F3CD934F</keyname>
-                        <passphraseServerId>09111991</passphraseServerId>
+                        <keyname>6AF40E74</keyname>
                     </configuration>
                 </execution>
             </executions>
@@ -116,23 +121,25 @@
   </build>
   <packaging>jar</packaging>
 
-  <distributionManagement>
-      <snapshotRepository>
-          <id>ossrh</id>
-          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-      </snapshotRepository>
-      <repository>
-          <id>ossrh</id>
-          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-      </repository>
-  </distributionManagement>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
-  <name>SpaceBunny Device SDK</name>
-  <url>http://www.spacebunny.io/</url>
+
+
+    <name>SpaceBunny Device SDK</name>
+    <url>http://www.spacebunny.io/</url>
     <scm>
-        <connection>scm:svn:http://somerepository.com/svn_repo/trunk</connection>
-        <developerConnection>scm:svn:https://somerepository.com/svn_repo/trunk</developerConnection>
-        <url>http://somerepository.com/view.cvs</url>
+        <url>https://github.com/space-bunny/java_sdk</url>
+        <connection>scm:git:git://github.com/space-bunny/java_sdk.git</connection>
+        <developerConnection>scm:git:git@github.com:space-bunny/java_sdk.git</developerConnection>
     </scm>
 
     <description>Space Bunny is the IoT platform that makes it easy for you and your devices to send and exchange messages with a server or even with each other.</description>
@@ -156,11 +163,6 @@
             </roles>
         </developer>
     </developers>
-
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
-
   <dependencies>
     <dependency>
       <groupId>com.rabbitmq</groupId>

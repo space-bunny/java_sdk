@@ -1,5 +1,6 @@
 package io.fancypixel.myapplication;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
@@ -66,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         updateUI();
-
     }
 
     public void updateUI() {
@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
                             public void onReceived(final String message, Envelope envelope) {
                                 mHandler.post(new Runnable() {
                                     public void run() {
-                                        Snackbar.make(toolbar, getString(R.string.text_message) + ": " +  message, Snackbar.LENGTH_LONG).show();
+                                        Snackbar.make(toolbar, getString(R.string.text_message) + ": " + message, Snackbar.LENGTH_LONG).show();
                                     }
                                 });
                             }

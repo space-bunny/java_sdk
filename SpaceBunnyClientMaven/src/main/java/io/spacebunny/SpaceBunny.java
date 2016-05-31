@@ -4,8 +4,10 @@ import com.rabbitmq.client.ConfirmListener;
 import io.spacebunny.connection.RabbitConnection;
 import io.spacebunny.device.SBChannel;
 import io.spacebunny.device.SBDevice;
+import io.spacebunny.device.SBLiveStream;
 import io.spacebunny.device.SBProtocol;
 import io.spacebunny.util.Constants;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,6 +23,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -330,6 +333,233 @@ public class SpaceBunny {
         }
     }
 
+    public static class LiveStream {
+        private final static String CONNECTION_KEY = "connection";
+        private final static String HOST_KEY = "host";
+        private final static String PROTOCOLS_KEY = "protocols";
+        private final static String LIVE_STREAMS_KEY = "live_streams";
+        private final static String CLIENT_KEY = "client";
+        private final static String SECRET_KEY = "secret";
+        private final static String VHOST_KEY = "vhost";
+
+        private String host;
+        private ArrayList<SBProtocol> protocols = new ArrayList<>();
+        private String client;
+        private String secret;
+        private String vhost;
+        private ArrayList<SBLiveStream> liveStreams = new ArrayList<>();
+
+        private boolean tls = true;
+        private boolean verify_ca = true;
+        private RabbitConnection rabbitConnection = null;
+        private boolean custom_certificate = false;
+
+        private String liveStream_key_client;
+        private String liveStream_key_secret;
+
+
+        public LiveStream(String liveStream_key_client, String liveStream_key_secret) throws ConfigurationException {
+            if (liveStream_key_client == null || liveStream_key_client.equals("") ||
+                    liveStream_key_secret == null || liveStream_key_secret.equals(""))
+                throw new ConfigurationException("Live Stream configuration error.");
+            this.liveStream_key_client = liveStream_key_client;
+            this.liveStream_key_secret = liveStream_key_secret;
+        }
+
+        public void connect(io.spacebunny.SpaceBunny.OnConnectedListener onConnectedListener) throws KeyManagementException, NoSuchAlgorithmException, IOException, JSONException, ConnectionException {
+
+            URLConnection uc;
+            BufferedReader reader;
+
+            try {
+
+                if (tls) {
+                    if (!verify_ca) {
+                        // Create a trust manager that does not validate certificate chains
+                        TrustManager[] trustAllCerts = new TrustManager[]{
+                                new X509TrustManager() {
+                                    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                                        return null;
+                                    }
+
+                                    public void checkClientTrusted(
+                                            java.security.cert.X509Certificate[] certs, String authType) {
+                                    }
+
+                                    public void checkServerTrusted(
+                                            java.security.cert.X509Certificate[] certs, String authType) {
+                                    }
+                                }
+                        };
+
+                        SSLContext sc = SSLContext.getInstance("TLS");
+                        sc.init(null, trustAllCerts, new java.security.SecureRandom());
+                        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+                    } else {
+                        if (!custom_certificate) {
+                            setDefaultCA();
+                        }
+                    }
+                }
+
+                URL url = new URL(generateLiveStreamHostname(tls));
+                uc = url.openConnection();
+                uc.setRequestProperty("Live-Stream-Key-Client", liveStream_key_client);
+                uc.setRequestProperty("Live-Stream-Key-Secret", liveStream_key_secret);
+                reader = new BufferedReader(new InputStreamReader(uc.getInputStream(), "UTF-8"));
+
+                StringBuilder responseStrBuilder = new StringBuilder();
+
+                String inputStr;
+                while ((inputStr = reader.readLine()) != null)
+                    responseStrBuilder.append(inputStr);
+
+                JSONObject jsonObject = new JSONObject(responseStrBuilder.toString());
+
+                JSONObject conn = jsonObject.getJSONObject(CONNECTION_KEY);
+                host = conn.getString(HOST_KEY);
+
+                JSONObject pr = conn.getJSONObject(PROTOCOLS_KEY);
+                Iterator<?> keys = pr.keys();
+
+                protocols.add(Constants.DEFAULT_PROTOCOL);
+
+                while( keys.hasNext() ) {
+                    String key = (String)keys.next();
+                    SBProtocol newProtocol = new SBProtocol(key, pr.getJSONObject(key));
+
+                    // Check default protocol updates
+                    if (newProtocol.getName().equals(Constants.DEFAULT_PROTOCOL.getName()))
+                        protocols.remove(Constants.DEFAULT_PROTOCOL);
+
+                    protocols.add(newProtocol);
+                }
+
+                JSONArray ls = jsonObject.getJSONArray(LIVE_STREAMS_KEY);
+                for(Object obg : ls) {
+                    liveStreams.add(new SBLiveStream((JSONObject) obg));
+                }
+
+                this.client =  conn.getString(CLIENT_KEY);
+                this.secret =  conn.getString(SECRET_KEY);
+                this.vhost =  conn.getString(VHOST_KEY);
+
+                // Rabbit Connection
+                SBProtocol protocol = Constants.DEFAULT_PROTOCOL;
+
+                rabbitConnection = new RabbitConnection(protocol, tls);
+                if (rabbitConnection.connect(host, vhost, client, secret) && onConnectedListener != null)
+                    onConnectedListener.onConnected();
+
+            } catch (Exception e) {
+                throw new SpaceBunny.ConnectionException(e);
+            }
+
+        }
+
+        /**
+         *
+         * @return connection status
+         */
+        public boolean isConnected() {
+            return rabbitConnection.isConnected();
+        }
+
+        /**
+         * Test the connection with SpaceBunny
+         * Throws an exception if it is not
+         *
+         * @throws ConnectionException connection error
+         */
+        public void testConnection() throws ConnectionException {
+            if (!isConnected())
+                throw new ConnectionException("Space Bunny is not connected. Try spaceBunny.connect().");
+        }
+
+        /**
+         * Set a custom CA
+         *
+         * @param path of CA
+         */
+        public void setPathCustomCA(String path) throws ConfigurationException {
+            addCA(path);
+            custom_certificate = true;
+        }
+
+        public void subscribe(String liveStreamName, boolean cache, RabbitConnection.OnSubscriptionMessageReceivedListener onMessageReceived) throws ConnectionException {
+            testConnection();
+            SBLiveStream liveStream = SBLiveStream.findLiveStream(liveStreamName, liveStreams);
+            try {
+                rabbitConnection.subscribeLiveStream(liveStream, cache, client, onMessageReceived);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                throw new ConnectionException(ex);
+            }
+        }
+
+        public void unsubscribe(String liveStreamName, boolean cache) throws ConnectionException {
+            testConnection();
+            SBLiveStream liveStream = SBLiveStream.findLiveStream(liveStreamName, liveStreams);
+            try {
+                rabbitConnection.unsubscribeLiveStream(liveStream, cache, client);
+            } catch (Exception ex) {
+                throw new ConnectionException(ex);
+            }
+        }
+
+        public void setTls(boolean tls) {
+            this.tls = tls;
+        }
+
+        public boolean istls() {
+            return this.tls;
+        }
+
+        public void setVerifyCA(boolean verify) {
+            this.verify_ca = verify;
+        }
+
+        public boolean isCAVerifed() {
+            return this.verify_ca;
+        }
+
+        public ArrayList<SBProtocol> getProtocols() {
+            return protocols;
+        }
+
+        public ArrayList<SBLiveStream> getLiveStreams() {
+            return liveStreams;
+        }
+
+        /**
+         * Close connection to SpaceBunny
+         *
+         * @throws ConnectionException
+         */
+        public void close() throws ConnectionException {
+            testConnection();
+            try {
+                rabbitConnection.close();
+            } catch (Exception ex) {
+                throw new ConnectionException(ex);
+            }
+        }
+
+        public SBProtocol getDefaultProtocol() {
+            return Constants.DEFAULT_PROTOCOL;
+        }
+
+        public boolean existsLiveStream(String liveStreamName) {
+            try {
+                SBLiveStream.findLiveStream(liveStreamName, liveStreams);
+                return true;
+            } catch (ConnectionException ex) {
+                return false;
+            }
+        }
+    }
+
     public static class ConfigurationException extends Exception {
         public ConfigurationException(String message){
             super(message);
@@ -367,7 +597,11 @@ public class SpaceBunny {
 
 
     private static String generateHostname(boolean tls) {
-        return (tls ? Constants.URL_ENDPOINT_TLS : Constants.URL_ENDPOINT) + Constants.API_VERSION + Constants.PATH_ENDPOINT;
+        return (tls ? Constants.URL_ENDPOINT_TLS : Constants.URL_ENDPOINT) + Constants.API_VERSION + Constants.DEVICE_PATH_ENDPOINT;
+    }
+
+    private static String generateLiveStreamHostname(boolean tls) {
+        return (tls ? Constants.URL_ENDPOINT_TLS : Constants.URL_ENDPOINT) + Constants.API_VERSION + Constants.LIVE_STREAM_PATH_ENDPOINT;
     }
 
     private static void addCA(String path) throws SpaceBunny.ConfigurationException {

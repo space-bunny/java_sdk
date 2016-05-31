@@ -2,10 +2,10 @@
     <servers>
         <server>
             <id>ossrh</id>
-            <!--<username>fancy.pixel</username>
-            <password>{EhRA1nWF0xgH/PePYLok8vfB7hzIAUrtDFk5xQNLAjk=}</password>-->
-            <username>tommaso.berlose</username>
-            <password>{v+UGu+YjpUMHPkttOeOvcKOhcwVMElnGyysT579bS/I=}</password>
+            <username>fancy.pixel</username>
+            <password>{xT1udvZcnRAHNuTDOccui9agpRSi5tIA9TK3S9I99vpecD/LXTFxI8t1a6Tu+Fao}</password>
+            <!--<username>tommaso.berlose</username>
+            <password>{v+UGu+YjpUMHPkttOeOvcKOhcwVMElnGyysT579bS/I=}</password>-->
         </server>
     </servers>
 </settings>

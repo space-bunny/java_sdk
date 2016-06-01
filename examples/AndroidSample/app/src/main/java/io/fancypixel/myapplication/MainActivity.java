@@ -243,8 +243,12 @@ public class MainActivity extends AppCompatActivity {
                                                     });
                                                 }
                                             });
-                                } catch (SpaceBunny.ConnectionException ex) {
-                                    showError(ex.getMessage());
+                                } catch (final SpaceBunny.ConnectionException ex) {
+                                    mHandler.post(new Runnable() {
+                                        public void run() {
+                                            showError(ex.getMessage());
+                                        }
+                                    });
                                 }
 
                             }

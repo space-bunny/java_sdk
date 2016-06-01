@@ -21,7 +21,7 @@ public class JavaSample {
             spaceBunny.setOnFinishConfigiurationListener(new SpaceBunny.OnFinishConfigiurationListener() {
                 @Override
                 public void onConfigured(SBDevice device) throws SpaceBunny.ConnectionException {
-                    System.out.println(device.toString());
+                    //System.out.println(device.toString());
                 }
             });
 
